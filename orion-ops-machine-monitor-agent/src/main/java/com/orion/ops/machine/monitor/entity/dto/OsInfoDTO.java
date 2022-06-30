@@ -13,6 +13,11 @@ import lombok.Data;
 public class OsInfoDTO {
 
     /**
+     * 进程id
+     */
+    private Integer pid;
+
+    /**
      * 系统名称
      */
     private String osName;
@@ -28,13 +33,28 @@ public class OsInfoDTO {
     private String cpuName;
 
     /**
-     * cpu 核心数
+     * cpu 物理核心数
      */
-    private Integer cpuCore;
+    private Integer cpuPhysicalCore;
+
+    /**
+     * cpu 逻辑核心数
+     */
+    private Integer cpuLogicalCore;
 
     /**
      * 总内存
      */
     private Long totalMemory;
+
+    /**
+     * 主机名
+     */
+    private String hostname;
+
+    /**
+     * 用户名
+     */
+    private String username;
 
 }

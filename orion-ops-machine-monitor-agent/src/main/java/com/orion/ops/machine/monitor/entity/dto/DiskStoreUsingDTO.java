@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 2022/6/27 18:37
  */
 @Data
-public class DiskStoreDTO {
+public class DiskStoreUsingDTO {
 
     /**
      * 磁盘名称

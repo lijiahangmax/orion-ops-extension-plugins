@@ -26,6 +26,11 @@ public class MetricsHolder {
     private long[] currentCpuLoadTicks;
 
     /**
+     * 当前 cpu 核心使用情况
+     */
+    private long[][] currentProcTicks;
+
+    /**
      * 当前网卡信息
      */
     private List<NetworkIF> currentNetwork;

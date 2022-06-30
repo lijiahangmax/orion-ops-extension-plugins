@@ -13,11 +13,6 @@ import lombok.Data;
 public class MemoryUsingDTO {
 
     /**
-     * 时间戳
-     */
-    private Long timestamp;
-
-    /**
      * 总内存
      */
     private Long totalMemory;

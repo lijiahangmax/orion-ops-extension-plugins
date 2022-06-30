@@ -17,6 +17,11 @@ import oshi.util.FormatUtil;
 public class OsInfoVO {
 
     /**
+     * 进程id
+     */
+    private Integer pid;
+
+    /**
      * 系统名称
      */
     private String osName;
@@ -32,23 +37,42 @@ public class OsInfoVO {
     private String cpuName;
 
     /**
-     * cpu 核心数
+     * cpu 物理核心数
      */
-    private Integer cpuCore;
+    private Integer cpuPhysicalCore;
+
+    /**
+     * cpu 逻辑核心数
+     */
+    private Integer cpuLogicalCore;
 
     /**
      * 总内存
      */
     private String totalMemory;
 
+    /**
+     * 主机名
+     */
+    private String hostname;
+
+    /**
+     * 用户名
+     */
+    private String username;
+
     static {
         TypeStore.STORE.register(OsInfoDTO.class, OsInfoVO.class, p -> {
             OsInfoVO vo = new OsInfoVO();
+            vo.setPid(p.getPid());
             vo.setOsName(p.getOsName());
             vo.setUptime(FormatUtil.formatElapsedSecs(p.getUptime()));
             vo.setCpuName(p.getCpuName());
-            vo.setCpuCore(p.getCpuCore());
+            vo.setCpuPhysicalCore(p.getCpuPhysicalCore());
+            vo.setCpuLogicalCore(p.getCpuLogicalCore());
             vo.setTotalMemory(Files1.getSize(p.getTotalMemory()));
+            vo.setHostname(p.getHostname());
+            vo.setUsername(p.getUsername());
             return vo;
         });
     }
