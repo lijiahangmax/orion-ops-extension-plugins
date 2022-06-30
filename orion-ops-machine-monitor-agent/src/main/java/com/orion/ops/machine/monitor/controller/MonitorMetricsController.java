@@ -37,14 +37,6 @@ public class MonitorMetricsController {
     }
 
     /**
-     * 获取 cpu 使用信息
-     */
-    @GetMapping("/cpu-using")
-    public CpuUsingVO getCpuUsing() {
-        return Converts.to(metricsProvider.getCpuUsing(), CpuUsingVO.class);
-    }
-
-    /**
      * 获取系统负载
      */
     @GetMapping("/system-load")
@@ -53,11 +45,27 @@ public class MonitorMetricsController {
     }
 
     /**
+     * 获取 cpu 使用信息
+     */
+    @GetMapping("/cpu-using")
+    public CpuUsingVO getCpuUsing() {
+        return Converts.to(metricsProvider.getCpuUsing(), CpuUsingVO.class);
+    }
+
+    /**
      * 获取内存使用信息
      */
     @GetMapping("/memory-using")
     public MemoryUsingVO getMemoryUsing() {
         return Converts.to(metricsProvider.getMemoryUsing(), MemoryUsingVO.class);
+    }
+
+    /**
+     * 获取网络带宽使用信息
+     */
+    @GetMapping("/net-bandwidth")
+    public NetBandwidthVO getNetBandwidth() {
+        return Converts.to(metricsProvider.getNetBandwidth(), NetBandwidthVO.class);
     }
 
     /**

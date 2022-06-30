@@ -88,6 +88,26 @@ public class MetricsProvider {
     }
 
     /**
+     * 获取 cpu 使用率
+     */
+    public CpuUsingDTO getCpuUsing() {
+        CentralProcessor processor = hardware.getProcessor();
+        long[] beforeTicks = processor.getSystemCpuLoadTicks();
+        long[][] beforeProcTicks = processor.getProcessorCpuLoadTicks();
+        // 获取当前指标 休眠1秒 获取后一秒的指标比对
+        Threads.sleep(Const.MS_S_1);
+        CpuUsingDTO cpuUsing = new CpuUsingDTO();
+        cpuUsing.setUsing(processor.getSystemCpuLoadBetweenTicks(beforeTicks) * 100);
+        // 核心使用率
+        List<Double> coreUsing = Arrays.stream(processor.getProcessorCpuLoadBetweenTicks(beforeProcTicks))
+                .map(s -> s * 100)
+                .boxed()
+                .collect(Collectors.toList());
+        cpuUsing.setCoreUsing(coreUsing);
+        return cpuUsing;
+    }
+
+    /**
      * 获取内存信息
      *
      * @return metrics
@@ -103,6 +123,26 @@ public class MetricsProvider {
         memoryUsing.setFreeMemory(availableByte);
         memoryUsing.setUsingRate((double) (totalByte - availableByte) / (double) totalByte);
         return memoryUsing;
+    }
+
+    /**
+     * 获取网络带宽信息
+     */
+    public NetBandwidthDTO getNetBandwidth() {
+        List<NetworkIF> beforeNetwork = hardware.getNetworkIFs();
+        // 获取当前指标 休眠1秒 获取后一秒的指标比对
+        Threads.sleep(Const.MS_S_1);
+        List<NetworkIF> currentNetwork = hardware.getNetworkIFs();
+        // 统计流量信息
+        long prevReceiveTotal = beforeNetwork.stream().mapToLong(NetworkIF::getBytesRecv).sum();
+        long prevSentTotal = beforeNetwork.stream().mapToLong(NetworkIF::getBytesSent).sum();
+        long currentReceiveTotal = currentNetwork.stream().mapToLong(NetworkIF::getBytesRecv).sum();
+        long currentSentTotal = currentNetwork.stream().mapToLong(NetworkIF::getBytesSent).sum();
+        // 返回
+        NetBandwidthDTO net = new NetBandwidthDTO();
+        net.setUpstream(currentSentTotal - prevSentTotal);
+        net.setDownstream(currentReceiveTotal - prevReceiveTotal);
+        return net;
     }
 
     /**
@@ -126,6 +166,32 @@ public class MetricsProvider {
                     disk.setUsingRate((double) usingSpace / (double) totalSpace);
                     return disk;
                 }).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取 IO 使用信息
+     *
+     * @return metrics
+     */
+    public List<IoUsingDTO> getIoUsing() {
+        List<HWDiskStore> beforeDisks = hardware.getDiskStores();
+        // 获取当前指标 休眠1秒 获取后一秒的指标比对
+        Threads.sleep(Const.MS_S_1);
+        List<HWDiskStore> currentDisks = hardware.getDiskStores();
+        List<IoUsingDTO> list = new ArrayList<>();
+        for (int i = 0; i < currentDisks.size(); i++) {
+            HWDiskStore afterDisk = currentDisks.get(i);
+            HWDiskStore prevDisk = beforeDisks.get(i);
+            IoUsingDTO using = new IoUsingDTO();
+            using.setName(afterDisk.getName());
+            using.setReadCount(afterDisk.getReads() - prevDisk.getReads());
+            using.setReadBytes(afterDisk.getReadBytes() - prevDisk.getReadBytes());
+            using.setWriteCount(afterDisk.getWrites() - prevDisk.getWrites());
+            using.setWriteBytes(afterDisk.getReadBytes() - prevDisk.getReadBytes());
+            using.setUsingTime(afterDisk.getTransferTime() - prevDisk.getTransferTime());
+            list.add(using);
+        }
+        return list;
     }
 
     /**
@@ -156,72 +222,6 @@ public class MetricsProvider {
                     p.setCommandLine(s.getCommandLine());
                     return p;
                 }).collect(Collectors.toList());
-    }
-
-    /**
-     * 获取 cpu 使用率
-     */
-    public CpuUsingDTO getCpuUsing() {
-        CentralProcessor processor = hardware.getProcessor();
-        long[] beforeTicks = processor.getSystemCpuLoadTicks();
-        long[][] beforeProcTicks = processor.getProcessorCpuLoadTicks();
-        // 获取当前指标 休眠1秒 获取后一秒的指标比对
-        Threads.sleep(Const.MS_S_1);
-        CpuUsingDTO cpuUsing = new CpuUsingDTO();
-        cpuUsing.setUsing(processor.getSystemCpuLoadBetweenTicks(beforeTicks) * 100);
-        // 核心使用率
-        List<Double> coreUsing = Arrays.stream(processor.getProcessorCpuLoadBetweenTicks(beforeProcTicks))
-                .map(s -> s * 100)
-                .boxed()
-                .collect(Collectors.toList());
-        cpuUsing.setCoreUsing(coreUsing);
-        return cpuUsing;
-    }
-
-    /**
-     * 获取网络带宽信息
-     */
-    public NetBandwidthDTO getNetBandwidth() {
-        List<NetworkIF> beforeNetwork = hardware.getNetworkIFs();
-        // 获取当前指标 休眠1秒 获取后一秒的指标比对
-        Threads.sleep(Const.MS_S_1);
-        List<NetworkIF> currentNetwork = hardware.getNetworkIFs();
-        // 统计流量信息
-        long prevReceiveTotal = beforeNetwork.stream().mapToLong(NetworkIF::getBytesRecv).sum();
-        long prevSentTotal = beforeNetwork.stream().mapToLong(NetworkIF::getBytesSent).sum();
-        long currentReceiveTotal = currentNetwork.stream().mapToLong(NetworkIF::getBytesRecv).sum();
-        long currentSentTotal = currentNetwork.stream().mapToLong(NetworkIF::getBytesSent).sum();
-        // 返回
-        NetBandwidthDTO net = new NetBandwidthDTO();
-        net.setUpstream(currentSentTotal - prevSentTotal);
-        net.setDownstream(currentReceiveTotal - prevReceiveTotal);
-        return net;
-    }
-
-    /**
-     * 获取 IO 使用信息
-     *
-     * @return metrics
-     */
-    public List<IoUsingDTO> getIoUsing() {
-        List<HWDiskStore> beforeDisks = hardware.getDiskStores();
-        // 获取当前指标 休眠1秒 获取后一秒的指标比对
-        Threads.sleep(Const.MS_S_1);
-        List<HWDiskStore> currentDisks = hardware.getDiskStores();
-        List<IoUsingDTO> list = new ArrayList<>();
-        for (int i = 0; i < currentDisks.size(); i++) {
-            HWDiskStore afterDisk = currentDisks.get(i);
-            HWDiskStore prevDisk = beforeDisks.get(i);
-            IoUsingDTO using = new IoUsingDTO();
-            using.setName(afterDisk.getName());
-            using.setReadCount(afterDisk.getReads() - prevDisk.getReads());
-            using.setReadBytes(afterDisk.getReadBytes() - prevDisk.getReadBytes());
-            using.setWriteCount(afterDisk.getWrites() - prevDisk.getWrites());
-            using.setWriteBytes(afterDisk.getReadBytes() - prevDisk.getReadBytes());
-            using.setUsingTime(afterDisk.getTransferTime() - prevDisk.getTransferTime());
-            list.add(using);
-        }
-        return list;
     }
 
 }
