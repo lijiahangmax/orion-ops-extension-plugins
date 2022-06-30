@@ -13,11 +13,6 @@ import lombok.Data;
 public class IoUsingDTO {
 
     /**
-     * 时间戳
-     */
-    private Long timestamp;
-
-    /**
      * 名称
      */
     private String name;

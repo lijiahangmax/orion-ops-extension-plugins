@@ -13,11 +13,6 @@ import lombok.Data;
 public class SystemLoadDTO {
 
     /**
-     * 时间戳
-     */
-    private Long timestamp;
-
-    /**
      * 1分 负载
      */
     private Double oneMinuteLoad;

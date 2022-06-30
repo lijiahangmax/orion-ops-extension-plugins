@@ -15,24 +15,9 @@ import java.util.List;
 public class CpuUsingDTO {
 
     /**
-     * 时间戳
+     * 使用率
      */
-    private Long timestamp;
-
-    /**
-     * 用户使用率
-     */
-    private Double userUsing;
-
-    /**
-     * 系统使用率
-     */
-    private Double systemUsing;
-
-    /**
-     * 总使用率
-     */
-    private Double totalUsing;
+    private Double using;
 
     /**
      * 核心使用率

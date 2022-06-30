@@ -19,19 +19,9 @@ import java.util.stream.Collectors;
 public class CpuUsingVO {
 
     /**
-     * 用户使用率
+     * 使用率
      */
-    private Double userUsing;
-
-    /**
-     * 系统使用率
-     */
-    private Double systemUsing;
-
-    /**
-     * 总使用率
-     */
-    private Double totalUsing;
+    private Double using;
 
     /**
      * 核心使用率
@@ -41,9 +31,7 @@ public class CpuUsingVO {
     static {
         TypeStore.STORE.register(CpuUsingDTO.class, CpuUsingVO.class, p -> {
             CpuUsingVO vo = new CpuUsingVO();
-            vo.setUserUsing(Utils.roundToDouble(p.getUserUsing()));
-            vo.setSystemUsing(Utils.roundToDouble(p.getSystemUsing()));
-            vo.setTotalUsing(Utils.roundToDouble(p.getUserUsing()));
+            vo.setUsing(Utils.roundToDouble(p.getUsing()));
             vo.setCoreUsing(p.getCoreUsing().stream()
                     .map(Utils::roundToDouble)
                     .collect(Collectors.toList()));

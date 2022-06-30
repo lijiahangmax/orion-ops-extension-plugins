@@ -1,7 +1,7 @@
 package com.orion.ops.machine.monitor.controller;
 
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
-import com.orion.ops.machine.monitor.collect.MetricsCollector;
+import com.orion.ops.machine.monitor.collect.MetricsProvider;
 import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsingDTO;
 import com.orion.ops.machine.monitor.entity.vo.*;
 import com.orion.utils.convert.Converts;
@@ -26,14 +26,14 @@ import java.util.List;
 public class MonitorMetricsController {
 
     @Resource
-    private MetricsCollector metricsCollector;
+    private MetricsProvider metricsProvider;
 
     /**
      * 获取机器信息
      */
     @GetMapping("/info")
     public OsInfoVO getOsInfo() {
-        return Converts.to(metricsCollector.getOsInfo(), OsInfoVO.class);
+        return Converts.to(metricsProvider.getOsInfo(), OsInfoVO.class);
     }
 
     /**
@@ -41,7 +41,7 @@ public class MonitorMetricsController {
      */
     @GetMapping("/cpu-using")
     public CpuUsingVO getCpuUsing() {
-        return Converts.to(metricsCollector.getCpuUsing(), CpuUsingVO.class);
+        return Converts.to(metricsProvider.getCpuUsing(), CpuUsingVO.class);
     }
 
     /**
@@ -49,7 +49,7 @@ public class MonitorMetricsController {
      */
     @GetMapping("/system-load")
     public SystemLoadVO getSystemLoad() {
-        return Converts.to(metricsCollector.getSystemLoad(), SystemLoadVO.class);
+        return Converts.to(metricsProvider.getSystemLoad(), SystemLoadVO.class);
     }
 
     /**
@@ -57,7 +57,7 @@ public class MonitorMetricsController {
      */
     @GetMapping("/memory-using")
     public MemoryUsingVO getMemoryUsing() {
-        return Converts.to(metricsCollector.getMemoryUsing(), MemoryUsingVO.class);
+        return Converts.to(metricsProvider.getMemoryUsing(), MemoryUsingVO.class);
     }
 
     /**
@@ -65,7 +65,7 @@ public class MonitorMetricsController {
      */
     @GetMapping("/disk-using")
     public List<DiskStoreUsingVO> getDiskStoreUsing() {
-        return Converts.toList(metricsCollector.getDiskStoreUsing(), DiskStoreUsingVO.class);
+        return Converts.toList(metricsProvider.getDiskStoreUsing(), DiskStoreUsingVO.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class MonitorMetricsController {
      */
     @GetMapping("/disk-merge-using")
     public DiskStoreUsingVO getDiskStoreMergeUsing() {
-        List<DiskStoreUsingDTO> store = metricsCollector.getDiskStoreUsing();
+        List<DiskStoreUsingDTO> store = metricsProvider.getDiskStoreUsing();
         if (store.size() == 1) {
             return Converts.to(store.get(0), DiskStoreUsingVO.class);
         }
@@ -95,7 +95,7 @@ public class MonitorMetricsController {
     @GetMapping("/top-processes")
     public List<SystemProcessVO> getTopProgress(@RequestParam(value = "name", required = false) String name,
                                                 @RequestParam("limit") Integer limit) {
-        return Converts.toList(metricsCollector.getProcesses(name, limit), SystemProcessVO.class);
+        return Converts.toList(metricsProvider.getProcesses(name, limit), SystemProcessVO.class);
     }
 
 }
