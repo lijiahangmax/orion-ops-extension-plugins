@@ -4,12 +4,13 @@ import com.orion.ops.machine.monitor.OrionOpsMachineMonitorAgentApplication;
 import com.orion.support.Attempt;
 import com.orion.utils.reflect.PackageScanner;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * TypeStore加载器
+ * TypeStore 类型转换加载器
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -20,10 +21,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class TypeStoreRegisterRunner implements CommandLineRunner {
 
+    @Value("#{'${type.store.scan.packages}'.split(',')}")
+    private String[] scanPackages;
+
     @Override
     public void run(String... args) throws Exception {
-        log.info("注册vo转换器-开始");
-        new PackageScanner("com.orion.ops.machine.monitor.entity.vo.*", "com.orion.ops.machine.monitor.dto.*")
+        log.info("注册对象转换器-开始");
+        new PackageScanner(scanPackages)
                 .with(OrionOpsMachineMonitorAgentApplication.class)
                 .scan()
                 .getClasses()
@@ -31,7 +35,7 @@ public class TypeStoreRegisterRunner implements CommandLineRunner {
                     log.info("register type store class: {}", s);
                     Class.forName(s.getName());
                 }));
-        log.info("注册vo转换器-结束");
+        log.info("注册对象转换器-结束");
     }
 
 }
