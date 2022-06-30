@@ -134,14 +134,14 @@ public class MetricsProvider {
         Threads.sleep(Const.MS_S_1);
         List<NetworkIF> currentNetwork = hardware.getNetworkIFs();
         // 统计流量信息
-        long prevReceiveTotal = beforeNetwork.stream().mapToLong(NetworkIF::getBytesRecv).sum();
-        long prevSentTotal = beforeNetwork.stream().mapToLong(NetworkIF::getBytesSent).sum();
+        long beforeReceiveTotal = beforeNetwork.stream().mapToLong(NetworkIF::getBytesRecv).sum();
+        long beforeSentTotal = beforeNetwork.stream().mapToLong(NetworkIF::getBytesSent).sum();
         long currentReceiveTotal = currentNetwork.stream().mapToLong(NetworkIF::getBytesRecv).sum();
         long currentSentTotal = currentNetwork.stream().mapToLong(NetworkIF::getBytesSent).sum();
         // 返回
         NetBandwidthDTO net = new NetBandwidthDTO();
-        net.setUpstream(currentSentTotal - prevSentTotal);
-        net.setDownstream(currentReceiveTotal - prevReceiveTotal);
+        net.setUpstream(currentSentTotal - beforeSentTotal);
+        net.setDownstream(currentReceiveTotal - beforeReceiveTotal);
         return net;
     }
 
@@ -181,14 +181,14 @@ public class MetricsProvider {
         List<IoUsingDTO> list = new ArrayList<>();
         for (int i = 0; i < currentDisks.size(); i++) {
             HWDiskStore afterDisk = currentDisks.get(i);
-            HWDiskStore prevDisk = beforeDisks.get(i);
+            HWDiskStore beforeDisk = beforeDisks.get(i);
             IoUsingDTO using = new IoUsingDTO();
             using.setName(afterDisk.getName());
-            using.setReadCount(afterDisk.getReads() - prevDisk.getReads());
-            using.setReadBytes(afterDisk.getReadBytes() - prevDisk.getReadBytes());
-            using.setWriteCount(afterDisk.getWrites() - prevDisk.getWrites());
-            using.setWriteBytes(afterDisk.getReadBytes() - prevDisk.getReadBytes());
-            using.setUsingTime(afterDisk.getTransferTime() - prevDisk.getTransferTime());
+            using.setReadCount(afterDisk.getReads() - beforeDisk.getReads());
+            using.setReadBytes(afterDisk.getReadBytes() - beforeDisk.getReadBytes());
+            using.setWriteCount(afterDisk.getWrites() - beforeDisk.getWrites());
+            using.setWriteBytes(afterDisk.getReadBytes() - beforeDisk.getReadBytes());
+            using.setUsingTime(afterDisk.getTransferTime() - beforeDisk.getTransferTime());
             list.add(using);
         }
         return list;

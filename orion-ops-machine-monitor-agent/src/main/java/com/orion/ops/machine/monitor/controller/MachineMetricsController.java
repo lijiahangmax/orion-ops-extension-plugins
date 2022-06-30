@@ -3,6 +3,7 @@ package com.orion.ops.machine.monitor.controller;
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
 import com.orion.ops.machine.monitor.collect.MetricsProvider;
 import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsingDTO;
+import com.orion.ops.machine.monitor.entity.dto.IoUsingDTO;
 import com.orion.ops.machine.monitor.entity.vo.*;
 import com.orion.utils.convert.Converts;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 机器监控指标 api
+ * 机器指标 api
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -23,7 +24,7 @@ import java.util.List;
 @RestWrapper
 @RestController
 @RequestMapping("/orion/machine-monitor-agent/api/metrics")
-public class MonitorMetricsController {
+public class MachineMetricsController {
 
     @Resource
     private MetricsProvider metricsProvider;
@@ -95,6 +96,38 @@ public class MonitorMetricsController {
         merge.setFreeSpace(freeSpace);
         merge.setUsingRate((double) usingSpace / (double) totalSpace);
         return Converts.to(merge, DiskStoreUsingVO.class);
+    }
+
+    /**
+     * 获取 IO 使用信息
+     */
+    @GetMapping("/io-using")
+    public List<IoUsingVO> getIoUsing() {
+        return Converts.toList(metricsProvider.getIoUsing(), IoUsingVO.class);
+    }
+
+    /**
+     * 合并获取 IO 使用信息
+     */
+    @GetMapping("/io-merge-using")
+    public IoUsingVO getIoMergeUsing() {
+        List<IoUsingDTO> io = metricsProvider.getIoUsing();
+        if (io.size() == 1) {
+            return Converts.to(io.get(0), IoUsingVO.class);
+        }
+        // 合并
+        long readCount = io.stream().mapToLong(IoUsingDTO::getReadCount).sum();
+        long readBytes = io.stream().mapToLong(IoUsingDTO::getReadBytes).sum();
+        long writeCount = io.stream().mapToLong(IoUsingDTO::getWriteCount).sum();
+        long writeBytes = io.stream().mapToLong(IoUsingDTO::getWriteBytes).sum();
+        long usingTime = io.stream().mapToLong(IoUsingDTO::getUsingTime).sum();
+        IoUsingDTO merge = new IoUsingDTO();
+        merge.setReadCount(readCount);
+        merge.setReadBytes(readBytes);
+        merge.setWriteCount(writeCount);
+        merge.setWriteBytes(writeBytes);
+        merge.setUsingTime(usingTime);
+        return Converts.to(merge, IoUsingVO.class);
     }
 
     /**
