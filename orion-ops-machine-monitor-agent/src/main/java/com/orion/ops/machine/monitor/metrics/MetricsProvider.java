@@ -1,4 +1,4 @@
-package com.orion.ops.machine.monitor.collect;
+package com.orion.ops.machine.monitor.metrics;
 
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.dto.*;
@@ -40,7 +40,7 @@ public class MetricsProvider {
     private OperatingSystem os;
 
     @PostConstruct
-    public void initCollector() {
+    private void initCollector() {
         log.info("初始化数据提供者");
         // 获取机器数据
         SystemInfo si = new SystemInfo();
