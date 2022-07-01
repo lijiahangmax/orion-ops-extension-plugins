@@ -35,7 +35,6 @@ public class NetBandwidthBO extends BaseRangeBO {
      */
     private Long rp;
 
-
     public void setSs(Long ss) {
         this.ss = ss / Const.BUFFER_KB_1;
     }

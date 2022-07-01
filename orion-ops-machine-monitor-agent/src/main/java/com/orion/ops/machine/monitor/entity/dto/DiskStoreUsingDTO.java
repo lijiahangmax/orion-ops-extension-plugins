@@ -3,7 +3,7 @@ package com.orion.ops.machine.monitor.entity.dto;
 import lombok.Data;
 
 /**
- * 磁盘空间信息
+ * 磁盘空间使用信息
  *
  * @author Jiahang Li
  * @version 1.0.0

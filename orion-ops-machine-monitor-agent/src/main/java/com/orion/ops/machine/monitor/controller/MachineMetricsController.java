@@ -3,7 +3,7 @@ package com.orion.ops.machine.monitor.controller;
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsingDTO;
-import com.orion.ops.machine.monitor.entity.dto.IoUsingDTO;
+import com.orion.ops.machine.monitor.entity.dto.DiskIoUsingDTO;
 import com.orion.ops.machine.monitor.entity.vo.*;
 import com.orion.utils.convert.Converts;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,18 +70,18 @@ public class MachineMetricsController {
     }
 
     /**
-     * 获取磁盘使用信息
+     * 获取磁盘空间使用信息
      */
-    @GetMapping("/disk-using")
+    @GetMapping("/disk-store-using")
     public List<DiskStoreUsingVO> getDiskStoreUsing() {
         return Converts.toList(metricsProvider.getDiskStoreUsing(), DiskStoreUsingVO.class);
     }
 
     /**
-     * 合并获取磁盘使用信息
+     * 合并获取磁盘空间使用信息
      */
-    @GetMapping("/disk-merge-using")
-    public DiskStoreUsingVO getDiskStoreMergeUsing() {
+    @GetMapping("/disk-store-using-merge")
+    public DiskStoreUsingVO getDiskStoreUsingMerge() {
         List<DiskStoreUsingDTO> store = metricsProvider.getDiskStoreUsing();
         if (store.size() == 1) {
             return Converts.to(store.get(0), DiskStoreUsingVO.class);
@@ -99,35 +99,35 @@ public class MachineMetricsController {
     }
 
     /**
-     * 获取 IO 使用信息
+     * 获取磁盘 IO 使用信息
      */
-    @GetMapping("/io-using")
-    public List<IoUsingVO> getIoUsing() {
-        return Converts.toList(metricsProvider.getIoUsing(), IoUsingVO.class);
+    @GetMapping("/disk-io-using")
+    public List<DiskIoUsingVO> getDiskIoUsing() {
+        return Converts.toList(metricsProvider.getDiskIoUsing(), DiskIoUsingVO.class);
     }
 
     /**
-     * 合并获取 IO 使用信息
+     * 合并获取磁盘 IO 使用信息
      */
-    @GetMapping("/io-merge-using")
-    public IoUsingVO getIoMergeUsing() {
-        List<IoUsingDTO> io = metricsProvider.getIoUsing();
+    @GetMapping("/disk-io-using-merge")
+    public DiskIoUsingVO getDiskIoUsingMerge() {
+        List<DiskIoUsingDTO> io = metricsProvider.getDiskIoUsing();
         if (io.size() == 1) {
-            return Converts.to(io.get(0), IoUsingVO.class);
+            return Converts.to(io.get(0), DiskIoUsingVO.class);
         }
         // 合并
-        long readCount = io.stream().mapToLong(IoUsingDTO::getReadCount).sum();
-        long readBytes = io.stream().mapToLong(IoUsingDTO::getReadBytes).sum();
-        long writeCount = io.stream().mapToLong(IoUsingDTO::getWriteCount).sum();
-        long writeBytes = io.stream().mapToLong(IoUsingDTO::getWriteBytes).sum();
-        long usingTime = io.stream().mapToLong(IoUsingDTO::getUsingTime).sum();
-        IoUsingDTO merge = new IoUsingDTO();
+        long readCount = io.stream().mapToLong(DiskIoUsingDTO::getReadCount).sum();
+        long readBytes = io.stream().mapToLong(DiskIoUsingDTO::getReadBytes).sum();
+        long writeCount = io.stream().mapToLong(DiskIoUsingDTO::getWriteCount).sum();
+        long writeBytes = io.stream().mapToLong(DiskIoUsingDTO::getWriteBytes).sum();
+        long usingTime = io.stream().mapToLong(DiskIoUsingDTO::getUsingTime).sum();
+        DiskIoUsingDTO merge = new DiskIoUsingDTO();
         merge.setReadCount(readCount);
         merge.setReadBytes(readBytes);
         merge.setWriteCount(writeCount);
         merge.setWriteBytes(writeBytes);
         merge.setUsingTime(usingTime);
-        return Converts.to(merge, IoUsingVO.class);
+        return Converts.to(merge, DiskIoUsingVO.class);
     }
 
     /**

@@ -146,7 +146,7 @@ public class MetricsProvider {
     }
 
     /**
-     * 获取磁盘空间信息
+     * 获取磁盘空间使用信息
      *
      * @return metrics
      */
@@ -169,20 +169,20 @@ public class MetricsProvider {
     }
 
     /**
-     * 获取 IO 使用信息
+     * 获取磁盘 IO 使用信息
      *
      * @return metrics
      */
-    public List<IoUsingDTO> getIoUsing() {
+    public List<DiskIoUsingDTO> getDiskIoUsing() {
         List<HWDiskStore> beforeDisks = hardware.getDiskStores();
         // 获取当前指标 休眠1秒 获取后一秒的指标比对
         Threads.sleep(Const.MS_S_1);
         List<HWDiskStore> currentDisks = hardware.getDiskStores();
-        List<IoUsingDTO> list = new ArrayList<>();
+        List<DiskIoUsingDTO> list = new ArrayList<>();
         for (int i = 0; i < currentDisks.size(); i++) {
             HWDiskStore afterDisk = currentDisks.get(i);
             HWDiskStore beforeDisk = beforeDisks.get(i);
-            IoUsingDTO using = new IoUsingDTO();
+            DiskIoUsingDTO using = new DiskIoUsingDTO();
             using.setName(afterDisk.getName());
             using.setReadCount(afterDisk.getReads() - beforeDisk.getReads());
             using.setReadBytes(afterDisk.getReadBytes() - beforeDisk.getReadBytes());

@@ -3,14 +3,14 @@ package com.orion.ops.machine.monitor.entity.dto;
 import lombok.Data;
 
 /**
- * IO 使用信息
+ * 磁盘 IO 使用信息
  *
  * @author Jiahang Li
  * @version 1.0.0
  * @since 2022/6/28 10:25
  */
 @Data
-public class IoUsingDTO {
+public class DiskIoUsingDTO {
 
     /**
      * 名称
