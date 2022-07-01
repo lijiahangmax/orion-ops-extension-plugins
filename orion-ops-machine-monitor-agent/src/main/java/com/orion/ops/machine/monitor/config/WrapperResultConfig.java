@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
+ * wrapper 包装拦截配置
+ *
  * @author Jiahang Li
  * @version 1.0.0
  * @since 2021/4/2 17:14
@@ -25,7 +27,7 @@ public class WrapperResultConfig {
     private WrapperResultHandler wrapperResultHandler;
 
     @PostConstruct
-    public void compare() {
+    private void compare() {
         List<HandlerMethodReturnValueHandler> handlers = requestMappingHandlerAdapter.getReturnValueHandlers();
         List<HandlerMethodReturnValueHandler> list = Lists.newList();
         list.add(wrapperResultHandler);

@@ -14,14 +14,19 @@ public class Utils {
     private Utils() {
     }
 
-    /**
-     * 四舍五入为整数
-     *
-     * @param d d
-     * @return 整数
-     */
     public static Double roundToDouble(double d) {
-        return Double.valueOf(String.format("%.2f", d));
+        return roundToDouble(d, 2);
+    }
+
+    /**
+     * 四舍五入
+     *
+     * @param d     d
+     * @param scale 小数位
+     * @return 四舍五入
+     */
+    public static Double roundToDouble(double d, int scale) {
+        return Double.valueOf(String.format("%." + scale + "f", d));
     }
 
     /**
@@ -36,10 +41,12 @@ public class Utils {
         for (int i = 0; i < currentTicks.length; i++) {
             total += currentTicks[i] - prevTicks[i];
         }
-        long idle = currentTicks[TickType.IDLE.getIndex()] + currentTicks[TickType.IOWAIT.getIndex()]
-                - prevTicks[TickType.IDLE.getIndex()] - prevTicks[TickType.IOWAIT.getIndex()];
+        long idle = currentTicks[TickType.IDLE.getIndex()]
+                + currentTicks[TickType.IOWAIT.getIndex()]
+                - prevTicks[TickType.IDLE.getIndex()]
+                - prevTicks[TickType.IOWAIT.getIndex()];
         double use = total > 0 ? (double) (total - idle) / total : 0D;
-        return roundToDouble(use);
+        return roundToDouble(use, 3);
     }
 
 }

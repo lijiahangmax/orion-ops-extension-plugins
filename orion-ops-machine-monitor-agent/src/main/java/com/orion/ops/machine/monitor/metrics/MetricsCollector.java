@@ -102,7 +102,7 @@ public class MetricsCollector {
         long currentTime = System.currentTimeMillis();
         metricsHolder.setPrevMemoryTime(currentTime);
         MemoryUsingBO mem = new MemoryUsingBO();
-        mem.setUr(Utils.roundToDouble((double) using / (double) total));
+        mem.setUr(Utils.roundToDouble((double) using / (double) total, 3));
         mem.setUs(using / Const.BUFFER_KB_1 / Const.BUFFER_KB_1);
         mem.setSr(prevTime);
         mem.setEr(currentTime);

@@ -1,7 +1,7 @@
 package com.orion.ops.machine.monitor.controller;
 
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
-import com.orion.ops.machine.monitor.collect.MetricsProvider;
+import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsingDTO;
 import com.orion.ops.machine.monitor.entity.dto.IoUsingDTO;
 import com.orion.ops.machine.monitor.entity.vo.*;

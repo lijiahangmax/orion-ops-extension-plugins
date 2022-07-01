@@ -52,9 +52,9 @@ public class MetricsCollectTask implements Runnable {
         int seq = counter.incrementAndGet();
         log.info("第 {} 次采集数据-开始 {}", seq, Dates.current());
         CpuUsingBO cpu = metricsCollector.collectCpu();
-        log.info("处理器指标: {}",JSON.toJSONString(cpu));
+        log.info("处理器指标: {}", JSON.toJSONString(cpu));
         MemoryUsingBO mem = metricsCollector.collectMemory();
-        log.info("内存指标: {}",JSON.toJSONString(mem));
+        log.info("内存指标: {}", JSON.toJSONString(mem));
         log.info("第 {} 次采集数据-结束 {}", seq, Dates.current());
     }
 
