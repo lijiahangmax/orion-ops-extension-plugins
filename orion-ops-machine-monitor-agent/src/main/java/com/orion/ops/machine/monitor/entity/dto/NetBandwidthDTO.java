@@ -15,11 +15,11 @@ public class NetBandwidthDTO {
     /**
      * 上行流量速率
      */
-    private Long upstream;
+    private Long up;
 
     /**
      * 下行流量速率
      */
-    private Long downstream;
+    private Long down;
 
 }

@@ -28,8 +28,8 @@ public class NetBandwidthVO {
     static {
         TypeStore.STORE.register(NetBandwidthDTO.class, NetBandwidthVO.class, p -> {
             NetBandwidthVO vo = new NetBandwidthVO();
-            vo.setUpstream(Files1.getSize(p.getUpstream()));
-            vo.setDownstream(Files1.getSize(p.getDownstream()));
+            vo.setUpstream(Files1.getSize(p.getUp()));
+            vo.setDownstream(Files1.getSize(p.getDown()));
             return vo;
         });
     }

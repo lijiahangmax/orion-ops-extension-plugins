@@ -3,6 +3,7 @@ package com.orion.ops.machine.monitor.metrics;
 import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.utils.time.Dates;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,8 @@ public class MetricsCollectTask implements Runnable {
         log.info("处理器指标: {}", JSON.toJSONString(cpu));
         MemoryUsingBO mem = metricsCollector.collectMemory();
         log.info("内存指标: {}", JSON.toJSONString(mem));
+        NetBandwidthBO net = metricsCollector.collectNetBandwidth();
+        log.info("网络带宽指标: {}", JSON.toJSONString(net));
         log.info("第 {} 次采集数据-结束 {}", seq, Dates.current());
     }
 

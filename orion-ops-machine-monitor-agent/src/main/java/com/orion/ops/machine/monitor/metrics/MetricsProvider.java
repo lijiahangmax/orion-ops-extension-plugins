@@ -140,8 +140,8 @@ public class MetricsProvider {
         long currentSentTotal = currentNetwork.stream().mapToLong(NetworkIF::getBytesSent).sum();
         // 返回
         NetBandwidthDTO net = new NetBandwidthDTO();
-        net.setUpstream(currentSentTotal - beforeSentTotal);
-        net.setDownstream(currentReceiveTotal - beforeReceiveTotal);
+        net.setUp(currentSentTotal - beforeSentTotal);
+        net.setDown(currentReceiveTotal - beforeReceiveTotal);
         return net;
     }
 
