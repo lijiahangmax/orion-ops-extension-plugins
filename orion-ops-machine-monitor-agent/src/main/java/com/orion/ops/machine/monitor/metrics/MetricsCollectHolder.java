@@ -9,7 +9,7 @@ import oshi.hardware.NetworkIF;
 import java.util.List;
 
 /**
- * 指标数据存储
+ * 指标数据采集域
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -18,15 +18,17 @@ import java.util.List;
 @Component
 @Getter
 @Setter
-public class MetricsHolder {
+public class MetricsCollectHolder {
+
+    // TODO 优化为枚举
 
     /**
-     * 上次采集 cpu 信息
+     * 上次采集处理器信息
      */
     private long[] prevCpu;
 
     /**
-     * 上次采集 cpu 信息时间
+     * 上次采集处理器信息时间
      */
     private long prevCpuTime;
 
@@ -54,5 +56,25 @@ public class MetricsHolder {
      * 上次采集磁盘信息时间
      */
     private long prevDisksTime;
+
+    /**
+     * 上次采集处理器信息小时
+     */
+    public String prevCpuHour;
+
+    /**
+     * 上次采集内存信息小时
+     */
+    public String prevMemoryHour;
+
+    /**
+     * 上次采集网卡信息小时
+     */
+    public String prevNetworkHour;
+
+    /**
+     * 上次采集磁盘信息小时
+     */
+    public String prevDiskHour;
 
 }

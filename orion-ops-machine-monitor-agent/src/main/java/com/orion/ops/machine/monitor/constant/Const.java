@@ -22,12 +22,4 @@ public class Const extends com.orion.constant.Const {
 
     public static final String INVALID_ACCESS_TOKEN = "非法访问";
 
-    public static final String CPU_DATA_PATH = "/cpu";
-
-    public static final String MEMORY_DATA_PATH = "/memory";
-
-    public static final String NET_DATA_PATH = "/net";
-
-    public static final String DISK_DATA_PATH = "/disk";
-
 }

@@ -3,10 +3,10 @@ package com.orion.ops.machine.monitor.metrics;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.dto.*;
 import com.orion.ops.machine.monitor.entity.vo.DiskNameVO;
+import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.Strings;
 import com.orion.utils.Systems;
 import com.orion.utils.Threads;
-import com.orion.utils.crypto.Signatures;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -181,7 +181,7 @@ public class MetricsProvider {
                     DiskNameVO disk = new DiskNameVO();
                     String model = d.getModel();
                     disk.setName(model);
-                    disk.setSeq(Signatures.md5(model).substring(0, 8));
+                    disk.setSeq(Utils.getDiskSeq(model));
                     return disk;
                 }).collect(Collectors.toList());
     }

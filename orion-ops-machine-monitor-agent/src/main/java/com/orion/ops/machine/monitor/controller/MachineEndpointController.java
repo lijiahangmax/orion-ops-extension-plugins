@@ -3,7 +3,7 @@ package com.orion.ops.machine.monitor.controller;
 import com.orion.lang.wrapper.HttpWrapper;
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.ops.machine.monitor.metrics.MetricsCollectScheduler;
+import com.orion.ops.machine.monitor.metrics.MetricsCollectTask;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 public class MachineEndpointController {
 
     @Resource
-    private MetricsCollectScheduler metricsCollectScheduler;
+    private MetricsCollectTask metricsCollectTask;
 
     /**
      * 发送心跳
@@ -38,6 +38,7 @@ public class MachineEndpointController {
      */
     @GetMapping("/version")
     public String getVersion() {
+        // TODO ops version
         return Const.VERSION;
     }
 
@@ -46,7 +47,7 @@ public class MachineEndpointController {
      */
     @GetMapping("/status")
     public Boolean getRunStatus() {
-        return metricsCollectScheduler.getTask().isRun();
+        return metricsCollectTask.isRun();
     }
 
     /**
@@ -54,7 +55,7 @@ public class MachineEndpointController {
      */
     @GetMapping("/start")
     public HttpWrapper<?> startMonitor() {
-        metricsCollectScheduler.getTask().setRun(true);
+        metricsCollectTask.setRun(true);
         return HttpWrapper.ok();
     }
 
@@ -63,7 +64,7 @@ public class MachineEndpointController {
      */
     @GetMapping("/stop")
     public HttpWrapper<?> stopMonitor() {
-        metricsCollectScheduler.getTask().setRun(false);
+        metricsCollectTask.setRun(false);
         return HttpWrapper.ok();
     }
 

@@ -1,13 +1,13 @@
 package com.orion.ops.machine.monitor.metrics;
 
+import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.collect.Maps;
-import com.orion.utils.crypto.Signatures;
+import com.orion.utils.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,6 @@ import oshi.hardware.*;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 机器指标采集器
@@ -34,7 +33,7 @@ public class MetricsCollector {
     private MetricsProvider metricsProvider;
 
     @Resource
-    private MetricsHolder metricsHolder;
+    private MetricsCollectHolder metricsCollectHolder;
 
     /**
      * 硬件
@@ -59,13 +58,19 @@ public class MetricsCollector {
         this.processor = hardware.getProcessor();
         this.memory = hardware.getMemory();
         // 设置原始数据
-        metricsHolder.setPrevCpu(processor.getSystemCpuLoadTicks());
-        metricsHolder.setPrevCpuTime(System.currentTimeMillis());
-        metricsHolder.setPrevMemoryTime(System.currentTimeMillis());
-        metricsHolder.setPrevNetworks(hardware.getNetworkIFs());
-        metricsHolder.setPrevNetworksTime(System.currentTimeMillis());
-        metricsHolder.setPrevDisks(hardware.getDiskStores());
-        metricsHolder.setPrevDisksTime(System.currentTimeMillis());
+        long collectTime = System.currentTimeMillis();
+        String collectHour = Utils.getRangeStartHour(collectTime);
+        metricsCollectHolder.setPrevCpu(processor.getSystemCpuLoadTicks());
+        metricsCollectHolder.setPrevCpuTime(collectTime);
+        metricsCollectHolder.setPrevMemoryTime(collectTime);
+        metricsCollectHolder.setPrevNetworks(hardware.getNetworkIFs());
+        metricsCollectHolder.setPrevNetworksTime(collectTime);
+        metricsCollectHolder.setPrevDisks(hardware.getDiskStores());
+        metricsCollectHolder.setPrevDisksTime(collectTime);
+        metricsCollectHolder.setPrevCpuHour(collectHour);
+        metricsCollectHolder.setPrevMemoryHour(collectHour);
+        metricsCollectHolder.setPrevNetworkHour(collectHour);
+        metricsCollectHolder.setPrevDiskHour(collectHour);
     }
 
     /**
@@ -74,17 +79,18 @@ public class MetricsCollector {
      * @return cpu 使用信息
      */
     public CpuUsingBO collectCpu() {
-        long[] prevCpu = metricsHolder.getPrevCpu();
-        long prevTime = metricsHolder.getPrevCpuTime();
+        long[] prevCpu = metricsCollectHolder.getPrevCpu();
+        long prevTime = metricsCollectHolder.getPrevCpuTime();
         long[] currentCpu = processor.getSystemCpuLoadTicks();
         long currentTime = System.currentTimeMillis();
-        metricsHolder.setPrevCpu(currentCpu);
-        metricsHolder.setPrevCpuTime(currentTime);
+        metricsCollectHolder.setPrevCpu(currentCpu);
+        metricsCollectHolder.setPrevCpuTime(currentTime);
         // 计算
         CpuUsingBO cpu = new CpuUsingBO();
         cpu.setU(Utils.computeCpuLoad(prevCpu, currentCpu));
         cpu.setSr(prevTime);
         cpu.setEr(currentTime);
+        log.info("处理器指标: {}", JSON.toJSONString(cpu));
         return cpu;
     }
 
@@ -94,17 +100,18 @@ public class MetricsCollector {
      * @return 内存使用信息
      */
     public MemoryUsingBO collectMemory() {
-        long prevTime = metricsHolder.getPrevMemoryTime();
+        long prevTime = metricsCollectHolder.getPrevMemoryTime();
         long total = memory.getTotal();
         long using = total - memory.getAvailable();
         long currentTime = System.currentTimeMillis();
-        metricsHolder.setPrevMemoryTime(currentTime);
+        metricsCollectHolder.setPrevMemoryTime(currentTime);
         // 计算
         MemoryUsingBO mem = new MemoryUsingBO();
         mem.setUr(Utils.roundToDouble((double) using / (double) total, 3));
         mem.setUs(using / Const.BUFFER_KB_1 / Const.BUFFER_KB_1);
         mem.setSr(prevTime);
         mem.setEr(currentTime);
+        log.info("内存指标: {}", JSON.toJSONString(mem));
         return mem;
     }
 
@@ -114,12 +121,12 @@ public class MetricsCollector {
      * @return 网络带宽使用信息
      */
     public NetBandwidthBO collectNetBandwidth() {
-        List<NetworkIF> prevNetwork = metricsHolder.getPrevNetworks();
-        long prevTime = metricsHolder.getPrevNetworksTime();
+        List<NetworkIF> prevNetwork = metricsCollectHolder.getPrevNetworks();
+        long prevTime = metricsCollectHolder.getPrevNetworksTime();
         List<NetworkIF> currentNetwork = hardware.getNetworkIFs();
         long currentTime = System.currentTimeMillis();
-        metricsHolder.setPrevNetworks(currentNetwork);
-        metricsHolder.setPrevNetworksTime(currentTime);
+        metricsCollectHolder.setPrevNetworks(currentNetwork);
+        metricsCollectHolder.setPrevNetworksTime(currentTime);
         // 统计流量信息
         long beforeReceiveSize = prevNetwork.stream().mapToLong(NetworkIF::getBytesRecv).sum();
         long beforeReceivePacket = prevNetwork.stream().mapToLong(NetworkIF::getPacketsRecv).sum();
@@ -137,6 +144,7 @@ public class MetricsCollector {
         net.setRp(currentReceivePacket - beforeReceivePacket);
         net.setSr(prevTime);
         net.setEr(currentTime);
+        log.info("网络带宽指标: {}", JSON.toJSONString(net));
         return net;
     }
 
@@ -144,23 +152,23 @@ public class MetricsCollector {
      * 收集磁盘 IO 使用信息
      *
      * @return 磁盘 IO 使用信息
-     * key: md5.8
-     * value: metrics
      */
-    public Map<String, DiskIoUsingBO> collectDiskIo() {
-        List<HWDiskStore> prevDisks = metricsHolder.getPrevDisks();
-        long prevTime = metricsHolder.getPrevDisksTime();
+    public List<DiskIoUsingBO> collectDiskIo() {
+        List<HWDiskStore> prevDisks = metricsCollectHolder.getPrevDisks();
+        long prevTime = metricsCollectHolder.getPrevDisksTime();
         List<HWDiskStore> currentDisks = hardware.getDiskStores();
         long currentTime = System.currentTimeMillis();
-        metricsHolder.setPrevDisks(currentDisks);
-        metricsHolder.setPrevDisksTime(currentTime);
+        metricsCollectHolder.setPrevDisks(currentDisks);
+        metricsCollectHolder.setPrevDisksTime(currentTime);
         // 计算
-        Map<String, DiskIoUsingBO> map = Maps.newLinkedMap();
+        List<DiskIoUsingBO> list = Lists.newList();
         for (int i = 0; i < currentDisks.size(); i++) {
             HWDiskStore currentDisk = currentDisks.get(i);
             HWDiskStore prevDisk = prevDisks.get(i);
             // 设置
+            String seq = Utils.getDiskSeq(currentDisk.getModel());
             DiskIoUsingBO disk = new DiskIoUsingBO();
+            disk.setSeq(seq);
             disk.setRs(currentDisk.getReadBytes() - prevDisk.getReadBytes());
             disk.setWs(currentDisk.getReadBytes() - prevDisk.getReadBytes());
             disk.setRc(currentDisk.getReads() - prevDisk.getReads());
@@ -168,9 +176,10 @@ public class MetricsCollector {
             disk.setUt(currentDisk.getTransferTime() - prevDisk.getTransferTime());
             disk.setSr(prevTime);
             disk.setEr(currentTime);
-            map.put(Signatures.md5(currentDisk.getModel()).substring(0, 8), disk);
+            list.add(disk);
+            log.info("磁盘读写指标-{}: {}", seq, JSON.toJSONString(disk));
         }
-        return map;
+        return list;
     }
 
 }

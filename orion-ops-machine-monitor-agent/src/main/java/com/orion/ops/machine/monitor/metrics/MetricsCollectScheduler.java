@@ -3,7 +3,6 @@ package com.orion.ops.machine.monitor.metrics;
 import com.orion.constant.Const;
 import com.orion.lang.thread.ThreadFactoryBuilder;
 import com.orion.utils.Threads;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,15 +35,12 @@ public class MetricsCollectScheduler implements DisposableBean {
     private Integer collectPeriodSecond;
 
     @Resource
-    private MetricsCollector metricsCollector;
+    private MetricsCollectTask metricsCollectTask;
 
     /**
      * 调度器
      */
     private ScheduledExecutorService scheduler;
-
-    @Getter
-    private MetricsCollectTask task;
 
     @PostConstruct
     private void initScheduler() {
@@ -55,10 +51,9 @@ public class MetricsCollectScheduler implements DisposableBean {
                 .setPrefix("machine-collector-thread-")
                 .build();
         this.scheduler = new ScheduledThreadPoolExecutor(1, threadFactory);
-        this.task = new MetricsCollectTask(machineId, metricsCollector);
-        scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(metricsCollectTask, 0, 10, TimeUnit.SECONDS);
         // TODO
-        // scheduler.scheduleAtFixedRate(task, collectPeriodSecond, collectPeriodSecond, TimeUnit.SECONDS);
+        // scheduler.scheduleAtFixedRate(metricsCollectTask, collectPeriodSecond, collectPeriodSecond, TimeUnit.SECONDS);
     }
 
     @Override

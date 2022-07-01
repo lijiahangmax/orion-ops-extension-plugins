@@ -1,5 +1,6 @@
 package com.orion.ops.machine.monitor.entity.bo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.orion.ops.machine.monitor.constant.Const;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +15,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DiskIoUsingBO extends BaseRangeBO {
+
+    /**
+     * 磁盘序列
+     */
+    @JSONField(serialize = false)
+    private String seq;
 
     /**
      * 读取次数 readCount

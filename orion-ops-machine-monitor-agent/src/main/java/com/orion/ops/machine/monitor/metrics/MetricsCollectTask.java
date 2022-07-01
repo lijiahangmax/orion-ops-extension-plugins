@@ -1,19 +1,19 @@
 package com.orion.ops.machine.monitor.metrics;
 
-import com.alibaba.fastjson.JSON;
-import com.orion.constant.Letters;
-import com.orion.ops.machine.monitor.entity.bo.*;
+import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.io.Files1;
 import com.orion.utils.time.Dates;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Map;
+import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -24,17 +24,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 2022/6/29 14:50
  */
 @Slf4j
+@Component
 public class MetricsCollectTask implements Runnable {
 
-    /**
-     * 机器id
-     */
-    private final Long machineId;
+    @Resource
+    private MetricsCollector metricsCollector;
 
-    /**
-     * 采集器
-     */
-    private final MetricsCollector metricsCollector;
+    @Resource
+    private MetricsHourReducer metricsHourReducer;
 
     /**
      * 计数器
@@ -45,12 +42,13 @@ public class MetricsCollectTask implements Runnable {
     @Setter
     private volatile boolean run;
 
-    public MetricsCollectTask(Long machineId, MetricsCollector metricsCollector) {
+    public MetricsCollectTask() {
         this.run = true;
-        this.machineId = machineId;
-        this.metricsCollector = metricsCollector;
         this.counter = new AtomicInteger();
     }
+
+    // TODO 检查监控指标 push
+    // TODO pushApi Component
 
     @Override
     public void run() {
@@ -75,9 +73,11 @@ public class MetricsCollectTask implements Runnable {
      */
     private void collectCpuData() {
         CpuUsingBO cpu = metricsCollector.collectCpu();
-        log.info("处理器指标: {}", JSON.toJSONString(cpu));
-        String path = PathBuilders.getCpuDataPath(Utils.getRangeStartTime(cpu.getSr()));
-        this.appendMetricsData(path, cpu);
+        // 拼接到天级数据
+        String path = PathBuilders.getCpuDayDataPath(Utils.getRangeStartTime(cpu.getSr()));
+        Utils.appendMetricsData(path, cpu);
+        // 规约小时数据粒度
+        metricsHourReducer.reduceCpuData(cpu);
     }
 
     /**
@@ -85,9 +85,11 @@ public class MetricsCollectTask implements Runnable {
      */
     private void collectMemoryData() {
         MemoryUsingBO mem = metricsCollector.collectMemory();
-        log.info("内存指标: {}", JSON.toJSONString(mem));
-        String path = PathBuilders.getMemoryDataPath(Utils.getRangeStartTime(mem.getSr()));
-        this.appendMetricsData(path, mem);
+        // 拼接到天级数据
+        String path = PathBuilders.getMemoryDayDataPath(Utils.getRangeStartTime(mem.getSr()));
+        Utils.appendMetricsData(path, mem);
+        // 规约小时数据粒度
+        metricsHourReducer.reduceMemoryData(mem);
     }
 
     /**
@@ -95,38 +97,24 @@ public class MetricsCollectTask implements Runnable {
      */
     private void collectNetData() {
         NetBandwidthBO net = metricsCollector.collectNetBandwidth();
-        log.info("网络带宽指标: {}", JSON.toJSONString(net));
-        String path = PathBuilders.getNetDataPath(Utils.getRangeStartTime(net.getSr()));
-        this.appendMetricsData(path, net);
+        // 拼接到天级数据
+        String path = PathBuilders.getNetDayDataPath(Utils.getRangeStartTime(net.getSr()));
+        Utils.appendMetricsData(path, net);
+        // 规约小时数据粒度
+        metricsHourReducer.reduceNetData(net);
     }
 
     /**
      * 采集磁盘读写数据
      */
     private void collectDiskData() {
-        Map<String, DiskIoUsingBO> disks = metricsCollector.collectDiskIo();
-        log.info("磁盘读写指标: {}", JSON.toJSONString(disks));
-        disks.forEach((k, v) -> {
-            String path = PathBuilders.getDiskDataPath(k, Utils.getRangeStartTime(v.getSr()));
-            this.appendMetricsData(path, v);
-        });
-    }
-
-    /**
-     * 拼接数据
-     *
-     * @param path path
-     * @param data data
-     * @param <T>  data type
-     */
-    private <T extends BaseRangeBO> void appendMetricsData(String path, T data) {
-        // FIXME 升级KIT后需要把这个改为 fast
-        try (OutputStream out = Files1.openOutputStream(path, true)) {
-            out.write(JSON.toJSONBytes(data));
-            out.write(Letters.LF);
-            out.flush();
-        } catch (IOException e) {
-            log.error("数据持久化失败", e);
+        List<DiskIoUsingBO> disks = metricsCollector.collectDiskIo();
+        for (DiskIoUsingBO disk : disks) {
+            // 拼接到天级数据
+            String path = PathBuilders.getDiskDayDataPath(Utils.getRangeStartTime(disk.getSr()), disk.getSeq());
+            Utils.appendMetricsData(path, disk);
+            // 规约小时数据粒度
+            metricsHourReducer.reduceDiskData(disk);
         }
     }
 

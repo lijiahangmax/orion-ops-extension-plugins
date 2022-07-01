@@ -15,16 +15,34 @@ public class PathBuilders {
     private PathBuilders() {
     }
 
+    public static final String CPU_DAY_DATA_PATH = "/cpu_day";
+
+    public static final String MEMORY_DAY_DATA_PATH = "/memory_day";
+
+    public static final String NET_DAY_DATA_PATH = "/net_day";
+
+    public static final String DISK_DAY_DATA_PATH = "/disk_day";
+
+    public static final String CPU_MONTH_DATA_PATH = "/cpu_month";
+
+    public static final String MEMORY_MONTH_DATA_PATH = "/memory_month";
+
+    public static final String NET_MONTH_DATA_PATH = "/net_month";
+
+    public static final String DISK_MONTH_DATA_PATH = "/disk_month";
+
+    // -------------------- 天级数据 粒度为配置参数 --------------------
+
     /**
      * 获取处理器指标数据路径
      *
      * @param time 开始时间
      * @return path
      */
-    public static String getCpuDataPath(String time) {
+    public static String getCpuDayDataPath(String time) {
         return Systems.HOME_DIR
                 + "/" + Const.OPS_MONITOR_AGENT
-                + Const.CPU_DATA_PATH
+                + CPU_DAY_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
     }
@@ -35,10 +53,10 @@ public class PathBuilders {
      * @param time 开始时间
      * @return path
      */
-    public static String getMemoryDataPath(String time) {
+    public static String getMemoryDayDataPath(String time) {
         return Systems.HOME_DIR
                 + "/" + Const.OPS_MONITOR_AGENT
-                + Const.MEMORY_DATA_PATH
+                + MEMORY_DAY_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
     }
@@ -49,10 +67,10 @@ public class PathBuilders {
      * @param time 开始时间
      * @return path
      */
-    public static String getNetDataPath(String time) {
+    public static String getNetDayDataPath(String time) {
         return Systems.HOME_DIR
                 + "/" + Const.OPS_MONITOR_AGENT
-                + Const.NET_DATA_PATH
+                + NET_DAY_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
     }
@@ -63,13 +81,16 @@ public class PathBuilders {
      * @param time 开始时间
      * @return path
      */
-    public static String getDiskDataPath(String time, String tag) {
+    public static String getDiskDayDataPath(String time, String tag) {
         return Systems.HOME_DIR
                 + "/" + Const.OPS_MONITOR_AGENT
-                + Const.DISK_DATA_PATH
+                + DISK_DAY_DATA_PATH
                 + "/" + tag
                 + "-" + time
                 + "." + Const.SUFFIX_LOG;
     }
+
+    // -------------------- 月级数据 粒度为时 --------------------
+
 
 }
