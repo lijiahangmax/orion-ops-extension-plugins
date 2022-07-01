@@ -1,5 +1,9 @@
 package com.orion.ops.machine.monitor.utils;
 
+import com.orion.utils.time.Dates;
+
+import java.util.Date;
+
 import static oshi.hardware.CentralProcessor.TickType;
 
 /**
@@ -47,6 +51,16 @@ public class Utils {
                 - prevTicks[TickType.IOWAIT.getIndex()];
         double use = total > 0 ? (double) (total - idle) / total : 0D;
         return roundToDouble(use, 3);
+    }
+
+    /**
+     * 获取区间开始时间
+     *
+     * @param sr 开始时间
+     * @return 时间
+     */
+    public static String getRangeStartTime(long sr) {
+        return Dates.format(new Date(sr * 1000), Dates.YMD2);
     }
 
 }

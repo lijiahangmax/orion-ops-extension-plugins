@@ -147,7 +147,7 @@ public class MetricsCollector {
      * key: md5.8
      * value: metrics
      */
-    public Map<String, DiskIoUsingBO> collectDistIo() {
+    public Map<String, DiskIoUsingBO> collectDiskIo() {
         List<HWDiskStore> prevDisks = metricsHolder.getPrevDisks();
         long prevTime = metricsHolder.getPrevDisksTime();
         List<HWDiskStore> currentDisks = hardware.getDiskStores();
