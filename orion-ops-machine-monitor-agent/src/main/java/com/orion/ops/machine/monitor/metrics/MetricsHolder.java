@@ -38,21 +38,21 @@ public class MetricsHolder {
     /**
      * 上次采集网卡信息
      */
-    private List<NetworkIF> prevNetwork;
+    private List<NetworkIF> prevNetworks;
 
     /**
      * 上次采集网卡信息时间
      */
-    private long prevNetworkTime;
+    private long prevNetworksTime;
 
     /**
      * 上次采集磁盘信息
      */
-    private List<HWDiskStore> prevDisk;
+    private List<HWDiskStore> prevDisks;
 
     /**
      * 上次采集磁盘信息时间
      */
-    private long prevDiskTime;
+    private long prevDisksTime;
 
 }

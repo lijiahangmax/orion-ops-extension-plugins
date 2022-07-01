@@ -15,7 +15,7 @@ public class DiskIoUsingDTO {
     /**
      * 名称
      */
-    private String name;
+    private String model;
 
     /**
      * 读取次数

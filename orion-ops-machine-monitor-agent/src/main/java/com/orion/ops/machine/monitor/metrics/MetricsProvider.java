@@ -183,7 +183,7 @@ public class MetricsProvider {
             HWDiskStore afterDisk = currentDisks.get(i);
             HWDiskStore beforeDisk = beforeDisks.get(i);
             DiskIoUsingDTO using = new DiskIoUsingDTO();
-            using.setName(afterDisk.getName());
+            using.setModel(afterDisk.getModel());
             using.setReadCount(afterDisk.getReads() - beforeDisk.getReads());
             using.setReadBytes(afterDisk.getReadBytes() - beforeDisk.getReadBytes());
             using.setWriteCount(afterDisk.getWrites() - beforeDisk.getWrites());

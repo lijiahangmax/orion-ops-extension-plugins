@@ -18,7 +18,7 @@ public class DiskIoUsingVO {
     /**
      * 名称
      */
-    private String name;
+    private String model;
 
     /**
      * 读取次数
@@ -43,7 +43,7 @@ public class DiskIoUsingVO {
     static {
         TypeStore.STORE.register(DiskIoUsingDTO.class, DiskIoUsingVO.class, p -> {
             DiskIoUsingVO vo = new DiskIoUsingVO();
-            vo.setName(p.getName());
+            vo.setModel(p.getModel());
             vo.setReadCount(p.getReadCount());
             vo.setReadSize(Files1.getSize(p.getReadBytes()));
             vo.setWriteCount(p.getWriteCount());
