@@ -34,6 +34,22 @@ public class MachineEndpointController {
     }
 
     /**
+     * 获取版本
+     */
+    @GetMapping("/version")
+    public String getVersion() {
+        return Const.VERSION;
+    }
+
+    /**
+     * 获取监控启动状态
+     */
+    @GetMapping("/status")
+    public Boolean getRunStatus() {
+        return metricsCollectScheduler.getTask().isRun();
+    }
+
+    /**
      * 开启监控
      */
     @GetMapping("/start")
