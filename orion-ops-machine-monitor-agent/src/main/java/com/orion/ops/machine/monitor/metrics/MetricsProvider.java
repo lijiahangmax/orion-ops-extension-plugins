@@ -2,9 +2,11 @@ package com.orion.ops.machine.monitor.metrics;
 
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.dto.*;
+import com.orion.ops.machine.monitor.entity.vo.DiskNameVO;
 import com.orion.utils.Strings;
 import com.orion.utils.Systems;
 import com.orion.utils.Threads;
+import com.orion.utils.crypto.Signatures;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -169,9 +171,25 @@ public class MetricsProvider {
     }
 
     /**
+     * 获取磁盘名称
+     *
+     * @return 磁盘名称
+     */
+    public List<DiskNameVO> getDiskName() {
+        return hardware.getDiskStores().stream()
+                .map(d -> {
+                    DiskNameVO disk = new DiskNameVO();
+                    String model = d.getModel();
+                    disk.setName(model);
+                    disk.setSeq(Signatures.md5(model).substring(0, 8));
+                    return disk;
+                }).collect(Collectors.toList());
+    }
+
+    /**
      * 获取磁盘 IO 使用信息
      *
-     * @return metrics
+     * @return 磁盘 IO 使用信息
      */
     public List<DiskIoUsingDTO> getDiskIoUsing() {
         List<HWDiskStore> beforeDisks = hardware.getDiskStores();
@@ -199,7 +217,7 @@ public class MetricsProvider {
      *
      * @param name  命令名称
      * @param limit 限制数
-     * @return metrics
+     * @return 进程
      */
     public List<SystemProcessDTO> getProcesses(String name, int limit) {
         Predicate<OSProcess> filter;

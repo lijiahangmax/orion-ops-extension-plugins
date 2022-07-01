@@ -99,6 +99,14 @@ public class MachineMetricsController {
     }
 
     /**
+     * 获取磁盘名称
+     */
+    @GetMapping("/disk-name")
+    public List<DiskNameVO> getDiskName() {
+        return metricsProvider.getDiskName();
+    }
+
+    /**
      * 获取磁盘 IO 使用信息
      */
     @GetMapping("/disk-io-using")
