@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CpuUsingHourReduceBO extends BaseRangeBO implements HourReduceBO {
+public class CpuUsingHourReduceBO extends HourReduceBO {
 
     /**
      * 最大使用率 maxUsing

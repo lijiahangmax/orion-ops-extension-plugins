@@ -17,8 +17,7 @@ public enum MetricsHourReduceCalculator {
     /**
      * 处理器
      */
-    CPU(CpuHourReduceResolver.class) {
-    },
+    CPU(CpuHourReduceResolver.class),
 
     /**
      * 内存
@@ -27,13 +26,13 @@ public enum MetricsHourReduceCalculator {
 
     ;
 
-    private final Class<? extends MetricsHourReduceResolver<?>> beanClass;
+    private final Class<? extends IMetricsHourReduceResolver<?>> beanClass;
 
     /**
      * 获取处理器 bean
      */
     @SuppressWarnings("unchecked")
-    public <T extends MetricsHourReduceResolver<? super BaseRangeBO>> T getReduceResolverBean() {
+    public <T extends IMetricsHourReduceResolver<? super BaseRangeBO>> T getReduceResolverBean() {
         return (T) SpringHolder.getBean(beanClass);
     }
 
