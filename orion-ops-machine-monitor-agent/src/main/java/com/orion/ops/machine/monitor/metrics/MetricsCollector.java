@@ -133,12 +133,12 @@ public class MetricsCollector {
         long currentSentPacket = currentNetwork.stream().mapToLong(NetworkIF::getPacketsSent).sum();
         // 计算
         NetBandwidthBO net = new NetBandwidthBO();
-        net.setSs(currentSentSize - beforeSentSize);
-        net.setSp(currentSentPacket - beforeSentPacket);
-        net.setRs(currentReceiveSize - beforeReceiveSize);
-        net.setRp(currentReceivePacket - beforeReceivePacket);
         net.setSr(prevTime);
         net.setEr(currentTime);
+        net.setSmr(Utils.computeMpbSecondRate(net, currentSentSize - beforeSentSize));
+        net.setRmr(Utils.computeMpbSecondRate(net, currentReceiveSize - beforeReceiveSize));
+        net.setSp(currentSentPacket - beforeSentPacket);
+        net.setRp(currentReceivePacket - beforeReceivePacket);
         log.info("网络带宽指标: {}", JSON.toJSONString(net));
         return net;
     }

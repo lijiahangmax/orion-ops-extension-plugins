@@ -18,18 +18,18 @@ public class NetBandwidthVO {
     /**
      * 上行流量速率
      */
-    private String upstream;
+    private String up;
 
     /**
      * 下行流量速率
      */
-    private String downstream;
+    private String down;
 
     static {
         TypeStore.STORE.register(NetBandwidthDTO.class, NetBandwidthVO.class, p -> {
             NetBandwidthVO vo = new NetBandwidthVO();
-            vo.setUpstream(Files1.getSize(p.getUp()));
-            vo.setDownstream(Files1.getSize(p.getDown()));
+            vo.setUp(Files1.getSize(p.getUp()));
+            vo.setDown(Files1.getSize(p.getDown()));
             return vo;
         });
     }

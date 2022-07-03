@@ -120,5 +120,19 @@ public class PathBuilders {
                 + "." + Const.SUFFIX_LOG;
     }
 
+    /**
+     * 获取网络带宽指标数据路径 月级数据
+     *
+     * @param time 开始时间
+     * @return path
+     */
+    public static String getNetMonthDataPath(String time) {
+        return Systems.HOME_DIR
+                + "/" + Const.OPS_MONITOR_AGENT
+                + NET_MONTH_DATA_PATH
+                + "/" + time
+                + "." + Const.SUFFIX_LOG;
+    }
+
 
 }

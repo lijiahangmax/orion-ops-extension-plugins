@@ -5,7 +5,6 @@ import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReduceCalculator;
-import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReducer;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.time.Dates;
@@ -31,9 +30,6 @@ public class MetricsCollectTask implements Runnable {
 
     @Resource
     private MetricsCollector metricsCollector;
-
-    @Resource
-    private MetricsHourReducer metricsHourReducer;
 
     /**
      * 计数器
@@ -103,7 +99,7 @@ public class MetricsCollectTask implements Runnable {
         String path = PathBuilders.getNetDayDataPath(Utils.getRangeStartTime(net.getSr()));
         Utils.appendMetricsData(path, net);
         // 规约小时数据粒度
-        metricsHourReducer.reduceNetData(net);
+        MetricsHourReduceCalculator.NET.getReduceResolverBean().reduce(net);
     }
 
     /**
@@ -116,7 +112,6 @@ public class MetricsCollectTask implements Runnable {
             String path = PathBuilders.getDiskDayDataPath(Utils.getRangeStartTime(disk.getSr()), disk.getSeq());
             Utils.appendMetricsData(path, disk);
             // 规约小时数据粒度
-            metricsHourReducer.reduceDiskData(disk);
         }
     }
 

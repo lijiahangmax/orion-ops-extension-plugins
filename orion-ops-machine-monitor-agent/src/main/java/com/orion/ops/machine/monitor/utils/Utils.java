@@ -34,6 +34,18 @@ public class Utils {
 
     private static final String YM = "yyyyMM";
 
+    private static final int MPB = 128 * 1024;
+
+    /**
+     * 四舍五入到整数
+     *
+     * @param d d
+     * @return 整数
+     */
+    public static int roundToInt(double d) {
+        return (int) Math.round(d);
+    }
+
     public static Double roundToDouble(double d) {
         return roundToDouble(d, 2);
     }
@@ -120,6 +132,25 @@ public class Utils {
     public static <T extends BaseRangeBO> void setReduceHourRange(T t, String startHour, String endHour) {
         t.setSr(Dates.parse(startHour, YMDH).getTime());
         t.setEr(Dates.parse(endHour, YMDH).getTime());
+    }
+
+    /**
+     * 计算 mpb/s
+     *
+     * @param range range
+     * @param bytes bytes
+     * @return mpb/s
+     */
+    public static Double computeMpbSecondRate(BaseRangeBO range, long bytes) {
+        int s = roundToInt((double) range.getEr() - (double) range.getSr());
+        return roundToDouble((double) bytes / s / MPB, 5);
+    }
+
+    public static void main(String[] args) {
+        BaseRangeBO b = new BaseRangeBO();
+        b.setSr(1656862556630L);
+        b.setEr(1656862557730L);
+        System.out.println(computeMpbSecondRate(b, 1024));
     }
 
     /**

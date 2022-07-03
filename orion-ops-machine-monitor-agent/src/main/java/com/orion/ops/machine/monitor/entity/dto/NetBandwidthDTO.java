@@ -13,12 +13,12 @@ import lombok.Data;
 public class NetBandwidthDTO {
 
     /**
-     * 上行流量速率
+     * 上行流量流量 byte
      */
     private Long up;
 
     /**
-     * 下行流量速率
+     * 下行流量流量 byte
      */
     private Long down;
 

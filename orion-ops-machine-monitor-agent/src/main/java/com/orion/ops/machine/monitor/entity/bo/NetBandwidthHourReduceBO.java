@@ -4,25 +4,20 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 网络带宽指标
+ * 网络带宽使用存储小时指标
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2022/7/1 14:28
+ * @since 2022/7/3 23:03
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class NetBandwidthBO extends BaseRangeBO {
+public class NetBandwidthHourReduceBO extends HourReduceBO {
 
     /**
-     * 流量上行速率 mpb sentMpbRate
+     * 上行流量 kb sentSize
      */
-    private Double smr;
-
-    /**
-     * 流量下行速率 mpb receivedMpbRate
-     */
-    private Double rmr;
+    private Long ss;
 
     /**
      * 上行包 sentPacket
@@ -30,8 +25,12 @@ public class NetBandwidthBO extends BaseRangeBO {
     private Long sp;
 
     /**
+     * 下行流量 kb receivedSize
+     */
+    private Long rs;
+
+    /**
      * 下行包 receivedPacket
      */
     private Long rp;
-
 }
