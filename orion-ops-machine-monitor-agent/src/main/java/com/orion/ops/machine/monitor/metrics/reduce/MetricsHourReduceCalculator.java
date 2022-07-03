@@ -22,7 +22,7 @@ public enum MetricsHourReduceCalculator {
     /**
      * 内存
      */
-    // MEMORY(MemoryHourReduceResolver.class),
+    MEMORY(MemoryHourReduceResolver.class),
 
     ;
 

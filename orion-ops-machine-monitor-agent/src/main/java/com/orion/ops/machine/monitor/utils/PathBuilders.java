@@ -106,5 +106,19 @@ public class PathBuilders {
                 + "." + Const.SUFFIX_LOG;
     }
 
+    /**
+     * 获取内存指标数据路径 月级数据
+     *
+     * @param time 开始时间
+     * @return path
+     */
+    public static String getMemoryMonthDataPath(String time) {
+        return Systems.HOME_DIR
+                + "/" + Const.OPS_MONITOR_AGENT
+                + MEMORY_MONTH_DATA_PATH
+                + "/" + time
+                + "." + Const.SUFFIX_LOG;
+    }
+
 
 }

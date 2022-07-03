@@ -91,7 +91,7 @@ public class MetricsCollectTask implements Runnable {
         String path = PathBuilders.getMemoryDayDataPath(Utils.getRangeStartTime(mem.getSr()));
         Utils.appendMetricsData(path, mem);
         // 规约小时数据粒度
-        metricsHourReducer.reduceMemoryData(mem);
+        MetricsHourReduceCalculator.MEMORY.getReduceResolverBean().reduce(mem);
     }
 
     /**

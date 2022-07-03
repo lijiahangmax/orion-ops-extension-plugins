@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class CpuHourReduceResolver extends BaseMetricsHourReduceResolver<CpuUsingBO> {
+public class CpuHourReduceResolver extends BaseMetricsHourReduceResolver<CpuUsingBO, CpuUsingHourReduceBO> {
 
     public CpuHourReduceResolver() {
         super((prevHour) -> PathBuilders.getCpuMonthDataPath(Utils.getRangeStartMonth(prevHour)));

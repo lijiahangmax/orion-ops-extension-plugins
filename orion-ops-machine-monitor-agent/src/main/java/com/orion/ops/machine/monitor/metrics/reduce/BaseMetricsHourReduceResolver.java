@@ -15,7 +15,7 @@ import java.util.function.Function;
  * @version 1.0.0
  * @since 2022/7/3 22:23
  */
-public abstract class BaseMetricsHourReduceResolver<T extends BaseRangeBO> implements IMetricsHourReduceResolver<T> {
+public abstract class BaseMetricsHourReduceResolver<T extends BaseRangeBO, R extends HourReduceBO> implements IMetricsHourReduceResolver<T> {
 
     /**
      * 当前采集信息粒度时
@@ -52,7 +52,7 @@ public abstract class BaseMetricsHourReduceResolver<T extends BaseRangeBO> imple
         String prevHour = this.currentHour;
         this.currentHour = currentHour;
         // 计算数据
-        HourReduceBO reduceData = this.computeHourReduceData(currentHour, prevHour);
+        R reduceData = this.computeHourReduceData(currentHour, prevHour);
         Utils.setReduceHourRange(reduceData, prevHour, currentHour);
         currentMetrics.clear();
         currentMetrics.add(data);
@@ -67,6 +67,6 @@ public abstract class BaseMetricsHourReduceResolver<T extends BaseRangeBO> imple
      * @param prevHour    prevHour
      * @return reduce
      */
-    protected abstract HourReduceBO computeHourReduceData(String currentHour, String prevHour);
+    protected abstract R computeHourReduceData(String currentHour, String prevHour);
 
 }
