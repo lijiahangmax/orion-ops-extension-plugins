@@ -4,6 +4,7 @@ import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
+import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReducer;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.time.Dates;

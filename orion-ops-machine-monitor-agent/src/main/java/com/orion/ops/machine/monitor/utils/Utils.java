@@ -27,7 +27,10 @@ public class Utils {
     private Utils() {
     }
 
-    private static final String YMDH = "yyyyMMddHH";
+    // FIXME
+    // private static final String YMDH = "yyyyMMddHH";
+
+    private static final String YMDH = "yyyyMMddHHmm";
 
     private static final String YM = "yyyyMM";
 
@@ -83,27 +86,40 @@ public class Utils {
      * @return 时间
      */
     public static String getRangeStartTime(long sr) {
-        return Dates.format(new Date(sr * 1000), Dates.YMD2);
+        return Dates.format(new Date(sr * Dates.SECOND_STAMP), Dates.YMD2);
     }
 
     /**
      * 获取时间区间月份
      *
-     * @param sr 开始时间
+     * @param hour 开始时间小时
      * @return 月份
      */
-    public static String getRangeStartMonth(long sr) {
-        return Dates.format(new Date(sr * 1000), YM);
+    public static String getRangeStartMonth(String hour) {
+        return Dates.format(Dates.parse(hour, YMDH), YM);
     }
 
     /**
      * 获取时间区间小时
      *
-     * @param sr 开始时间
+     * @param t 开始时间
      * @return 小时
      */
-    public static String getRangeStartHour(long sr) {
-        return Dates.format(new Date(sr * 1000), YMDH);
+    public static <T extends BaseRangeBO> String getRangeStartHour(T t) {
+        return Dates.format(new Date(t.getSr() * Dates.SECOND_STAMP), YMDH);
+    }
+
+    /**
+     * 设置规约小时区间
+     *
+     * @param t         t
+     * @param startHour 开始时间
+     * @param endHour   结束时间
+     * @param <T>       T
+     */
+    public static <T extends BaseRangeBO> void setReduceHourRange(T t, String startHour, String endHour) {
+        t.setSr(Dates.parse(startHour, YMDH).getTime());
+        t.setEr(Dates.parse(endHour, YMDH).getTime());
     }
 
     /**

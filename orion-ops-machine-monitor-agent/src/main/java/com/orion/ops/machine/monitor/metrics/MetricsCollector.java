@@ -59,7 +59,6 @@ public class MetricsCollector {
         this.memory = hardware.getMemory();
         // 设置原始数据
         long collectTime = System.currentTimeMillis();
-        String collectHour = Utils.getRangeStartHour(collectTime);
         metricsCollectHolder.setPrevCpu(processor.getSystemCpuLoadTicks());
         metricsCollectHolder.setPrevCpuTime(collectTime);
         metricsCollectHolder.setPrevMemoryTime(collectTime);
@@ -67,10 +66,6 @@ public class MetricsCollector {
         metricsCollectHolder.setPrevNetworksTime(collectTime);
         metricsCollectHolder.setPrevDisks(hardware.getDiskStores());
         metricsCollectHolder.setPrevDisksTime(collectTime);
-        metricsCollectHolder.setPrevCpuHour(collectHour);
-        metricsCollectHolder.setPrevMemoryHour(collectHour);
-        metricsCollectHolder.setPrevNetworkHour(collectHour);
-        metricsCollectHolder.setPrevDiskHour(collectHour);
     }
 
     /**

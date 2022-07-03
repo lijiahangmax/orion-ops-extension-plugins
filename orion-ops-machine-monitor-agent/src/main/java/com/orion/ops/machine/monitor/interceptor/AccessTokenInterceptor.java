@@ -32,6 +32,10 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+        // FIXME 测试
+        if (true) {
+            return true;
+        }
         String accessTokenHeader = request.getHeader(Const.ACCESS_TOKEN);
         if (accessToken.equals(accessTokenHeader)) {
             return true;

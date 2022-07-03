@@ -57,24 +57,4 @@ public class MetricsCollectHolder {
      */
     private long prevDisksTime;
 
-    /**
-     * 上次采集处理器信息小时
-     */
-    public String prevCpuHour;
-
-    /**
-     * 上次采集内存信息小时
-     */
-    public String prevMemoryHour;
-
-    /**
-     * 上次采集网卡信息小时
-     */
-    public String prevNetworkHour;
-
-    /**
-     * 上次采集磁盘信息小时
-     */
-    public String prevDiskHour;
-
 }

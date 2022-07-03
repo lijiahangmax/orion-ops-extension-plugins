@@ -1,5 +1,6 @@
 package com.orion.ops.machine.monitor.entity.bo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.orion.utils.time.Dates;
 import lombok.Data;
 
@@ -16,11 +17,13 @@ public class BaseRangeBO {
     /**
      * 开始时间 秒 startRange
      */
+    @JSONField(ordinal = 1)
     private Long sr;
 
     /**
      * 结束时间 秒 endRange
      */
+    @JSONField(ordinal = 2)
     private Long er;
 
     public void setSr(Long sr) {

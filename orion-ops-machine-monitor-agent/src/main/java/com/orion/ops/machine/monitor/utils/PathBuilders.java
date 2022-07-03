@@ -34,7 +34,7 @@ public class PathBuilders {
     // -------------------- 天级数据 粒度为配置参数 --------------------
 
     /**
-     * 获取处理器指标数据路径
+     * 获取处理器指标数据 天级数据路径
      *
      * @param time 开始时间
      * @return path
@@ -48,7 +48,7 @@ public class PathBuilders {
     }
 
     /**
-     * 获取内存指标数据路径
+     * 获取内存指标数据 天级数据路径
      *
      * @param time 开始时间
      * @return path
@@ -62,7 +62,7 @@ public class PathBuilders {
     }
 
     /**
-     * 获取网卡指标数据路径
+     * 获取网卡指标数据 天级数据路径
      *
      * @param time 开始时间
      * @return path
@@ -76,7 +76,7 @@ public class PathBuilders {
     }
 
     /**
-     * 获取磁盘指标数据路径
+     * 获取磁盘指标数据 天级数据路径
      *
      * @param time 开始时间
      * @return path
@@ -91,6 +91,20 @@ public class PathBuilders {
     }
 
     // -------------------- 月级数据 粒度为时 --------------------
+
+    /**
+     * 获取处理器指标数据路径 月级数据
+     *
+     * @param time 开始时间
+     * @return path
+     */
+    public static String getCpuMonthDataPath(String time) {
+        return Systems.HOME_DIR
+                + "/" + Const.OPS_MONITOR_AGENT
+                + CPU_MONTH_DATA_PATH
+                + "/" + time
+                + "." + Const.SUFFIX_LOG;
+    }
 
 
 }
