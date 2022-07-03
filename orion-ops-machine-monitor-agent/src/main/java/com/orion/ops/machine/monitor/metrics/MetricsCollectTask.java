@@ -4,6 +4,7 @@ import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
+import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReduceCalculator;
 import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReducer;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
@@ -78,7 +79,7 @@ public class MetricsCollectTask implements Runnable {
         String path = PathBuilders.getCpuDayDataPath(Utils.getRangeStartTime(cpu.getSr()));
         Utils.appendMetricsData(path, cpu);
         // 规约小时数据粒度
-        metricsHourReducer.reduceCpuData(cpu);
+        MetricsHourReduceCalculator.CPU.getReduceResolverBean().reduce(cpu);
     }
 
     /**

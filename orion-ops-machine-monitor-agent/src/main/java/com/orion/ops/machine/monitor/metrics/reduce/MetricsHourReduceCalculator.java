@@ -1,5 +1,6 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
+import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
 import com.orion.spring.SpringHolder;
 import lombok.AllArgsConstructor;
 
@@ -16,22 +17,23 @@ public enum MetricsHourReduceCalculator {
     /**
      * 处理器
      */
-    CPU(CpuHourReduceResolver.class),
+    CPU(CpuHourReduceResolver.class) {
+    },
 
     /**
      * 内存
      */
-    MEMORY(MemoryHourReduceResolver.class),
+    // MEMORY(MemoryHourReduceResolver.class),
 
     ;
 
-    private final Class<? extends MetricsHourReduceResolver> beanClass;
+    private final Class<? extends MetricsHourReduceResolver<?>> beanClass;
 
     /**
      * 获取处理器 bean
      */
     @SuppressWarnings("unchecked")
-    public <T extends MetricsHourReduceResolver> T getReduceResolverBean() {
+    public <T extends MetricsHourReduceResolver<? super BaseRangeBO>> T getReduceResolverBean() {
         return (T) SpringHolder.getBean(beanClass);
     }
 
