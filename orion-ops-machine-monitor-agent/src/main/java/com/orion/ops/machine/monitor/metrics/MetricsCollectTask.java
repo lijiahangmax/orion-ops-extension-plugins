@@ -112,6 +112,7 @@ public class MetricsCollectTask implements Runnable {
             String path = PathBuilders.getDiskDayDataPath(Utils.getRangeStartTime(disk.getSr()), disk.getSeq());
             Utils.appendMetricsData(path, disk);
             // 规约小时数据粒度
+            MetricsHourReduceCalculator.DISK.getReduceResolverBean().reduce(disk);
         }
     }
 

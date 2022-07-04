@@ -29,6 +29,11 @@ public enum MetricsHourReduceCalculator {
      */
     NET(NetBandwidthHourReduceResolver.class),
 
+    /**
+     * 磁盘
+     */
+    DISK(DiskHourReduceResolver.class),
+
     ;
 
     private final Class<? extends IMetricsHourReduceResolver<?>> beanClass;
