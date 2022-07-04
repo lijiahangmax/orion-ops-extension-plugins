@@ -17,21 +17,26 @@ public enum GranularityType {
     /**
      * 1分钟
      */
-    MINUTE(10),
+    MINUTE(10, false),
 
     /**
      * 1小时
      */
-    HOUR(20),
+    HOUR(20, true),
 
     /**
      * 1天
      */
-    DAY(30),
+    DAY(30, true),
 
     ;
 
     private final Integer type;
+
+    /**
+     * 是否查询时级粒度数据
+     */
+    private final boolean queryMonth;
 
     public static GranularityType of(Integer type) {
         if (type == null) {
