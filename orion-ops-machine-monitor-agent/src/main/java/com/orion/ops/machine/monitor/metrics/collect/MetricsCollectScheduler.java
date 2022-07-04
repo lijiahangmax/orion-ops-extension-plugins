@@ -1,4 +1,4 @@
-package com.orion.ops.machine.monitor.metrics;
+package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.orion.constant.Const;
 import com.orion.lang.thread.ThreadFactoryBuilder;
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2022/6/29 14:40
  */
 @Slf4j
-@Order(500)
+@Order(600)
 @Component
 public class MetricsCollectScheduler implements DisposableBean {
 
@@ -52,7 +52,7 @@ public class MetricsCollectScheduler implements DisposableBean {
                 .build();
         this.scheduler = new ScheduledThreadPoolExecutor(1, threadFactory);
         scheduler.scheduleAtFixedRate(metricsCollectTask, 0, 10, TimeUnit.SECONDS);
-        // TODO
+        // FIXME
         // scheduler.scheduleAtFixedRate(metricsCollectTask, collectPeriodSecond, collectPeriodSecond, TimeUnit.SECONDS);
     }
 

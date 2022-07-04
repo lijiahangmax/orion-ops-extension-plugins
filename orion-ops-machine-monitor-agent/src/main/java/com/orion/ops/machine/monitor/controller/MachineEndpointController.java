@@ -3,7 +3,7 @@ package com.orion.ops.machine.monitor.controller;
 import com.orion.lang.wrapper.HttpWrapper;
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.ops.machine.monitor.metrics.MetricsCollectTask;
+import com.orion.ops.machine.monitor.metrics.collect.MetricsCollectTask;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

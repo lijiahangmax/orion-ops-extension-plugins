@@ -1,19 +1,16 @@
-package com.orion.ops.machine.monitor.metrics;
+package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReduceCalculator;
-import com.orion.ops.machine.monitor.utils.PathBuilders;
-import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.time.Dates;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -27,9 +24,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @Component
 public class MetricsCollectTask implements Runnable {
-
-    @Resource
-    private MetricsCollector metricsCollector;
 
     /**
      * 计数器
@@ -70,10 +64,8 @@ public class MetricsCollectTask implements Runnable {
      * 采集处理器数据
      */
     private void collectCpuData() {
-        CpuUsingBO cpu = metricsCollector.collectCpu();
-        // 拼接到天级数据
-        String path = PathBuilders.getCpuDayDataPath(Utils.getRangeStartTime(cpu.getSr()));
-        Utils.appendMetricsData(path, cpu);
+        // 采集处理器数据
+        CpuUsingBO cpu = ((CpuMetricsCollector) MetricsCollectorType.CPU.getCollectBean()).collect();
         // 规约小时数据粒度
         MetricsHourReduceCalculator.CPU.getReduceResolverBean().reduce(cpu);
     }
@@ -82,10 +74,8 @@ public class MetricsCollectTask implements Runnable {
      * 采集内存数据
      */
     private void collectMemoryData() {
-        MemoryUsingBO mem = metricsCollector.collectMemory();
-        // 拼接到天级数据
-        String path = PathBuilders.getMemoryDayDataPath(Utils.getRangeStartTime(mem.getSr()));
-        Utils.appendMetricsData(path, mem);
+        // 采集内存数据
+        MemoryUsingBO mem = ((MemoryMetricsCollector) MetricsCollectorType.MEMORY.getCollectBean()).collect();
         // 规约小时数据粒度
         MetricsHourReduceCalculator.MEMORY.getReduceResolverBean().reduce(mem);
     }
@@ -94,10 +84,8 @@ public class MetricsCollectTask implements Runnable {
      * 采集网络带宽数据
      */
     private void collectNetData() {
-        NetBandwidthBO net = metricsCollector.collectNetBandwidth();
-        // 拼接到天级数据
-        String path = PathBuilders.getNetDayDataPath(Utils.getRangeStartTime(net.getSr()));
-        Utils.appendMetricsData(path, net);
+        // 采集网络带宽数据
+        NetBandwidthBO net = ((NetBandwidthCollector) MetricsCollectorType.NET.getCollectBean()).collect();
         // 规约小时数据粒度
         MetricsHourReduceCalculator.NET.getReduceResolverBean().reduce(net);
     }
@@ -106,11 +94,9 @@ public class MetricsCollectTask implements Runnable {
      * 采集磁盘读写数据
      */
     private void collectDiskData() {
-        List<DiskIoUsingBO> disks = metricsCollector.collectDiskIo();
+        // 采集磁盘数据
+        List<DiskIoUsingBO> disks = ((DiskMetricsCollector) MetricsCollectorType.DISK.getCollectBean()).collectAsList();
         for (DiskIoUsingBO disk : disks) {
-            // 拼接到天级数据
-            String path = PathBuilders.getDiskDayDataPath(Utils.getRangeStartTime(disk.getSr()), disk.getSeq());
-            Utils.appendMetricsData(path, disk);
             // 规约小时数据粒度
             MetricsHourReduceCalculator.DISK.getReduceResolverBean().reduce(disk);
         }

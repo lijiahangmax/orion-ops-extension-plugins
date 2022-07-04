@@ -16,7 +16,6 @@ import oshi.hardware.*;
 import oshi.software.os.OSProcess;
 import oshi.software.os.OperatingSystem;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,13 +35,12 @@ import java.util.stream.Collectors;
 public class MetricsProvider {
 
     @Getter
-    private HardwareAbstractionLayer hardware;
+    private final HardwareAbstractionLayer hardware;
 
     @Getter
-    private OperatingSystem os;
+    private final OperatingSystem os;
 
-    @PostConstruct
-    private void initCollector() {
+    public MetricsProvider() {
         log.info("初始化数据提供者");
         // 获取机器数据
         SystemInfo si = new SystemInfo();
