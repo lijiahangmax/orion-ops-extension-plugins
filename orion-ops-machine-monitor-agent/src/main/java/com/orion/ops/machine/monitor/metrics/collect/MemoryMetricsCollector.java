@@ -6,6 +6,7 @@ import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
+import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -56,8 +57,8 @@ public class MemoryMetricsCollector implements IMetricsCollector<MemoryUsingBO> 
         MemoryUsingBO mem = new MemoryUsingBO();
         mem.setUr(Utils.roundToDouble((double) using / (double) total, 3));
         mem.setUs(using / Const.BUFFER_KB_1 / Const.BUFFER_KB_1);
-        mem.setSr(prevTime);
-        mem.setEr(currentTime);
+        mem.setSr(Utils.getSecondTime(prevTime));
+        mem.setEr(Utils.getSecondTime(currentTime));
         log.debug("内存指标: {}", JSON.toJSONString(mem));
         // 拼接到天级数据
         String path = PathBuilders.getMemoryDayDataPath(Utils.getRangeStartTime(mem.getSr()));

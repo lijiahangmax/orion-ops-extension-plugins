@@ -30,7 +30,7 @@ public enum MetricsCollectorType {
     NET(NetBandwidthCollector.class),
 
     /**
-     * 磁盘
+     * 硬盘
      */
     DISK(DiskMetricsCollector.class),
 

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 磁盘 IO 使用指标
+ * 硬盘 IO 使用指标
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 public class DiskIoUsingBO extends BaseRangeBO {
 
     /**
-     * 磁盘序列
+     * 硬盘序列
      */
     @JSONField(serialize = false)
     private String seq;
@@ -47,10 +47,12 @@ public class DiskIoUsingBO extends BaseRangeBO {
      */
     private Long ut;
 
+    // TODO
     public void setRs(Long rs) {
         this.rs = rs / Const.BUFFER_KB_1;
     }
 
+    // TODO
     public void setWs(Long ws) {
         this.ws = ws / Const.BUFFER_KB_1;
     }

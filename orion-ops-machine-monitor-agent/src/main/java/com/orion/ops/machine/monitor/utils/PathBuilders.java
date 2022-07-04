@@ -76,7 +76,7 @@ public class PathBuilders {
     }
 
     /**
-     * 获取磁盘指标数据 天级数据路径
+     * 获取硬盘指标数据 天级数据路径
      *
      * @param time 开始时间
      * @param seq  seq
@@ -136,7 +136,7 @@ public class PathBuilders {
     }
 
     /**
-     * 获取磁盘指标数据路径 月级数据
+     * 获取硬盘指标数据路径 月级数据
      *
      * @param time 开始时间
      * @param seq  seq

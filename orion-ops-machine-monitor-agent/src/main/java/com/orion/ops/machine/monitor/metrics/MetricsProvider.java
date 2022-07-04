@@ -146,7 +146,7 @@ public class MetricsProvider {
     }
 
     /**
-     * 获取磁盘空间使用信息
+     * 获取硬盘空间使用信息
      *
      * @return metrics
      */
@@ -169,9 +169,9 @@ public class MetricsProvider {
     }
 
     /**
-     * 获取磁盘名称
+     * 获取硬盘名称
      *
-     * @return 磁盘名称
+     * @return 硬盘名称
      */
     public List<DiskNameVO> getDiskName() {
         return hardware.getDiskStores().stream()
@@ -185,9 +185,9 @@ public class MetricsProvider {
     }
 
     /**
-     * 获取磁盘 IO 使用信息
+     * 获取硬盘 IO 使用信息
      *
-     * @return 磁盘 IO 使用信息
+     * @return 硬盘 IO 使用信息
      */
     public List<DiskIoUsingDTO> getDiskIoUsing() {
         List<HWDiskStore> beforeDisks = hardware.getDiskStores();

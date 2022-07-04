@@ -6,7 +6,7 @@ import com.orion.utils.io.Files1;
 import lombok.Data;
 
 /**
- * 磁盘 IO 使用信息
+ * 硬盘 IO 使用信息
  *
  * @author Jiahang Li
  * @version 1.0.0

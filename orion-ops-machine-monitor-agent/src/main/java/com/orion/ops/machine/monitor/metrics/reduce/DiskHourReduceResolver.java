@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 磁盘时级数据规约器
+ * 硬盘时级数据规约器
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -59,7 +59,7 @@ public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIo
         reduceData.setWs(list.stream().mapToLong(DiskIoUsingBO::getWs).sum());
         reduceData.setUt(list.stream().mapToLong(DiskIoUsingBO::getUt).sum());
         Utils.setReduceHourRange(reduceData, prevHour, currentHour);
-        log.debug("磁盘时级数据指标-seq: {} {}", seq, JSON.toJSONString(reduceData));
+        log.debug("硬盘时级数据指标-seq: {} {}", seq, JSON.toJSONString(reduceData));
         list.clear();
         list.add(data);
         // 拼接到月级数据

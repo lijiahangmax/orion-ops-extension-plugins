@@ -55,7 +55,7 @@ public class MetricsCollectTask implements Runnable {
         this.collectMemoryData();
         // 采集网络带宽数据
         this.collectNetData();
-        // 采集磁盘读写数据
+        // 采集硬盘读写数据
         this.collectDiskData();
         log.info("第 {} 次采集数据-结束 {}", seq, Dates.current());
     }
@@ -91,10 +91,10 @@ public class MetricsCollectTask implements Runnable {
     }
 
     /**
-     * 采集磁盘读写数据
+     * 采集硬盘读写数据
      */
     private void collectDiskData() {
-        // 采集磁盘数据
+        // 采集硬盘数据
         List<DiskIoUsingBO> disks = ((DiskMetricsCollector) MetricsCollectorType.DISK.getCollectBean()).collectAsList();
         for (DiskIoUsingBO disk : disks) {
             // 规约小时数据粒度

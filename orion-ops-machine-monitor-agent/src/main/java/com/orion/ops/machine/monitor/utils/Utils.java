@@ -82,13 +82,24 @@ public class Utils {
     }
 
     /**
-     * 获取磁盘序列
+     * 获取硬盘序列
      *
      * @param model model
      * @return seq
      */
     public static String getDiskSeq(String model) {
         return Signatures.md5(model).substring(0, 8);
+    }
+
+    /**
+     * 时间戳毫秒转时间戳秒
+     *
+     * @param timestamp 时间戳毫秒
+     * @return 时间戳秒
+     */
+    // FIXME: 放到kit
+    public static long getSecondTime(long timestamp) {
+        return timestamp / Dates.SECOND_STAMP;
     }
 
     /**
@@ -99,6 +110,16 @@ public class Utils {
      */
     public static String getRangeStartTime(long sr) {
         return Dates.format(new Date(sr * Dates.SECOND_STAMP), Dates.YMD2);
+    }
+
+    /**
+     * 获取时间区间月份
+     *
+     * @param sr 开始时间
+     * @return 月份
+     */
+    public static String getRangeStartMonth(long sr) {
+        return Dates.format(new Date(sr * Dates.SECOND_STAMP), YM);
     }
 
     /**
@@ -130,8 +151,8 @@ public class Utils {
      * @param <T>       T
      */
     public static <T extends BaseRangeBO> void setReduceHourRange(T t, String startHour, String endHour) {
-        t.setSr(Dates.parse(startHour, YMDH).getTime());
-        t.setEr(Dates.parse(endHour, YMDH).getTime());
+        t.setSr(getSecondTime(Dates.parse(startHour, YMDH).getTime()));
+        t.setEr(getSecondTime(Dates.parse(endHour, YMDH).getTime()));
     }
 
     /**

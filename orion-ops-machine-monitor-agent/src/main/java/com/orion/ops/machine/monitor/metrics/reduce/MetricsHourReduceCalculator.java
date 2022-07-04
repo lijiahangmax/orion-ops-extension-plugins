@@ -30,7 +30,7 @@ public enum MetricsHourReduceCalculator {
     NET(NetBandwidthHourReduceResolver.class),
 
     /**
-     * 磁盘
+     * 硬盘
      */
     DISK(DiskHourReduceResolver.class),
 

@@ -3,7 +3,7 @@ package com.orion.ops.machine.monitor.entity.vo;
 import lombok.Data;
 
 /**
- * 磁盘名称
+ * 硬盘名称
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -13,12 +13,12 @@ import lombok.Data;
 public class DiskNameVO {
 
     /**
-     * 磁盘名称
+     * 硬盘名称
      */
     private String name;
 
     /**
-     * 磁盘序列
+     * 硬盘序列
      */
     private String seq;
 

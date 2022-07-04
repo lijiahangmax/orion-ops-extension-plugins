@@ -70,7 +70,7 @@ public class MachineMetricsController {
     }
 
     /**
-     * 获取磁盘空间使用信息
+     * 获取硬盘空间使用信息
      */
     @GetMapping("/disk-store-using")
     public List<DiskStoreUsingVO> getDiskStoreUsing() {
@@ -78,7 +78,7 @@ public class MachineMetricsController {
     }
 
     /**
-     * 合并获取磁盘空间使用信息
+     * 合并获取硬盘空间使用信息
      */
     @GetMapping("/disk-store-using-merge")
     public DiskStoreUsingVO getDiskStoreUsingMerge() {
@@ -99,7 +99,7 @@ public class MachineMetricsController {
     }
 
     /**
-     * 获取磁盘名称
+     * 获取硬盘名称
      */
     @GetMapping("/disk-name")
     public List<DiskNameVO> getDiskName() {
@@ -107,7 +107,7 @@ public class MachineMetricsController {
     }
 
     /**
-     * 获取磁盘 IO 使用信息
+     * 获取硬盘 IO 使用信息
      */
     @GetMapping("/disk-io-using")
     public List<DiskIoUsingVO> getDiskIoUsing() {
@@ -115,7 +115,7 @@ public class MachineMetricsController {
     }
 
     /**
-     * 合并获取磁盘 IO 使用信息
+     * 合并获取硬盘 IO 使用信息
      */
     @GetMapping("/disk-io-using-merge")
     public DiskIoUsingVO getDiskIoUsingMerge() {

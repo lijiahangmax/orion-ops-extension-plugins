@@ -6,6 +6,7 @@ import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.collect.Lists;
+import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -76,10 +77,10 @@ public class DiskMetricsCollector implements IMetricsCollector<DiskIoUsingBO> {
             disk.setRc(currentDisk.getReads() - prevDisk.getReads());
             disk.setWc(currentDisk.getWrites() - prevDisk.getWrites());
             disk.setUt(currentDisk.getTransferTime() - prevDisk.getTransferTime());
-            disk.setSr(prevTime);
-            disk.setEr(currentTime);
+            disk.setSr(Utils.getSecondTime(prevTime));
+            disk.setEr(Utils.getSecondTime(currentTime));
             list.add(disk);
-            log.debug("磁盘读写指标-{}: {}", seq, JSON.toJSONString(disk));
+            log.debug("硬盘读写指标-{}: {}", seq, JSON.toJSONString(disk));
             // 拼接到天级数据
             String path = PathBuilders.getDiskDayDataPath(Utils.getRangeStartTime(disk.getSr()), disk.getSeq());
             Utils.appendMetricsData(path, disk);

@@ -5,6 +5,7 @@ import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
+import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -67,8 +68,8 @@ public class NetBandwidthCollector implements IMetricsCollector<NetBandwidthBO> 
         long currentSentPacket = currentNetwork.stream().mapToLong(NetworkIF::getPacketsSent).sum();
         // 计算
         NetBandwidthBO net = new NetBandwidthBO();
-        net.setSr(prevTime);
-        net.setEr(currentTime);
+        net.setSr(Utils.getSecondTime(prevTime));
+        net.setEr(Utils.getSecondTime(currentTime));
         net.setSk(currentSentSize - beforeSentSize);
         net.setRk(currentReceiveSize - beforeReceiveSize);
         net.setSp(currentSentPacket - beforeSentPacket);

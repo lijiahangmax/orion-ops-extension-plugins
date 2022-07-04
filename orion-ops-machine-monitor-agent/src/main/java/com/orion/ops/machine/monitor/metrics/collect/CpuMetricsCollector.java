@@ -5,6 +5,7 @@ import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
+import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -57,8 +58,8 @@ public class CpuMetricsCollector implements IMetricsCollector<CpuUsingBO> {
         // 计算
         CpuUsingBO cpu = new CpuUsingBO();
         cpu.setU(Utils.computeCpuLoad(prevCpu, currentCpu));
-        cpu.setSr(prevTime);
-        cpu.setEr(currentTime);
+        cpu.setSr(Utils.getSecondTime(prevTime));
+        cpu.setEr(Utils.getSecondTime(currentTime));
         log.debug("处理器指标: {}", JSON.toJSONString(cpu));
         // 拼接到天级数据
         String path = PathBuilders.getCpuDayDataPath(Utils.getRangeStartTime(cpu.getSr()));
