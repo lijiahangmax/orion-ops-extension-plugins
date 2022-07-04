@@ -79,13 +79,14 @@ public class PathBuilders {
      * 获取磁盘指标数据 天级数据路径
      *
      * @param time 开始时间
+     * @param seq  seq
      * @return path
      */
-    public static String getDiskDayDataPath(String time, String tag) {
+    public static String getDiskDayDataPath(String time, String seq) {
         return Systems.HOME_DIR
                 + "/" + Const.OPS_MONITOR_AGENT
                 + DISK_DAY_DATA_PATH
-                + "/" + tag
+                + "/" + seq
                 + "-" + time
                 + "." + Const.SUFFIX_LOG;
     }
@@ -134,5 +135,20 @@ public class PathBuilders {
                 + "." + Const.SUFFIX_LOG;
     }
 
+    /**
+     * 获取磁盘指标数据路径 月级数据
+     *
+     * @param time 开始时间
+     * @param seq  seq
+     * @return path
+     */
+    public static String getDiskMonthDataPath(String time, String seq) {
+        return Systems.HOME_DIR
+                + "/" + Const.OPS_MONITOR_AGENT
+                + DISK_MONTH_DATA_PATH
+                + "/" + seq
+                + "-" + time
+                + "." + Const.SUFFIX_LOG;
+    }
 
 }

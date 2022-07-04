@@ -26,23 +26,11 @@ public class CpuHourReduceResolver extends BaseMetricsHourReduceResolver<CpuUsin
 
     @Override
     protected CpuUsingHourReduceBO computeHourReduceData(String currentHour, String prevHour) {
-        double max = currentMetrics.stream()
-                .mapToDouble(CpuUsingBO::getU)
-                .max()
-                .orElse(Const.D_0);
-        double min = currentMetrics.stream()
-                .mapToDouble(CpuUsingBO::getU)
-                .min()
-                .orElse(Const.D_0);
-        double avg = currentMetrics.stream()
-                .mapToDouble(CpuUsingBO::getU)
-                .average()
-                .orElse(Const.D_0);
         // 设置规约数据
         CpuUsingHourReduceBO reduce = new CpuUsingHourReduceBO();
-        reduce.setMax(Utils.roundToDouble(max, 3));
-        reduce.setMin(Utils.roundToDouble(min, 3));
-        reduce.setAvg(Utils.roundToDouble(avg, 3));
+        reduce.setMax(this.getMaxReduceData(CpuUsingBO::getU, 3));
+        reduce.setMin(this.getMinReduceData(CpuUsingBO::getU, 3));
+        reduce.setAvg(this.getAvgReduceData(CpuUsingBO::getU, 3));
         log.info("计算处理器小时级指标: {}", JSON.toJSONString(reduce));
         return reduce;
     }

@@ -15,23 +15,23 @@ import lombok.EqualsAndHashCode;
 public class NetBandwidthBO extends BaseRangeBO {
 
     /**
-     * 流量上行速率 mpb sentMpbRate
+     * 流量上行速率 mpb/s sentMpbRate
      */
     private Double smr;
 
     /**
-     * 流量下行速率 mpb receivedMpbRate
+     * 流量下行速率 mpb/s receivedMpbRate
      */
     private Double rmr;
 
     /**
-     * 上行包 sentPacket
+     * 上行包速率 p/s sentPacketRate
      */
-    private Long sp;
+    private Double spr;
 
     /**
-     * 下行包 receivedPacket
+     * 下行包速率 p/s receivedPacketRate
      */
-    private Long rp;
+    private Double rpr;
 
 }

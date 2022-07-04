@@ -137,8 +137,8 @@ public class MetricsCollector {
         net.setEr(currentTime);
         net.setSmr(Utils.computeMpbSecondRate(net, currentSentSize - beforeSentSize));
         net.setRmr(Utils.computeMpbSecondRate(net, currentReceiveSize - beforeReceiveSize));
-        net.setSp(currentSentPacket - beforeSentPacket);
-        net.setRp(currentReceivePacket - beforeReceivePacket);
+        net.setSpr(Utils.computePacketSecondRate(net, currentSentPacket - beforeSentPacket));
+        net.setRpr(Utils.computePacketSecondRate(net, currentReceivePacket - beforeReceivePacket));
         log.info("网络带宽指标: {}", JSON.toJSONString(net));
         return net;
     }

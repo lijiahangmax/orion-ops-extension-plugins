@@ -142,15 +142,20 @@ public class Utils {
      * @return mpb/s
      */
     public static Double computeMpbSecondRate(BaseRangeBO range, long bytes) {
-        int s = roundToInt((double) range.getEr() - (double) range.getSr());
+        long s = range.getEr() - range.getSr();
         return roundToDouble((double) bytes / s / MPB, 5);
     }
 
-    public static void main(String[] args) {
-        BaseRangeBO b = new BaseRangeBO();
-        b.setSr(1656862556630L);
-        b.setEr(1656862557730L);
-        System.out.println(computeMpbSecondRate(b, 1024));
+    /**
+     * 计算 pecket/s
+     *
+     * @param range  range
+     * @param packet packet
+     * @return mpb/s
+     */
+    public static Double computePacketSecondRate(BaseRangeBO range, long packet) {
+        long s = range.getEr() - range.getSr();
+        return roundToDouble((double) packet / s / MPB, 3);
     }
 
     /**

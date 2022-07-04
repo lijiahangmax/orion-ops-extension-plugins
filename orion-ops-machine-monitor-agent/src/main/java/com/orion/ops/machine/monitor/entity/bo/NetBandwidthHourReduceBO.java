@@ -15,22 +15,63 @@ import lombok.EqualsAndHashCode;
 public class NetBandwidthHourReduceBO extends HourReduceBO {
 
     /**
-     * 上行流量 kb sentSize
+     * 最大流量上行速率 mpb/s maxSentMpbRate
      */
-    private Long ss;
+    private Double maxsmr;
 
     /**
-     * 上行包 sentPacket
+     * 最小流量上行速率 mpb/s minSentMpbRate
      */
-    private Long sp;
+    private Double minsmr;
 
     /**
-     * 下行流量 kb receivedSize
+     * 平均流量上行速率 mpb/s avgSentMpbRate
      */
-    private Long rs;
+    private Double avgsmr;
 
     /**
-     * 下行包 receivedPacket
+     * 最大流量下行速率 mpb/s maxReceivedMpbRate
      */
-    private Long rp;
+    private Double maxrmr;
+
+    /**
+     * 最小流量下行速率 mpb/s minReceivedMpbRate
+     */
+    private Double minrmr;
+
+    /**
+     * 平均流量下行速率 mpb/s avgReceivedMpbRate
+     */
+    private Double avgrmr;
+
+    /**
+     * 最大上行包速率 p/s maxSentPacketRate
+     */
+    private Double maxspr;
+
+    /**
+     * 最小上行包速率 p/s minSentPacketRate
+     */
+    private Double minspr;
+
+    /**
+     * 平均上行包速率 p/s avgSentPacketRate
+     */
+    private Double avgspr;
+
+    /**
+     * 最大下行包速率 p/s maxReceivedPacketRate
+     */
+    private Double maxrpr;
+
+    /**
+     * 最小下行包速率 p/s minReceivedPacketRate
+     */
+    private Double minrpr;
+
+    /**
+     * 平均下行包速率 p/s avgReceivedPacketRate
+     */
+    private Double avgrpr;
+
 }
