@@ -1,6 +1,7 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
 import com.alibaba.fastjson.JSON;
+import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
@@ -54,9 +55,9 @@ public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIo
         // 计算数据
         DiskIoUsingBO reduceData = new DiskIoUsingBO();
         reduceData.setRc(list.stream().mapToLong(DiskIoUsingBO::getRc).sum());
-        reduceData.setRs(list.stream().mapToLong(DiskIoUsingBO::getRs).sum());
+        reduceData.setRs(list.stream().mapToLong(DiskIoUsingBO::getRs).map(s -> s / Const.BUFFER_KB_1).sum());
         reduceData.setWc(list.stream().mapToLong(DiskIoUsingBO::getWc).sum());
-        reduceData.setWs(list.stream().mapToLong(DiskIoUsingBO::getWs).sum());
+        reduceData.setWs(list.stream().mapToLong(DiskIoUsingBO::getWs).map(s -> s / Const.BUFFER_KB_1).sum());
         reduceData.setUt(list.stream().mapToLong(DiskIoUsingBO::getUt).sum());
         Utils.setReduceHourRange(reduceData, prevHour, currentHour);
         log.debug("硬盘时级数据指标-seq: {} {}", seq, JSON.toJSONString(reduceData));

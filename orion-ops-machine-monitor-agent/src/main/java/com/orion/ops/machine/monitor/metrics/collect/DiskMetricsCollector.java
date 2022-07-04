@@ -1,12 +1,12 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.alibaba.fastjson.JSON;
+import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.collect.Lists;
-import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -72,8 +72,8 @@ public class DiskMetricsCollector implements IMetricsCollector<DiskIoUsingBO> {
             String seq = Utils.getDiskSeq(currentDisk.getModel());
             DiskIoUsingBO disk = new DiskIoUsingBO();
             disk.setSeq(seq);
-            disk.setRs(currentDisk.getReadBytes() - prevDisk.getReadBytes());
-            disk.setWs(currentDisk.getReadBytes() - prevDisk.getReadBytes());
+            disk.setRs((currentDisk.getReadBytes() - prevDisk.getReadBytes()) / Const.BUFFER_KB_1);
+            disk.setWs((currentDisk.getReadBytes() - prevDisk.getReadBytes()) / Const.BUFFER_KB_1);
             disk.setRc(currentDisk.getReads() - prevDisk.getReads());
             disk.setWc(currentDisk.getWrites() - prevDisk.getWrites());
             disk.setUt(currentDisk.getTransferTime() - prevDisk.getTransferTime());

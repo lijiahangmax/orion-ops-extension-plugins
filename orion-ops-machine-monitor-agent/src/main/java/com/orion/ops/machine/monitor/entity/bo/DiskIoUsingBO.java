@@ -1,7 +1,6 @@
 package com.orion.ops.machine.monitor.entity.bo;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.orion.ops.machine.monitor.constant.Const;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -46,15 +45,5 @@ public class DiskIoUsingBO extends BaseRangeBO {
      * 使用时间 ms usingTime
      */
     private Long ut;
-
-    // TODO
-    public void setRs(Long rs) {
-        this.rs = rs / Const.BUFFER_KB_1;
-    }
-
-    // TODO
-    public void setWs(Long ws) {
-        this.ws = ws / Const.BUFFER_KB_1;
-    }
 
 }

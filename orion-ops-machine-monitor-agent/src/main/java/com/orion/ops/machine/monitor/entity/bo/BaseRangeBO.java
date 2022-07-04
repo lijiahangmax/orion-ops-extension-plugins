@@ -26,14 +26,4 @@ public class BaseRangeBO {
     @JSONField(ordinal = 2)
     private Long er;
 
-    // TODO
-    public void setSr(Long sr) {
-        this.sr = sr / Dates.SECOND_STAMP;
-    }
-
-    // TODO
-    public void setEr(Long er) {
-        this.er = er / Dates.SECOND_STAMP;
-    }
-
 }
