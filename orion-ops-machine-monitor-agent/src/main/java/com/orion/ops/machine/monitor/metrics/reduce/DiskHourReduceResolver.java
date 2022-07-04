@@ -1,10 +1,12 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
+import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.collect.Lists;
 import com.orion.utils.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 2022/7/4 10:51
  */
+@Slf4j
 @Component
 public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIoUsingBO> {
 
@@ -56,6 +59,7 @@ public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIo
         reduceData.setWs(list.stream().mapToLong(DiskIoUsingBO::getWs).sum());
         reduceData.setUt(list.stream().mapToLong(DiskIoUsingBO::getUt).sum());
         Utils.setReduceHourRange(reduceData, prevHour, currentHour);
+        log.debug("磁盘时级数据指标-seq: {} {}", seq, JSON.toJSONString(reduceData));
         list.clear();
         list.add(data);
         // 拼接到月级数据

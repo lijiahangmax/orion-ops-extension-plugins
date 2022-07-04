@@ -1,8 +1,10 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
+import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
  * @version 1.0.0
  * @since 2022/7/3 22:45
  */
+@Slf4j
 @Component
 public class MemoryHourReduceResolver extends BaseMetricsHourReduceResolver<MemoryUsingBO> {
 
@@ -25,6 +28,7 @@ public class MemoryHourReduceResolver extends BaseMetricsHourReduceResolver<Memo
         MemoryUsingBO reduce = new MemoryUsingBO();
         reduce.setUr(this.getAvgReduceData(MemoryUsingBO::getUr, 3));
         reduce.setUs(this.getAvgReduceData(MemoryUsingBO::getUs));
+        log.debug("内存时级数据指标 {}", JSON.toJSONString(reduce));
         return reduce;
     }
 

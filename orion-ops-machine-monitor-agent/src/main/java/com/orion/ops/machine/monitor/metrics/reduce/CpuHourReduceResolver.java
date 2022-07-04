@@ -1,17 +1,20 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
+import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * cpu 时级数据规约器
+ * 处理器时级数据规约器
  *
  * @author Jiahang Li
  * @version 1.0.0
  * @since 2022/7/2 16:09
  */
+@Slf4j
 @Component
 public class CpuHourReduceResolver extends BaseMetricsHourReduceResolver<CpuUsingBO> {
 
@@ -24,6 +27,7 @@ public class CpuHourReduceResolver extends BaseMetricsHourReduceResolver<CpuUsin
         // 设置规约数据
         CpuUsingBO reduce = new CpuUsingBO();
         reduce.setU(this.getAvgReduceData(CpuUsingBO::getU, 3));
+        log.debug("处理器时级数据指标 {}", JSON.toJSONString(reduce));
         return reduce;
     }
 
