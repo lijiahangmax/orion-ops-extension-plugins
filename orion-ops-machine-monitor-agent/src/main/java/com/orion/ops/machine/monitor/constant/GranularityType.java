@@ -8,6 +8,8 @@ import java.util.function.Consumer;
 
 /**
  * 数据粒度
+ * <p>
+ * 数据粒度与采集周期挂钩
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -18,49 +20,59 @@ import java.util.function.Consumer;
 public enum GranularityType {
 
     /**
+     * 10秒
+     */
+    SECOND_10(10, false, c -> c.add(Calendar.SECOND, 10)),
+
+    /**
+     * 30秒
+     */
+    SECOND_30(12, false, c -> c.add(Calendar.SECOND, 30)),
+
+    /**
      * 1分钟
      */
-    MINUTE_1(10, false, c -> c.add(Calendar.MINUTE, 1)),
+    MINUTE_1(20, false, c -> c.add(Calendar.MINUTE, 1)),
 
     /**
      * 5分钟
      */
-    MINUTE_5(12, false, c -> c.add(Calendar.MINUTE, 5)),
+    MINUTE_5(22, false, c -> c.add(Calendar.MINUTE, 5)),
 
     /**
      * 10分钟
      */
-    MINUTE_10(14, false, c -> c.add(Calendar.MINUTE, 10)),
+    MINUTE_10(24, false, c -> c.add(Calendar.MINUTE, 10)),
 
     /**
      * 30分钟
      */
-    MINUTE_30(16, false, c -> c.add(Calendar.MINUTE, 30)),
+    MINUTE_30(26, false, c -> c.add(Calendar.MINUTE, 30)),
 
     /**
      * 1小时
      */
-    HOUR_1(20, true, c -> c.add(Calendar.HOUR_OF_DAY, 1)),
+    HOUR_1(30, true, c -> c.add(Calendar.HOUR_OF_DAY, 1)),
 
     /**
      * 6小时
      */
-    HOUR_6(22, true, c -> c.add(Calendar.HOUR_OF_DAY, 6)),
+    HOUR_6(32, true, c -> c.add(Calendar.HOUR_OF_DAY, 6)),
 
     /**
      * 12小时
      */
-    HOUR_12(24, true, c -> c.add(Calendar.HOUR_OF_DAY, 12)),
+    HOUR_12(34, true, c -> c.add(Calendar.HOUR_OF_DAY, 12)),
 
     /**
      * 1天
      */
-    DAY(30, true, c -> c.add(Calendar.DAY_OF_MONTH, 1)),
+    DAY(40, true, c -> c.add(Calendar.DAY_OF_MONTH, 1)),
 
     /**
      * 1周
      */
-    WEEK(40, true, c -> c.add(Calendar.WEEK_OF_MONTH, 1)),
+    WEEK(50, true, c -> c.add(Calendar.WEEK_OF_MONTH, 1)),
 
     ;
 
