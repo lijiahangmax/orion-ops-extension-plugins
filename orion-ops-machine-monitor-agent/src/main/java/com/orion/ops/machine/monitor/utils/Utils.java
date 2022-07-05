@@ -78,7 +78,7 @@ public class Utils {
                 - prevTicks[TickType.IDLE.getIndex()]
                 - prevTicks[TickType.IOWAIT.getIndex()];
         double use = total > 0 ? (double) (total - idle) / total : 0D;
-        return roundToDouble(use, 3);
+        return roundToDouble(use * 100, 3);
     }
 
     /**

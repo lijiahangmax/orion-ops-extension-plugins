@@ -6,14 +6,14 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * cpu 监控指标统计数据
+ * 内存监控指标统计数据 (使用率)
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2022/7/4 17:32
+ * @since 2022/7/5 14:19
  */
 @Data
-public class CpuMetricsStatisticsVO implements BaseMetricsStatisticsVO {
+public class MemoryUsingMetricsStatisticsVO {
 
     /**
      * 最大值

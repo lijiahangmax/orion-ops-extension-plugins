@@ -20,17 +20,47 @@ public enum GranularityType {
     /**
      * 1分钟
      */
-    MINUTE(10, false, c -> c.add(Calendar.MINUTE, 1)),
+    MINUTE_1(10, false, c -> c.add(Calendar.MINUTE, 1)),
+
+    /**
+     * 5分钟
+     */
+    MINUTE_5(12, false, c -> c.add(Calendar.MINUTE, 5)),
+
+    /**
+     * 10分钟
+     */
+    MINUTE_10(14, false, c -> c.add(Calendar.MINUTE, 10)),
+
+    /**
+     * 30分钟
+     */
+    MINUTE_30(16, false, c -> c.add(Calendar.MINUTE, 30)),
 
     /**
      * 1小时
      */
-    HOUR(20, true, c -> c.add(Calendar.HOUR_OF_DAY, 1)),
+    HOUR_1(20, true, c -> c.add(Calendar.HOUR_OF_DAY, 1)),
+
+    /**
+     * 6小时
+     */
+    HOUR_6(22, true, c -> c.add(Calendar.HOUR_OF_DAY, 6)),
+
+    /**
+     * 12小时
+     */
+    HOUR_12(24, true, c -> c.add(Calendar.HOUR_OF_DAY, 12)),
 
     /**
      * 1天
      */
     DAY(30, true, c -> c.add(Calendar.DAY_OF_MONTH, 1)),
+
+    /**
+     * 1周
+     */
+    WEEK(40, true, c -> c.add(Calendar.WEEK_OF_MONTH, 1)),
 
     ;
 

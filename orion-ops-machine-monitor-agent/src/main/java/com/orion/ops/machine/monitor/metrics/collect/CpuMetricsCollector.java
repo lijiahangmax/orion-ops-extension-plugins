@@ -57,7 +57,7 @@ public class CpuMetricsCollector implements IMetricsCollector<CpuUsingBO> {
         long currentTime = this.prevTime = System.currentTimeMillis();
         // 计算
         CpuUsingBO cpu = new CpuUsingBO();
-        cpu.setU(Utils.computeCpuLoad(prevCpu, currentCpu) * 100);
+        cpu.setU(Utils.computeCpuLoad(prevCpu, currentCpu));
         cpu.setSr(Utils.getSecondTime(prevTime));
         cpu.setEr(Utils.getSecondTime(currentTime));
         log.debug("处理器指标: {}", JSON.toJSONString(cpu));

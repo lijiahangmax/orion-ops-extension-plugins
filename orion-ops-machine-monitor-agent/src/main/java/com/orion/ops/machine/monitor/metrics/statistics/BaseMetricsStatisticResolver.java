@@ -1,11 +1,13 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
+import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
 import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
 import com.orion.ops.machine.monitor.entity.vo.BaseMetricsStatisticsVO;
-import com.orion.utils.Exceptions;
+import com.orion.ops.machine.monitor.utils.TimestampValue;
+import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.collect.Lists;
 import com.orion.utils.time.Dates;
 import lombok.Getter;
@@ -13,6 +15,9 @@ import lombok.Getter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.OptionalDouble;
+import java.util.function.Function;
+import java.util.stream.DoubleStream;
 
 /**
  * 数据指标统计基类
@@ -57,36 +62,15 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
         if (rows.isEmpty()) {
             return;
         }
-        // 计算数据指标
-        this.setMax(rows);
-        this.setMin(rows);
-        this.setAvg(rows);
         // 获取粒度时间线
         List<Long> datelines = this.getMetricsDatelines();
-        // 计算图表数据
+        // 计算指标粒度数据
         this.computeGranularityMetrics(rows, datelines);
+        // 计算指标聚合数据
+        this.computeMetricsMax();
+        this.computeMetricsMin();
+        this.computeMetricsAvg();
     }
-
-    /**
-     * 设置最大值
-     *
-     * @param rows rows
-     */
-    protected abstract void setMax(List<T> rows);
-
-    /**
-     * 设置最小值
-     *
-     * @param rows rows
-     */
-    protected abstract void setMin(List<T> rows);
-
-    /**
-     * 设置平均值
-     *
-     * @param rows rows
-     */
-    protected abstract void setAvg(List<T> rows);
 
     /**
      * 获取指标时间线
@@ -119,5 +103,33 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      * @param datelines datelines
      */
     protected abstract void computeGranularityMetrics(List<T> rows, List<Long> datelines);
+
+    /**
+     * 计算最大值
+     */
+    protected abstract void computeMetricsMax();
+
+    /**
+     * 计算最小值
+     */
+    protected abstract void computeMetricsMin();
+
+    /**
+     * 计算平均值
+     */
+    protected abstract void computeMetricsAvg();
+
+    /**
+     * 计算聚合数据
+     *
+     * @param data data
+     * @param calc 计算
+     * @return data
+     */
+    protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc) {
+        DoubleStream stream = data.stream().mapToDouble(TimestampValue::getValue);
+        double max = calc.apply(stream).orElse(Const.D_0);
+        return Utils.roundToDouble(max, 3);
+    }
 
 }

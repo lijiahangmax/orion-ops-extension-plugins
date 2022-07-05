@@ -5,9 +5,11 @@ import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
 import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
-import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
-import com.orion.ops.machine.monitor.entity.vo.CpuMetricsStatisticsVO;
+import com.orion.ops.machine.monitor.entity.vo.MemoryMetricsStatisticsVO;
+import com.orion.ops.machine.monitor.entity.vo.MemorySizeMetricsStatisticsVO;
+import com.orion.ops.machine.monitor.entity.vo.MemoryUsingMetricsStatisticsVO;
 import com.orion.ops.machine.monitor.utils.TimestampValue;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.collect.Lists;
@@ -19,20 +21,34 @@ import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 /**
- * 处理器数据指标统计
+ * 内存数据指标统计
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2022/7/4 17:51
+ * @since 2022/7/5 14:24
  */
-public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<CpuUsingBO, CpuMetricsStatisticsVO> {
+public class MemoryMetricsStatisticResolver extends BaseMetricsStatisticResolver<MemoryUsingBO, MemoryMetricsStatisticsVO> {
 
-    public CpuMetricsStatisticResolver(MetricsStatisticsRequest request) {
-        super(request, DataMetricsType.CPU, new CpuMetricsStatisticsVO());
+    /**
+     * 使用量
+     */
+    private final MemorySizeMetricsStatisticsVO size;
+
+    /**
+     * 使用率
+     */
+    private final MemoryUsingMetricsStatisticsVO using;
+
+    public MemoryMetricsStatisticResolver(MetricsStatisticsRequest request) {
+        super(request, DataMetricsType.MEMORY, new MemoryMetricsStatisticsVO());
+        this.size = new MemorySizeMetricsStatisticsVO();
+        this.using = new MemoryUsingMetricsStatisticsVO();
+        metrics.setSize(size);
+        metrics.setUsing(using);
     }
 
     @Override
-    protected void computeGranularityMetrics(List<CpuUsingBO> rows, List<Long> datelines) {
+    protected void computeGranularityMetrics(List<MemoryUsingBO> rows, List<Long> datelines) {
         System.out.println("-------------- rows ---------------");
         rows.stream().map(JSON::toJSONString).forEach(System.out::println);
         System.out.println("\n------------ datelines ------------");
@@ -43,15 +59,16 @@ public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<Cp
                 .forEach(System.out::println);
         System.out.println();
 
-        List<TimestampValue<Double>> using = Lists.newList();
+        List<TimestampValue<Double>> sizeMetrics = Lists.newList();
+        List<TimestampValue<Double>> usingMetrics = Lists.newList();
         for (int i = 0; i < datelines.size() - 1; i++) {
             Long start = datelines.get(i);
             Long end = datelines.get(i + 1);
-            List<CpuUsingBO> currentRows = Lists.newList();
+            List<MemoryUsingBO> currentRows = Lists.newList();
             // 设置数据到当前区间并且移除元素
-            Iterator<CpuUsingBO> iter = rows.iterator();
+            Iterator<MemoryUsingBO> iter = rows.iterator();
             while (iter.hasNext()) {
-                CpuUsingBO row = iter.next();
+                MemoryUsingBO row = iter.next();
                 Long sr = row.getSr();
                 if (start <= sr && sr < end) {
                     currentRows.add(row);
@@ -61,32 +78,45 @@ public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<Cp
             // 统计数据
             System.out.print(start + "-" + end + " ");
             System.out.println(currentRows.stream().map(BaseRangeBO::getSr).collect(Collectors.toList()));
-            double use = currentRows
+            double size = currentRows
                     .stream()
-                    .mapToDouble(CpuUsingBO::getU)
+                    .mapToDouble(MemoryUsingBO::getUs)
                     .average()
                     .orElse(Const.D_0);
-            using.add(new TimestampValue<>(start, Utils.roundToDouble(use, 3)));
+            double use = currentRows
+                    .stream()
+                    .mapToDouble(MemoryUsingBO::getUr)
+                    .average()
+                    .orElse(Const.D_0);
+            sizeMetrics.add(new  TimestampValue<>(start, Utils.roundToDouble(size, 3)));
+            usingMetrics.add(new TimestampValue<>(start, Utils.roundToDouble(use, 3)));
         }
-        metrics.setMetrics(using);
+        size.setMetrics(sizeMetrics);
+        using.setMetrics(usingMetrics);
     }
 
     @Override
     protected void computeMetricsMax() {
-        double max = super.calcDataAgg(metrics.getMetrics(), DoubleStream::max);
-        metrics.setMax(max);
+        double sizeMax = super.calcDataAgg(size.getMetrics(), DoubleStream::max);
+        double usingMax = super.calcDataAgg(using.getMetrics(), DoubleStream::max);
+        size.setMax(sizeMax);
+        using.setMax(usingMax);
     }
 
     @Override
     protected void computeMetricsMin() {
-        double min = super.calcDataAgg(metrics.getMetrics(), DoubleStream::min);
-        metrics.setMin(min);
+        double sizeMin = super.calcDataAgg(size.getMetrics(), DoubleStream::min);
+        double usingMin = super.calcDataAgg(using.getMetrics(), DoubleStream::min);
+        size.setMin(sizeMin);
+        using.setMin(usingMin);
     }
 
     @Override
     protected void computeMetricsAvg() {
-        double avg = super.calcDataAgg(metrics.getMetrics(), DoubleStream::average);
-        metrics.setAvg(avg);
+        double sizeAvg = super.calcDataAgg(size.getMetrics(), DoubleStream::average);
+        double usingAvg = super.calcDataAgg(using.getMetrics(), DoubleStream::average);
+        size.setAvg(sizeAvg);
+        using.setAvg(usingAvg);
     }
 
     public static void main(String[] args) {
@@ -96,7 +126,7 @@ public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<Cp
         r.setStartRange(s);
         r.setEndRange(e);
         r.setGranularity(GranularityType.MINUTE_1.getType());
-        CpuMetricsStatisticResolver res = new CpuMetricsStatisticResolver(r);
+        MemoryMetricsStatisticResolver res = new MemoryMetricsStatisticResolver(r);
         res.statistics();
         System.out.println();
         System.out.println(JSON.toJSONString(res.getMetrics()));
