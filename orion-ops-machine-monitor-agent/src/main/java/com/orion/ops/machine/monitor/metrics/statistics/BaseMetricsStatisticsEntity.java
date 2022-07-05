@@ -1,4 +1,4 @@
-package com.orion.ops.machine.monitor.entity.vo;
+package com.orion.ops.machine.monitor.metrics.statistics;
 
 /**
  * 监控指标统计数据
@@ -7,5 +7,5 @@ package com.orion.ops.machine.monitor.entity.vo;
  * @version 1.0.0
  * @since 2022/7/5 10:28
  */
-public interface BaseMetricsStatisticsVO {
+public interface BaseMetricsStatisticsEntity {
 }

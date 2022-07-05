@@ -4,18 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
-import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
 import com.orion.ops.machine.monitor.entity.vo.CpuMetricsStatisticsVO;
+import com.orion.ops.machine.monitor.entity.vo.MetricsStatisticsVO;
 import com.orion.ops.machine.monitor.utils.TimestampValue;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.collect.Lists;
 import com.orion.utils.time.Dates;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 /**
@@ -27,66 +24,42 @@ import java.util.stream.DoubleStream;
  */
 public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<CpuUsingBO, CpuMetricsStatisticsVO> {
 
+    /**
+     * 使用率
+     */
+    private final MetricsStatisticsVO<Double> using;
+
     public CpuMetricsStatisticResolver(MetricsStatisticsRequest request) {
         super(request, DataMetricsType.CPU, new CpuMetricsStatisticsVO());
+        this.using = new MetricsStatisticsVO<>();
+        metrics.setUsing(using);
     }
 
     @Override
-    protected void computeGranularityMetrics(List<CpuUsingBO> rows, List<Long> datelines) {
-        System.out.println("-------------- rows ---------------");
-        rows.stream().map(JSON::toJSONString).forEach(System.out::println);
-        System.out.println("\n------------ datelines ------------");
-        datelines.stream()
-                // .map(s -> s * 1000)
-                // .map(Dates::date)
-                // .map(Dates::format)
-                .forEach(System.out::println);
-        System.out.println();
-
-        List<TimestampValue<Double>> using = Lists.newList();
-        for (int i = 0; i < datelines.size() - 1; i++) {
-            Long start = datelines.get(i);
-            Long end = datelines.get(i + 1);
-            List<CpuUsingBO> currentRows = Lists.newList();
-            // 设置数据到当前区间并且移除元素
-            Iterator<CpuUsingBO> iter = rows.iterator();
-            while (iter.hasNext()) {
-                CpuUsingBO row = iter.next();
-                Long sr = row.getSr();
-                if (start <= sr && sr < end) {
-                    currentRows.add(row);
-                    iter.remove();
-                }
-            }
-            // 统计数据
-            System.out.print(start + "-" + end + " ");
-            System.out.println(currentRows.stream().map(BaseRangeBO::getSr).collect(Collectors.toList()));
-            double use = currentRows
-                    .stream()
-                    .mapToDouble(CpuUsingBO::getU)
-                    .average()
-                    .orElse(Const.D_0);
-            using.add(new TimestampValue<>(start, Utils.roundToDouble(use, 3)));
-        }
-        metrics.setMetrics(using);
+    protected void computeMetricsData(List<CpuUsingBO> rows, Long start, Long end) {
+        double avgUsing = rows.stream()
+                .mapToDouble(CpuUsingBO::getU)
+                .average()
+                .orElse(Const.D_0);
+        using.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble(avgUsing, 3)));
     }
 
     @Override
     protected void computeMetricsMax() {
-        double max = super.calcDataAgg(metrics.getMetrics(), DoubleStream::max);
-        metrics.setMax(max);
+        double max = super.calcDataAgg(using.getMetrics(), DoubleStream::max);
+        using.setMax(max);
     }
 
     @Override
     protected void computeMetricsMin() {
-        double min = super.calcDataAgg(metrics.getMetrics(), DoubleStream::min);
-        metrics.setMin(min);
+        double min = super.calcDataAgg(using.getMetrics(), DoubleStream::min);
+        using.setMin(min);
     }
 
     @Override
     protected void computeMetricsAvg() {
-        double avg = super.calcDataAgg(metrics.getMetrics(), DoubleStream::average);
-        metrics.setAvg(avg);
+        double avg = super.calcDataAgg(using.getMetrics(), DoubleStream::average);
+        using.setAvg(avg);
     }
 
     public static void main(String[] args) {

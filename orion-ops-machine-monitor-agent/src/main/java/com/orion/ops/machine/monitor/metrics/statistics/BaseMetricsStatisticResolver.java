@@ -1,22 +1,20 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
+import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
 import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
-import com.orion.ops.machine.monitor.entity.vo.BaseMetricsStatisticsVO;
 import com.orion.ops.machine.monitor.utils.TimestampValue;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.collect.Lists;
 import com.orion.utils.time.Dates;
 import lombok.Getter;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 /**
@@ -26,7 +24,7 @@ import java.util.stream.DoubleStream;
  * @version 1.0.0
  * @since 2022/7/5 10:26
  */
-public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S extends BaseMetricsStatisticsVO> {
+public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S extends BaseMetricsStatisticsEntity> {
 
     /**
      * 访问器
@@ -65,7 +63,7 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
         // 获取粒度时间线
         List<Long> datelines = this.getMetricsDatelines();
         // 计算指标粒度数据
-        this.computeGranularityMetrics(rows, datelines);
+        this.groupingGranularityMetrics(rows, datelines);
         // 计算指标聚合数据
         this.computeMetricsMax();
         this.computeMetricsMin();
@@ -97,12 +95,48 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
     }
 
     /**
-     * 计算粒度数据指标
+     * 粒度数据指标分组
      *
      * @param rows      rows
      * @param datelines datelines
      */
-    protected abstract void computeGranularityMetrics(List<T> rows, List<Long> datelines);
+    protected void groupingGranularityMetrics(List<T> rows, List<Long> datelines) {
+        System.out.println("-------------- rows ---------------");
+        rows.stream().map(JSON::toJSONString).forEach(System.out::println);
+        System.out.println("\n------------ datelines ------------");
+        datelines.forEach(System.out::println);
+        System.out.println();
+
+        // 数据分组
+        for (int i = 0; i < datelines.size() - 1; i++) {
+            Long start = datelines.get(i);
+            Long end = datelines.get(i + 1);
+            List<T> currentRows = Lists.newList();
+            // 设置数据到当前区间并且移除元素
+            Iterator<T> iter = rows.iterator();
+            while (iter.hasNext()) {
+                T row = iter.next();
+                Long sr = row.getSr();
+                if (start <= sr && sr < end) {
+                    currentRows.add(row);
+                    iter.remove();
+                }
+            }
+            // 计算数据
+            System.out.print(start + "-" + end + " ");
+            System.out.println(currentRows.stream().map(BaseRangeBO::getSr).collect(Collectors.toList()));
+            this.computeMetricsData(currentRows, start, end);
+        }
+    }
+
+    /**
+     * 计算粒度指标数据
+     *
+     * @param rows  rows
+     * @param start start
+     * @param end   end
+     */
+    protected abstract void computeMetricsData(List<T> rows, Long start, Long end);
 
     /**
      * 计算最大值

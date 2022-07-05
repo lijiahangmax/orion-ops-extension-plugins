@@ -1,5 +1,6 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
+import com.orion.ops.machine.monitor.metrics.statistics.BaseMetricsStatisticsEntity;
 import lombok.Data;
 
 /**
@@ -10,16 +11,16 @@ import lombok.Data;
  * @since 2022/7/5 14:15
  */
 @Data
-public class MemoryMetricsStatisticsVO implements BaseMetricsStatisticsVO {
+public class MemoryMetricsStatisticsVO implements BaseMetricsStatisticsEntity {
 
     /**
      * 使用量
      */
-    private MemorySizeMetricsStatisticsVO size;
+    private MetricsStatisticsVO<Double> size;
 
     /**
      * 使用率
      */
-    private MemoryUsingMetricsStatisticsVO using;
+    private MetricsStatisticsVO<Double> using;
 
 }
