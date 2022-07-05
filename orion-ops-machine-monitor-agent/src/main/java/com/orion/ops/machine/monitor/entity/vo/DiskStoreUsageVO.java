@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
-import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsingDTO;
+import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsageDTO;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.convert.TypeStore;
 import com.orion.utils.io.Files1;
@@ -14,7 +14,7 @@ import lombok.Data;
  * @since 2022/6/30 17:30
  */
 @Data
-public class DiskStoreUsingVO {
+public class DiskStoreUsageVO {
 
     /**
      * 硬盘名称
@@ -29,7 +29,7 @@ public class DiskStoreUsingVO {
     /**
      * 使用空间
      */
-    private String usingSpace;
+    private String usageSpace;
 
     /**
      * 空闲空间
@@ -39,16 +39,16 @@ public class DiskStoreUsingVO {
     /**
      * 硬盘使用率
      */
-    private Double usingRate;
+    private Double usage;
 
     static {
-        TypeStore.STORE.register(DiskStoreUsingDTO.class, DiskStoreUsingVO.class, p -> {
-            DiskStoreUsingVO vo = new DiskStoreUsingVO();
+        TypeStore.STORE.register(DiskStoreUsageDTO.class, DiskStoreUsageVO.class, p -> {
+            DiskStoreUsageVO vo = new DiskStoreUsageVO();
             vo.setName(p.getName());
             vo.setTotalSpace(Files1.getSize(p.getTotalSpace()));
-            vo.setUsingSpace(Files1.getSize(p.getUsingSpace()));
+            vo.setUsageSpace(Files1.getSize(p.getUsageSpace()));
             vo.setFreeSpace(Files1.getSize(p.getFreeSpace()));
-            vo.setUsingRate(Utils.roundToDouble(p.getUsingRate()));
+            vo.setUsage(Utils.roundToDouble(p.getUsage()));
             return vo;
         });
     }

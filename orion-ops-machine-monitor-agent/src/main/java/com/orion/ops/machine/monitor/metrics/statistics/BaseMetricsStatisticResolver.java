@@ -153,17 +153,22 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      */
     protected abstract void computeMetricsAvg();
 
+    protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc) {
+        return this.calcDataAgg(data, calc, 3);
+    }
+
     /**
      * 计算聚合数据
      *
-     * @param data data
-     * @param calc 计算
+     * @param data  data
+     * @param calc  计算
+     * @param scale 小数位
      * @return data
      */
-    protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc) {
+    protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc, Integer scale) {
         DoubleStream stream = data.stream().mapToDouble(TimestampValue::getValue);
         double max = calc.apply(stream).orElse(Const.D_0);
-        return Utils.roundToDouble(max, 3);
+        return Utils.roundToDouble(max, scale);
     }
 
 }

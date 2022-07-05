@@ -1,8 +1,8 @@
 package com.orion.ops.machine.monitor.controller;
 
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
-import com.orion.ops.machine.monitor.entity.dto.DiskIoUsingDTO;
-import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsingDTO;
+import com.orion.ops.machine.monitor.entity.dto.DiskIoUsageDTO;
+import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsageDTO;
 import com.orion.ops.machine.monitor.entity.vo.*;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.utils.convert.Converts;
@@ -48,17 +48,17 @@ public class MachineMetricsController {
     /**
      * 获取 cpu 使用信息
      */
-    @GetMapping("/cpu-using")
-    public CpuUsingVO getCpuUsing() {
-        return Converts.to(metricsProvider.getCpuUsing(), CpuUsingVO.class);
+    @GetMapping("/cpu-usage")
+    public CpuUsageVO getCpuUsage() {
+        return Converts.to(metricsProvider.getCpuUsage(), CpuUsageVO.class);
     }
 
     /**
      * 获取内存使用信息
      */
-    @GetMapping("/memory-using")
-    public MemoryUsingVO getMemoryUsing() {
-        return Converts.to(metricsProvider.getMemoryUsing(), MemoryUsingVO.class);
+    @GetMapping("/memory-usage")
+    public MemoryUsageVO getMemoryUsage() {
+        return Converts.to(metricsProvider.getMemoryUsage(), MemoryUsageVO.class);
     }
 
     /**
@@ -72,30 +72,30 @@ public class MachineMetricsController {
     /**
      * 获取硬盘空间使用信息
      */
-    @GetMapping("/disk-store-using")
-    public List<DiskStoreUsingVO> getDiskStoreUsing() {
-        return Converts.toList(metricsProvider.getDiskStoreUsing(), DiskStoreUsingVO.class);
+    @GetMapping("/disk-store-usage")
+    public List<DiskStoreUsageVO> getDiskStoreUsage() {
+        return Converts.toList(metricsProvider.getDiskStoreUsage(), DiskStoreUsageVO.class);
     }
 
     /**
      * 合并获取硬盘空间使用信息
      */
-    @GetMapping("/disk-store-using-merge")
-    public DiskStoreUsingVO getDiskStoreUsingMerge() {
-        List<DiskStoreUsingDTO> store = metricsProvider.getDiskStoreUsing();
+    @GetMapping("/disk-store-usage-merge")
+    public DiskStoreUsageVO getDiskStoreUsageMerge() {
+        List<DiskStoreUsageDTO> store = metricsProvider.getDiskStoreUsage();
         if (store.size() == 1) {
-            return Converts.to(store.get(0), DiskStoreUsingVO.class);
+            return Converts.to(store.get(0), DiskStoreUsageVO.class);
         }
         // 合并
-        long totalSpace = store.stream().mapToLong(DiskStoreUsingDTO::getTotalSpace).sum();
-        long freeSpace = store.stream().mapToLong(DiskStoreUsingDTO::getFreeSpace).sum();
-        long usingSpace = totalSpace - freeSpace;
-        DiskStoreUsingDTO merge = new DiskStoreUsingDTO();
+        long totalSpace = store.stream().mapToLong(DiskStoreUsageDTO::getTotalSpace).sum();
+        long freeSpace = store.stream().mapToLong(DiskStoreUsageDTO::getFreeSpace).sum();
+        long usageSpace = totalSpace - freeSpace;
+        DiskStoreUsageDTO merge = new DiskStoreUsageDTO();
         merge.setTotalSpace(totalSpace);
-        merge.setUsingSpace(usingSpace);
+        merge.setUsageSpace(usageSpace);
         merge.setFreeSpace(freeSpace);
-        merge.setUsingRate((double) usingSpace / (double) totalSpace);
-        return Converts.to(merge, DiskStoreUsingVO.class);
+        merge.setUsage((double) usageSpace / (double) totalSpace);
+        return Converts.to(merge, DiskStoreUsageVO.class);
     }
 
     /**
@@ -109,33 +109,33 @@ public class MachineMetricsController {
     /**
      * 获取硬盘 IO 使用信息
      */
-    @GetMapping("/disk-io-using")
-    public List<DiskIoUsingVO> getDiskIoUsing() {
-        return Converts.toList(metricsProvider.getDiskIoUsing(), DiskIoUsingVO.class);
+    @GetMapping("/disk-io-usage")
+    public List<DiskIoUsageVO> getDiskIoUsage() {
+        return Converts.toList(metricsProvider.getDiskIoUsage(), DiskIoUsageVO.class);
     }
 
     /**
      * 合并获取硬盘 IO 使用信息
      */
-    @GetMapping("/disk-io-using-merge")
-    public DiskIoUsingVO getDiskIoUsingMerge() {
-        List<DiskIoUsingDTO> io = metricsProvider.getDiskIoUsing();
+    @GetMapping("/disk-io-usage-merge")
+    public DiskIoUsageVO getDiskIoUsageMerge() {
+        List<DiskIoUsageDTO> io = metricsProvider.getDiskIoUsage();
         if (io.size() == 1) {
-            return Converts.to(io.get(0), DiskIoUsingVO.class);
+            return Converts.to(io.get(0), DiskIoUsageVO.class);
         }
         // 合并
-        long readCount = io.stream().mapToLong(DiskIoUsingDTO::getReadCount).sum();
-        long readBytes = io.stream().mapToLong(DiskIoUsingDTO::getReadBytes).sum();
-        long writeCount = io.stream().mapToLong(DiskIoUsingDTO::getWriteCount).sum();
-        long writeBytes = io.stream().mapToLong(DiskIoUsingDTO::getWriteBytes).sum();
-        long usingTime = io.stream().mapToLong(DiskIoUsingDTO::getUsingTime).sum();
-        DiskIoUsingDTO merge = new DiskIoUsingDTO();
+        long readCount = io.stream().mapToLong(DiskIoUsageDTO::getReadCount).sum();
+        long readBytes = io.stream().mapToLong(DiskIoUsageDTO::getReadBytes).sum();
+        long writeCount = io.stream().mapToLong(DiskIoUsageDTO::getWriteCount).sum();
+        long writeBytes = io.stream().mapToLong(DiskIoUsageDTO::getWriteBytes).sum();
+        long usageTime = io.stream().mapToLong(DiskIoUsageDTO::getUsageTime).sum();
+        DiskIoUsageDTO merge = new DiskIoUsageDTO();
         merge.setReadCount(readCount);
         merge.setReadBytes(readBytes);
         merge.setWriteCount(writeCount);
         merge.setWriteBytes(writeBytes);
-        merge.setUsingTime(usingTime);
-        return Converts.to(merge, DiskIoUsingVO.class);
+        merge.setUsageTime(usageTime);
+        return Converts.to(merge, DiskIoUsageVO.class);
     }
 
     /**

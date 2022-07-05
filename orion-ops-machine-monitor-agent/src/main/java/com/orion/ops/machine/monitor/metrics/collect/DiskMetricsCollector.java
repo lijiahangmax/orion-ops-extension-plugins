@@ -2,7 +2,7 @@ package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
@@ -27,7 +27,7 @@ import java.util.List;
 @Slf4j
 @Order(530)
 @Component
-public class DiskMetricsCollector implements IMetricsCollector<DiskIoUsingBO> {
+public class DiskMetricsCollector implements IMetricsCollector<DiskIoUsageBO> {
 
     @Resource
     private MetricsProvider metricsProvider;
@@ -53,24 +53,24 @@ public class DiskMetricsCollector implements IMetricsCollector<DiskIoUsingBO> {
     }
 
     @Override
-    public DiskIoUsingBO collect() {
+    public DiskIoUsageBO collect() {
         return Lists.first(this.collectAsList());
     }
 
     @Override
-    public List<DiskIoUsingBO> collectAsList() {
+    public List<DiskIoUsageBO> collectAsList() {
         List<HWDiskStore> prevDisks = this.prevDisks;
         long prevTime = this.prevTime;
         List<HWDiskStore> currentDisks = this.prevDisks = hardware.getDiskStores();
         long currentTime = this.prevTime = System.currentTimeMillis();
         // 计算
-        List<DiskIoUsingBO> list = Lists.newList();
+        List<DiskIoUsageBO> list = Lists.newList();
         for (int i = 0; i < currentDisks.size(); i++) {
             HWDiskStore currentDisk = currentDisks.get(i);
             HWDiskStore prevDisk = prevDisks.get(i);
             // 设置
             String seq = Utils.getDiskSeq(currentDisk.getModel());
-            DiskIoUsingBO disk = new DiskIoUsingBO();
+            DiskIoUsageBO disk = new DiskIoUsageBO();
             disk.setSeq(seq);
             disk.setRs((currentDisk.getReadBytes() - prevDisk.getReadBytes()) / Const.BUFFER_KB_1);
             disk.setWs((currentDisk.getReadBytes() - prevDisk.getReadBytes()) / Const.BUFFER_KB_1);

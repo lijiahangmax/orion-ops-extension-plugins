@@ -90,21 +90,21 @@ public class MetricsProvider {
     /**
      * 获取 cpu 使用率
      */
-    public CpuUsingDTO getCpuUsing() {
+    public CpuUsageDTO getCpuUsage() {
         CentralProcessor processor = hardware.getProcessor();
         long[] beforeTicks = processor.getSystemCpuLoadTicks();
         long[][] beforeProcTicks = processor.getProcessorCpuLoadTicks();
         // 获取当前指标 休眠1秒 获取后一秒的指标比对
         Threads.sleep(Const.MS_S_1);
-        CpuUsingDTO cpuUsing = new CpuUsingDTO();
-        cpuUsing.setUsing(processor.getSystemCpuLoadBetweenTicks(beforeTicks) * 100);
+        CpuUsageDTO cpu = new CpuUsageDTO();
+        cpu.setUsage(processor.getSystemCpuLoadBetweenTicks(beforeTicks) * 100);
         // 核心使用率
-        List<Double> coreUsing = Arrays.stream(processor.getProcessorCpuLoadBetweenTicks(beforeProcTicks))
+        List<Double> core = Arrays.stream(processor.getProcessorCpuLoadBetweenTicks(beforeProcTicks))
                 .map(s -> s * 100)
                 .boxed()
                 .collect(Collectors.toList());
-        cpuUsing.setCoreUsing(coreUsing);
-        return cpuUsing;
+        cpu.setCoreUsage(core);
+        return cpu;
     }
 
     /**
@@ -112,17 +112,17 @@ public class MetricsProvider {
      *
      * @return metrics
      */
-    public MemoryUsingDTO getMemoryUsing() {
+    public MemoryUsageDTO getMemoryUsage() {
         GlobalMemory memory = hardware.getMemory();
         long totalByte = memory.getTotal();
         long availableByte = memory.getAvailable();
         // 设置内存指标
-        MemoryUsingDTO memoryUsing = new MemoryUsingDTO();
-        memoryUsing.setTotalMemory(totalByte);
-        memoryUsing.setUsingMemory(totalByte - availableByte);
-        memoryUsing.setFreeMemory(availableByte);
-        memoryUsing.setUsingRate((double) (totalByte - availableByte) / (double) totalByte);
-        return memoryUsing;
+        MemoryUsageDTO memoryUsage = new MemoryUsageDTO();
+        memoryUsage.setTotalMemory(totalByte);
+        memoryUsage.setUsageMemory(totalByte - availableByte);
+        memoryUsage.setFreeMemory(availableByte);
+        memoryUsage.setUsage((double) (totalByte - availableByte) / (double) totalByte);
+        return memoryUsage;
     }
 
     /**
@@ -150,20 +150,20 @@ public class MetricsProvider {
      *
      * @return metrics
      */
-    public List<DiskStoreUsingDTO> getDiskStoreUsing() {
+    public List<DiskStoreUsageDTO> getDiskStoreUsage() {
         return os.getFileSystem()
                 .getFileStores()
                 .stream()
                 .map(s -> {
                     long totalSpace = s.getTotalSpace();
                     long freeSpace = s.getFreeSpace();
-                    long usingSpace = totalSpace - freeSpace;
-                    DiskStoreUsingDTO disk = new DiskStoreUsingDTO();
+                    long usageSpace = totalSpace - freeSpace;
+                    DiskStoreUsageDTO disk = new DiskStoreUsageDTO();
                     disk.setName(s.getName());
                     disk.setTotalSpace(totalSpace);
-                    disk.setUsingSpace(usingSpace);
+                    disk.setUsageSpace(usageSpace);
                     disk.setFreeSpace(freeSpace);
-                    disk.setUsingRate((double) usingSpace / (double) totalSpace);
+                    disk.setUsage((double) usageSpace / (double) totalSpace);
                     return disk;
                 }).collect(Collectors.toList());
     }
@@ -189,23 +189,24 @@ public class MetricsProvider {
      *
      * @return 硬盘 IO 使用信息
      */
-    public List<DiskIoUsingDTO> getDiskIoUsing() {
+    public List<DiskIoUsageDTO> getDiskIoUsage() {
         List<HWDiskStore> beforeDisks = hardware.getDiskStores();
         // 获取当前指标 休眠1秒 获取后一秒的指标比对
         Threads.sleep(Const.MS_S_1);
         List<HWDiskStore> currentDisks = hardware.getDiskStores();
-        List<DiskIoUsingDTO> list = new ArrayList<>();
+        List<DiskIoUsageDTO> list = new ArrayList<>();
         for (int i = 0; i < currentDisks.size(); i++) {
             HWDiskStore afterDisk = currentDisks.get(i);
             HWDiskStore beforeDisk = beforeDisks.get(i);
-            DiskIoUsingDTO using = new DiskIoUsingDTO();
-            using.setModel(afterDisk.getModel());
-            using.setReadCount(afterDisk.getReads() - beforeDisk.getReads());
-            using.setReadBytes(afterDisk.getReadBytes() - beforeDisk.getReadBytes());
-            using.setWriteCount(afterDisk.getWrites() - beforeDisk.getWrites());
-            using.setWriteBytes(afterDisk.getReadBytes() - beforeDisk.getReadBytes());
-            using.setUsingTime(afterDisk.getTransferTime() - beforeDisk.getTransferTime());
-            list.add(using);
+            // 对比数据
+            DiskIoUsageDTO disk = new DiskIoUsageDTO();
+            disk.setModel(afterDisk.getModel());
+            disk.setReadCount(afterDisk.getReads() - beforeDisk.getReads());
+            disk.setReadBytes(afterDisk.getReadBytes() - beforeDisk.getReadBytes());
+            disk.setWriteCount(afterDisk.getWrites() - beforeDisk.getWrites());
+            disk.setWriteBytes(afterDisk.getReadBytes() - beforeDisk.getReadBytes());
+            disk.setUsageTime(afterDisk.getTransferTime() - beforeDisk.getTransferTime());
+            list.add(disk);
         }
         return list;
     }

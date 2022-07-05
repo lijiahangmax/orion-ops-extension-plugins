@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 2022/6/28 10:25
  */
 @Data
-public class DiskIoUsingDTO {
+public class DiskIoUsageDTO {
 
     /**
      * 名称
@@ -40,6 +40,6 @@ public class DiskIoUsingDTO {
     /**
      * 使用时间
      */
-    private Long usingTime;
+    private Long usageTime;
 
 }

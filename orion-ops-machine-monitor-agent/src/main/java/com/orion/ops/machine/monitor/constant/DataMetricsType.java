@@ -21,14 +21,14 @@ public enum DataMetricsType {
     /**
      * 处理器
      */
-    CPU(CpuUsingBO.class,
+    CPU(CpuUsageBO.class,
             PathBuilders::getCpuDayDataPath,
             PathBuilders::getCpuMonthDataPath),
 
     /**
      * 内存
      */
-    MEMORY(MemoryUsingBO.class,
+    MEMORY(MemoryUsageBO.class,
             PathBuilders::getMemoryDayDataPath,
             PathBuilders::getMemoryMonthDataPath),
 
@@ -42,7 +42,7 @@ public enum DataMetricsType {
     /**
      * 磁盘
      */
-    DISK(DiskIoUsingBO.class,
+    DISK(DiskIoUsageBO.class,
             d -> PathBuilders.getDiskDayDataPath(d, Currents.getDiskSeq()),
             m -> PathBuilders.getDiskMonthDataPath(m, Currents.getDiskSeq())),
 

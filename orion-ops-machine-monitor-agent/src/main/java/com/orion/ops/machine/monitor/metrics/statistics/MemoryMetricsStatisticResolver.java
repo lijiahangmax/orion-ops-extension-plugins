@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
-import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.MemoryUsageBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
 import com.orion.ops.machine.monitor.entity.vo.MemoryMetricsStatisticsVO;
 import com.orion.ops.machine.monitor.entity.vo.MetricsStatisticsVO;
@@ -22,7 +22,7 @@ import java.util.stream.DoubleStream;
  * @version 1.0.0
  * @since 2022/7/5 14:24
  */
-public class MemoryMetricsStatisticResolver extends BaseMetricsStatisticResolver<MemoryUsingBO, MemoryMetricsStatisticsVO> {
+public class MemoryMetricsStatisticResolver extends BaseMetricsStatisticResolver<MemoryUsageBO, MemoryMetricsStatisticsVO> {
 
     /**
      * 使用量
@@ -32,52 +32,52 @@ public class MemoryMetricsStatisticResolver extends BaseMetricsStatisticResolver
     /**
      * 使用率
      */
-    private final MetricsStatisticsVO<Double> using;
+    private final MetricsStatisticsVO<Double> usage;
 
     public MemoryMetricsStatisticResolver(MetricsStatisticsRequest request) {
         super(request, DataMetricsType.MEMORY, new MemoryMetricsStatisticsVO());
         this.size = new MetricsStatisticsVO<>();
-        this.using = new MetricsStatisticsVO<>();
+        this.usage = new MetricsStatisticsVO<>();
         metrics.setSize(size);
-        metrics.setUsing(using);
+        metrics.setUsage(usage);
     }
 
     @Override
-    protected void computeMetricsData(List<MemoryUsingBO> rows, Long start, Long end) {
+    protected void computeMetricsData(List<MemoryUsageBO> rows, Long start, Long end) {
         double avgSize = rows.stream()
-                .mapToDouble(MemoryUsingBO::getUs)
+                .mapToDouble(MemoryUsageBO::getUs)
                 .average()
                 .orElse(Const.D_0);
-        double avgUsing = rows.stream()
-                .mapToDouble(MemoryUsingBO::getUr)
+        double avgUsage = rows.stream()
+                .mapToDouble(MemoryUsageBO::getUr)
                 .average()
                 .orElse(Const.D_0);
         size.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble(avgSize, 3)));
-        using.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble(avgUsing, 3)));
+        usage.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble(avgUsage, 3)));
     }
 
     @Override
     protected void computeMetricsMax() {
         double sizeMax = super.calcDataAgg(size.getMetrics(), DoubleStream::max);
-        double usingMax = super.calcDataAgg(using.getMetrics(), DoubleStream::max);
+        double usageMax = super.calcDataAgg(usage.getMetrics(), DoubleStream::max);
         size.setMax(sizeMax);
-        using.setMax(usingMax);
+        usage.setMax(usageMax);
     }
 
     @Override
     protected void computeMetricsMin() {
         double sizeMin = super.calcDataAgg(size.getMetrics(), DoubleStream::min);
-        double usingMin = super.calcDataAgg(using.getMetrics(), DoubleStream::min);
+        double usageMin = super.calcDataAgg(usage.getMetrics(), DoubleStream::min);
         size.setMin(sizeMin);
-        using.setMin(usingMin);
+        usage.setMin(usageMin);
     }
 
     @Override
     protected void computeMetricsAvg() {
         double sizeAvg = super.calcDataAgg(size.getMetrics(), DoubleStream::average);
-        double usingAvg = super.calcDataAgg(using.getMetrics(), DoubleStream::average);
+        double usageAvg = super.calcDataAgg(usage.getMetrics(), DoubleStream::average);
         size.setAvg(sizeAvg);
-        using.setAvg(usingAvg);
+        usage.setAvg(usageAvg);
     }
 
     public static void main(String[] args) {

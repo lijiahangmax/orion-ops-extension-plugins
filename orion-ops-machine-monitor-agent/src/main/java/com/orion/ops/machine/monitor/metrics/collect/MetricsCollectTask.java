@@ -1,8 +1,8 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
-import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
-import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
-import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
+import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
+import com.orion.ops.machine.monitor.entity.bo.MemoryUsageBO;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReduceCalculator;
 import com.orion.utils.time.Dates;
@@ -65,7 +65,7 @@ public class MetricsCollectTask implements Runnable {
      */
     private void collectCpuData() {
         // 采集处理器数据
-        CpuUsingBO cpu = ((CpuMetricsCollector) MetricsCollectorType.CPU.getCollectBean()).collect();
+        CpuUsageBO cpu = ((CpuMetricsCollector) MetricsCollectorType.CPU.getCollectBean()).collect();
         // 规约小时数据粒度
         MetricsHourReduceCalculator.CPU.getReduceResolverBean().reduce(cpu);
     }
@@ -75,7 +75,7 @@ public class MetricsCollectTask implements Runnable {
      */
     private void collectMemoryData() {
         // 采集内存数据
-        MemoryUsingBO mem = ((MemoryMetricsCollector) MetricsCollectorType.MEMORY.getCollectBean()).collect();
+        MemoryUsageBO mem = ((MemoryMetricsCollector) MetricsCollectorType.MEMORY.getCollectBean()).collect();
         // 规约小时数据粒度
         MetricsHourReduceCalculator.MEMORY.getReduceResolverBean().reduce(mem);
     }
@@ -95,8 +95,8 @@ public class MetricsCollectTask implements Runnable {
      */
     private void collectDiskData() {
         // 采集硬盘数据
-        List<DiskIoUsingBO> disks = ((DiskMetricsCollector) MetricsCollectorType.DISK.getCollectBean()).collectAsList();
-        for (DiskIoUsingBO disk : disks) {
+        List<DiskIoUsageBO> disks = ((DiskMetricsCollector) MetricsCollectorType.DISK.getCollectBean()).collectAsList();
+        for (DiskIoUsageBO disk : disks) {
             // 规约小时数据粒度
             MetricsHourReduceCalculator.DISK.getReduceResolverBean().reduce(disk);
         }

@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 2022/6/27 18:09
  */
 @Data
-public class MemoryUsingDTO {
+public class MemoryUsageDTO {
 
     /**
      * 总内存
@@ -20,7 +20,7 @@ public class MemoryUsingDTO {
     /**
      * 使用内存
      */
-    private Long usingMemory;
+    private Long usageMemory;
 
     /**
      * 空闲内存
@@ -30,6 +30,6 @@ public class MemoryUsingDTO {
     /**
      * 内存使用率
      */
-    private Double usingRate;
+    private Double usage;
 
 }

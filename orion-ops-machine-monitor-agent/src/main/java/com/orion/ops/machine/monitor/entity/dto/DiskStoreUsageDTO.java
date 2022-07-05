@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 2022/6/27 18:37
  */
 @Data
-public class DiskStoreUsingDTO {
+public class DiskStoreUsageDTO {
 
     /**
      * 硬盘名称
@@ -25,7 +25,7 @@ public class DiskStoreUsingDTO {
     /**
      * 使用空间
      */
-    private Long usingSpace;
+    private Long usageSpace;
 
     /**
      * 空闲空间
@@ -35,6 +35,6 @@ public class DiskStoreUsingDTO {
     /**
      * 硬盘使用率
      */
-    private Double usingRate;
+    private Double usage;
 
 }

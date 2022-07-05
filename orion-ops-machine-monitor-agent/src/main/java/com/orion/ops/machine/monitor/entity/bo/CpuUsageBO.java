@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CpuUsingBO extends BaseRangeBO {
+public class CpuUsageBO extends BaseRangeBO {
 
     /**
-     * 使用率 using
+     * 使用率 usage
      */
     private Double u;
 

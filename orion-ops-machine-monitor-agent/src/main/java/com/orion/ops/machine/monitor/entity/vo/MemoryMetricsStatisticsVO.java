@@ -21,6 +21,6 @@ public class MemoryMetricsStatisticsVO implements BaseMetricsStatisticsEntity {
     /**
      * 使用率
      */
-    private MetricsStatisticsVO<Double> using;
+    private MetricsStatisticsVO<Double> usage;
 
 }

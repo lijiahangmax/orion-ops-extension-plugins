@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DiskIoUsingBO extends BaseRangeBO {
+public class DiskIoUsageBO extends BaseRangeBO {
 
     /**
      * 硬盘序列
@@ -42,7 +42,7 @@ public class DiskIoUsingBO extends BaseRangeBO {
     private Long ws;
 
     /**
-     * 使用时间 ms usingTime
+     * 使用时间 ms usageTime
      */
     private Long ut;
 

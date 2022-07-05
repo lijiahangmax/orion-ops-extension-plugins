@@ -156,27 +156,14 @@ public class Utils {
     }
 
     /**
-     * 计算 mpb/s
+     * 计算速率 mpb/s
      *
-     * @param range range
-     * @param bytes bytes
+     * @param second second
+     * @param bytes  bytes
      * @return mpb/s
      */
-    public static Double computeMpbSecondRate(BaseRangeBO range, long bytes) {
-        long s = range.getEr() - range.getSr();
-        return roundToDouble((double) bytes / s / MPB, 5);
-    }
-
-    /**
-     * 计算 pecket/s
-     *
-     * @param range  range
-     * @param packet packet
-     * @return mpb/s
-     */
-    public static Double computePacketSecondRate(BaseRangeBO range, long packet) {
-        long s = range.getEr() - range.getSr();
-        return roundToDouble((double) packet / s / MPB, 3);
+    public static Double computeMpbSecondSpeed(long second, long bytes) {
+        return roundToDouble((double) bytes / second / MPB, 5);
     }
 
     /**

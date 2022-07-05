@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
-import com.orion.ops.machine.monitor.entity.dto.DiskIoUsingDTO;
+import com.orion.ops.machine.monitor.entity.dto.DiskIoUsageDTO;
 import com.orion.utils.convert.TypeStore;
 import com.orion.utils.io.Files1;
 import lombok.Data;
@@ -13,7 +13,7 @@ import lombok.Data;
  * @since 2022/6/30 18:46
  */
 @Data
-public class DiskIoUsingVO {
+public class DiskIoUsageVO {
 
     /**
      * 名称
@@ -41,8 +41,8 @@ public class DiskIoUsingVO {
     private String writeSize;
 
     static {
-        TypeStore.STORE.register(DiskIoUsingDTO.class, DiskIoUsingVO.class, p -> {
-            DiskIoUsingVO vo = new DiskIoUsingVO();
+        TypeStore.STORE.register(DiskIoUsageDTO.class, DiskIoUsageVO.class, p -> {
+            DiskIoUsageVO vo = new DiskIoUsageVO();
             vo.setModel(p.getModel());
             vo.setReadCount(p.getReadCount());
             vo.setReadSize(Files1.getSize(p.getReadBytes()));

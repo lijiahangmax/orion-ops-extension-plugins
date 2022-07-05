@@ -2,11 +2,10 @@ package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.ops.machine.monitor.entity.bo.MemoryUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.MemoryUsageBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,7 @@ import javax.annotation.Resource;
 @Slf4j
 @Order(510)
 @Component
-public class MemoryMetricsCollector implements IMetricsCollector<MemoryUsingBO> {
+public class MemoryMetricsCollector implements IMetricsCollector<MemoryUsageBO> {
 
     @Resource
     private MetricsProvider metricsProvider;
@@ -48,15 +47,15 @@ public class MemoryMetricsCollector implements IMetricsCollector<MemoryUsingBO> 
     }
 
     @Override
-    public MemoryUsingBO collect() {
+    public MemoryUsageBO collect() {
         long prevTime = this.prevTime;
         long total = memory.getTotal();
-        long using = total - memory.getAvailable();
+        long usage = total - memory.getAvailable();
         long currentTime = this.prevTime = System.currentTimeMillis();
         // 计算
-        MemoryUsingBO mem = new MemoryUsingBO();
-        mem.setUr(Utils.roundToDouble((double) using / (double) total * 100, 3));
-        mem.setUs(using / Const.BUFFER_KB_1 / Const.BUFFER_KB_1);
+        MemoryUsageBO mem = new MemoryUsageBO();
+        mem.setUr(Utils.roundToDouble((double) usage / (double) total * 100, 3));
+        mem.setUs(usage / Const.BUFFER_KB_1 / Const.BUFFER_KB_1);
         mem.setSr(Utils.getSecondTime(prevTime));
         mem.setEr(Utils.getSecondTime(currentTime));
         log.debug("内存指标: {}", JSON.toJSONString(mem));

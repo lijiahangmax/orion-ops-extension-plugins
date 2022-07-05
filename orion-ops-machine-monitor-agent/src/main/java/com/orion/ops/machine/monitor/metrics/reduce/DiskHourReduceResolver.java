@@ -2,7 +2,7 @@ package com.orion.ops.machine.monitor.metrics.reduce;
 
 import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.ops.machine.monitor.entity.bo.DiskIoUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.collect.Lists;
@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIoUsingBO> {
+public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIoUsageBO> {
 
     /**
      * 当前采集信息粒度时
@@ -32,7 +32,7 @@ public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIo
     /**
      * 当前采集信息
      */
-    private final Map<String, List<DiskIoUsingBO>> currentMetrics;
+    private final Map<String, List<DiskIoUsageBO>> currentMetrics;
 
     public DiskHourReduceResolver() {
         this.currentHours = Maps.newMap();
@@ -40,11 +40,11 @@ public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIo
     }
 
     @Override
-    public void reduce(DiskIoUsingBO data) {
+    public void reduce(DiskIoUsageBO data) {
         String seq = data.getSeq();
         String currentHour = Utils.getRangeStartHour(data);
         String prevHour = currentHours.computeIfAbsent(seq, k -> currentHour);
-        List<DiskIoUsingBO> list = currentMetrics.computeIfAbsent(seq, k -> Lists.newList());
+        List<DiskIoUsageBO> list = currentMetrics.computeIfAbsent(seq, k -> Lists.newList());
         // 同一时间
         if (currentHour.equals(prevHour)) {
             list.add(data);
@@ -53,12 +53,12 @@ public class DiskHourReduceResolver implements IMetricsHourReduceResolver<DiskIo
         // 不同时间则规约
         currentHours.put(seq, currentHour);
         // 计算数据
-        DiskIoUsingBO reduceData = new DiskIoUsingBO();
-        reduceData.setRc(list.stream().mapToLong(DiskIoUsingBO::getRc).sum());
-        reduceData.setRs(list.stream().mapToLong(DiskIoUsingBO::getRs).map(s -> s / Const.BUFFER_KB_1).sum());
-        reduceData.setWc(list.stream().mapToLong(DiskIoUsingBO::getWc).sum());
-        reduceData.setWs(list.stream().mapToLong(DiskIoUsingBO::getWs).map(s -> s / Const.BUFFER_KB_1).sum());
-        reduceData.setUt(list.stream().mapToLong(DiskIoUsingBO::getUt).sum());
+        DiskIoUsageBO reduceData = new DiskIoUsageBO();
+        reduceData.setRc(list.stream().mapToLong(DiskIoUsageBO::getRc).sum());
+        reduceData.setRs(list.stream().mapToLong(DiskIoUsageBO::getRs).map(s -> s / Const.BUFFER_KB_1).sum());
+        reduceData.setWc(list.stream().mapToLong(DiskIoUsageBO::getWc).sum());
+        reduceData.setWs(list.stream().mapToLong(DiskIoUsageBO::getWs).map(s -> s / Const.BUFFER_KB_1).sum());
+        reduceData.setUt(list.stream().mapToLong(DiskIoUsageBO::getUt).sum());
         Utils.setReduceHourRange(reduceData, prevHour, currentHour);
         log.debug("硬盘时级数据指标-seq: {} {}", seq, JSON.toJSONString(reduceData));
         list.clear();

@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
-import com.orion.ops.machine.monitor.entity.dto.MemoryUsingDTO;
+import com.orion.ops.machine.monitor.entity.dto.MemoryUsageDTO;
 import com.orion.ops.machine.monitor.utils.Utils;
 import com.orion.utils.convert.TypeStore;
 import com.orion.utils.io.Files1;
@@ -14,7 +14,7 @@ import lombok.Data;
  * @since 2022/6/30 16:35
  */
 @Data
-public class MemoryUsingVO {
+public class MemoryUsageVO {
 
     /**
      * 总内存
@@ -24,7 +24,7 @@ public class MemoryUsingVO {
     /**
      * 使用内存
      */
-    private String usingMemory;
+    private String usageMemory;
 
     /**
      * 空闲内存
@@ -34,15 +34,15 @@ public class MemoryUsingVO {
     /**
      * 内存使用率
      */
-    private Double usingRate;
+    private Double usage;
 
     static {
-        TypeStore.STORE.register(MemoryUsingDTO.class, MemoryUsingVO.class, p -> {
-            MemoryUsingVO vo = new MemoryUsingVO();
+        TypeStore.STORE.register(MemoryUsageDTO.class, MemoryUsageVO.class, p -> {
+            MemoryUsageVO vo = new MemoryUsageVO();
             vo.setTotalMemory(Files1.getSize(p.getTotalMemory()));
-            vo.setUsingMemory(Files1.getSize(p.getUsingMemory()));
+            vo.setUsageMemory(Files1.getSize(p.getUsageMemory()));
             vo.setFreeMemory(Files1.getSize(p.getFreeMemory()));
-            vo.setUsingRate(Utils.roundToDouble(p.getUsingRate()));
+            vo.setUsage(Utils.roundToDouble(p.getUsage()));
             return vo;
         });
     }

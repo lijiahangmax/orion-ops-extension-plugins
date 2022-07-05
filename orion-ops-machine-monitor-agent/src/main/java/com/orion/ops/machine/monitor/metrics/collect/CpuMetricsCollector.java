@@ -1,11 +1,10 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.alibaba.fastjson.JSON;
-import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
+import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -24,7 +23,7 @@ import javax.annotation.Resource;
 @Slf4j
 @Order(500)
 @Component
-public class CpuMetricsCollector implements IMetricsCollector<CpuUsingBO> {
+public class CpuMetricsCollector implements IMetricsCollector<CpuUsageBO> {
 
     @Resource
     private MetricsProvider metricsProvider;
@@ -50,13 +49,13 @@ public class CpuMetricsCollector implements IMetricsCollector<CpuUsingBO> {
     }
 
     @Override
-    public CpuUsingBO collect() {
+    public CpuUsageBO collect() {
         long[] prevCpu = this.prevCpu;
         long prevTime = this.prevTime;
         long[] currentCpu = this.prevCpu = processor.getSystemCpuLoadTicks();
         long currentTime = this.prevTime = System.currentTimeMillis();
         // 计算
-        CpuUsingBO cpu = new CpuUsingBO();
+        CpuUsageBO cpu = new CpuUsageBO();
         cpu.setU(Utils.computeCpuLoad(prevCpu, currentCpu));
         cpu.setSr(Utils.getSecondTime(prevTime));
         cpu.setEr(Utils.getSecondTime(currentTime));

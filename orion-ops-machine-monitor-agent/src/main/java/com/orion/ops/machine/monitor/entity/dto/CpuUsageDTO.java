@@ -12,16 +12,16 @@ import java.util.List;
  * @since 2022/6/27 17:53
  */
 @Data
-public class CpuUsingDTO {
+public class CpuUsageDTO {
 
     /**
      * 使用率
      */
-    private Double using;
+    private Double usage;
 
     /**
      * 核心使用率
      */
-    private List<Double> coreUsing;
+    private List<Double> coreUsage;
 
 }

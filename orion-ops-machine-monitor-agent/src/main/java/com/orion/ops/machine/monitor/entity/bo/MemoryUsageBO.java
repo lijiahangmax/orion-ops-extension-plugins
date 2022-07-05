@@ -12,15 +12,15 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MemoryUsingBO extends BaseRangeBO {
+public class MemoryUsageBO extends BaseRangeBO {
 
     /**
-     * 使用率 usingRate
+     * 使用率 usageRate
      */
     private Double ur;
 
     /**
-     * 使用大小 usingSize MB
+     * 使用大小 usageSize MB
      */
     private Long us;
 
