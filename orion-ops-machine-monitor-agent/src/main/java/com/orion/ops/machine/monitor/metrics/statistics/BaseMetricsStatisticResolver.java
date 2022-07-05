@@ -16,6 +16,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
+import java.util.stream.LongStream;
 
 /**
  * 数据指标统计基类
@@ -165,10 +166,37 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      * @param scale 小数位
      * @return data
      */
-    protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc, Integer scale) {
+    protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc, int scale) {
         DoubleStream stream = data.stream().mapToDouble(TimestampValue::getValue);
         double max = calc.apply(stream).orElse(Const.D_0);
         return Utils.roundToDouble(max, scale);
+    }
+
+    /**
+     * 计算聚合数据
+     *
+     * @param data data
+     * @param calc 计算
+     * @return data
+     */
+    protected long calcDataAggLong(List<TimestampValue<Long>> data, Function<LongStream, OptionalLong> calc) {
+        LongStream stream = data.stream().mapToLong(TimestampValue::getValue);
+        return calc.apply(stream).orElse(Const.L_0);
+    }
+
+    /**
+     * 计算平均值
+     *
+     * @param data  data
+     * @param scale scale
+     * @return data
+     */
+    protected double calcDataAvgLong(List<TimestampValue<Long>> data, int scale) {
+        double d = data.stream()
+                .mapToLong(TimestampValue::getValue)
+                .average()
+                .orElse(Const.D_0);
+        return Utils.roundToDouble(d, scale);
     }
 
 }

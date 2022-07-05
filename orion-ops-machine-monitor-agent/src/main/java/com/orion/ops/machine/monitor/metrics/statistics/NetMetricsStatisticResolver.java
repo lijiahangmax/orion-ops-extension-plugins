@@ -13,6 +13,7 @@ import com.orion.utils.time.Dates;
 
 import java.util.List;
 import java.util.stream.DoubleStream;
+import java.util.stream.LongStream;
 
 /**
  * 网络带宽数据指标统计
@@ -36,12 +37,12 @@ public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<Ne
     /**
      * 上行包数
      */
-    private final MetricsStatisticsVO<Double> sentPacket;
+    private final MetricsStatisticsVO<Long> sentPacket;
 
     /**
      * 下行包数
      */
-    private final MetricsStatisticsVO<Double> recvPacket;
+    private final MetricsStatisticsVO<Long> recvPacket;
 
     public NetMetricsStatisticResolver(MetricsStatisticsRequest request) {
         super(request, DataMetricsType.NET, new NetBandwidthMetricsStatisticVO());
@@ -58,55 +59,55 @@ public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<Ne
     @Override
     protected void computeMetricsData(List<NetBandwidthBO> rows, Long start, Long end) {
         long s = end - start;
-        long totalSentSize = rows.stream().mapToLong(NetBandwidthBO::getSk).sum();
-        long totalRecvSize = rows.stream().mapToLong(NetBandwidthBO::getRk).sum();
-        long totalSentPacket = rows.stream().mapToLong(NetBandwidthBO::getSp).sum();
-        long totalRecvPacket = rows.stream().mapToLong(NetBandwidthBO::getRp).sum();
+        long totalSentSize = Utils.getLongStream(rows, NetBandwidthBO::getSs).sum();
+        long totalRecvSize = Utils.getLongStream(rows, NetBandwidthBO::getRs).sum();
+        long totalSentPacket = Utils.getLongStream(rows, NetBandwidthBO::getSp).sum();
+        long totalRecvPacket = Utils.getLongStream(rows, NetBandwidthBO::getRp).sum();
         sentSpeed.getMetrics().add(new TimestampValue<>(start, Utils.computeMpbSecondSpeed(s, totalSentSize)));
         recvSpeed.getMetrics().add(new TimestampValue<>(start, Utils.computeMpbSecondSpeed(s, totalRecvSize)));
-        sentPacket.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble((double) totalSentPacket / s, 3)));
-        recvPacket.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble((double) totalRecvPacket / s, 3)));
+        sentPacket.getMetrics().add(new TimestampValue<>(start, totalSentPacket));
+        recvPacket.getMetrics().add(new TimestampValue<>(start, totalRecvPacket));
     }
 
     @Override
     protected void computeMetricsMax() {
-        double upSpeedMax = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::max, 5);
-        double downSpeedMax = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::max, 5);
-        double upPacketMax = super.calcDataAgg(sentPacket.getMetrics(), DoubleStream::max, 3);
-        double downPacketMax = super.calcDataAgg(recvPacket.getMetrics(), DoubleStream::max, 3);
-        sentSpeed.setMax(upSpeedMax);
-        recvSpeed.setMax(downSpeedMax);
-        sentPacket.setMax(upPacketMax);
-        recvPacket.setMax(downPacketMax);
+        double sentSpeedMax = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::max, 5);
+        double recvSpeedMax = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::max, 5);
+        long sentPacketMax = super.calcDataAggLong(sentPacket.getMetrics(), LongStream::max);
+        long recvPacketMax = super.calcDataAggLong(recvPacket.getMetrics(), LongStream::max);
+        sentSpeed.setMax(sentSpeedMax);
+        recvSpeed.setMax(recvSpeedMax);
+        sentPacket.setMax(sentPacketMax);
+        recvPacket.setMax(recvPacketMax);
     }
 
     @Override
     protected void computeMetricsMin() {
-        double upSpeedMin = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::min, 5);
-        double downSpeedMin = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::min, 5);
-        double upPacketMin = super.calcDataAgg(sentPacket.getMetrics(), DoubleStream::min, 3);
-        double downPacketMin = super.calcDataAgg(recvPacket.getMetrics(), DoubleStream::min, 3);
-        sentSpeed.setMin(upSpeedMin);
-        recvSpeed.setMin(downSpeedMin);
-        sentPacket.setMin(upPacketMin);
-        recvPacket.setMin(downPacketMin);
+        double sentSpeedMin = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::min, 5);
+        double recvSpeedMin = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::min, 5);
+        long sentPacketMin = super.calcDataAggLong(sentPacket.getMetrics(), LongStream::min);
+        long recvPacketMin = super.calcDataAggLong(recvPacket.getMetrics(), LongStream::min);
+        sentSpeed.setMin(sentSpeedMin);
+        recvSpeed.setMin(recvSpeedMin);
+        sentPacket.setMin(sentPacketMin);
+        recvPacket.setMin(recvPacketMin);
     }
 
     @Override
     protected void computeMetricsAvg() {
-        double upSpeedAvg = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::average, 5);
-        double downSpeedAvg = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::average, 5);
-        double upPacketAvg = super.calcDataAgg(sentPacket.getMetrics(), DoubleStream::average, 3);
-        double downPacketAvg = super.calcDataAgg(recvPacket.getMetrics(), DoubleStream::average, 3);
-        sentSpeed.setAvg(upSpeedAvg);
-        recvSpeed.setAvg(downSpeedAvg);
-        sentPacket.setAvg(upPacketAvg);
-        recvPacket.setAvg(downPacketAvg);
+        double sentSpeedAvg = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::average, 5);
+        double recvSpeedAvg = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::average, 5);
+        double sentPacketAvg = super.calcDataAvgLong(sentPacket.getMetrics(), 3);
+        double recvPacketAvg = super.calcDataAvgLong(recvPacket.getMetrics(), 3);
+        sentSpeed.setAvg(sentSpeedAvg);
+        recvSpeed.setAvg(recvSpeedAvg);
+        sentPacket.setAvg(sentPacketAvg);
+        recvPacket.setAvg(recvPacketAvg);
     }
 
     public static void main(String[] args) {
-        long s = Dates.parse("202207051601").getTime();
-        long e = Dates.parse("202207051603").getTime();
+        long s = Dates.parse("202207051600").getTime();
+        long e = Dates.parse("202207051605").getTime();
         MetricsStatisticsRequest r = new MetricsStatisticsRequest();
         r.setStartRange(s);
         r.setEndRange(e);

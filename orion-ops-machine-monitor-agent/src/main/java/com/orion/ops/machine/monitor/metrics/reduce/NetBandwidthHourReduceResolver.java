@@ -1,6 +1,7 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
 import com.alibaba.fastjson.JSON;
+import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
@@ -26,8 +27,8 @@ public class NetBandwidthHourReduceResolver extends BaseMetricsHourReduceResolve
     protected NetBandwidthBO computeHourReduceData(String currentHour, String prevHour) {
         // 设置规约数据
         NetBandwidthBO reduce = new NetBandwidthBO();
-        reduce.setSk(this.getSumReduceData(NetBandwidthBO::getSk));
-        reduce.setRk(this.getSumReduceData(NetBandwidthBO::getRk));
+        reduce.setSs(this.getSumReduceData(NetBandwidthBO::getSs) / Const.BUFFER_KB_1);
+        reduce.setRs(this.getSumReduceData(NetBandwidthBO::getRs) / Const.BUFFER_KB_1);
         reduce.setSp(this.getSumReduceData(NetBandwidthBO::getSp));
         reduce.setRp(this.getSumReduceData(NetBandwidthBO::getRp));
         log.debug("网络带宽时级数据指标 {}", JSON.toJSONString(reduce));

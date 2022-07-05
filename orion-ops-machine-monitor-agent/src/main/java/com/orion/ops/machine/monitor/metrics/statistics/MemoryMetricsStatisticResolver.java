@@ -44,12 +44,10 @@ public class MemoryMetricsStatisticResolver extends BaseMetricsStatisticResolver
 
     @Override
     protected void computeMetricsData(List<MemoryUsageBO> rows, Long start, Long end) {
-        double avgSize = rows.stream()
-                .mapToDouble(MemoryUsageBO::getUs)
+        double avgSize = Utils.getLongStream(rows, MemoryUsageBO::getUs)
                 .average()
                 .orElse(Const.D_0);
-        double avgUsage = rows.stream()
-                .mapToDouble(MemoryUsageBO::getUr)
+        double avgUsage = Utils.getDoubleStream(rows, MemoryUsageBO::getUr)
                 .average()
                 .orElse(Const.D_0);
         size.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble(avgSize, 3)));

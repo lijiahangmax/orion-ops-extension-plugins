@@ -21,27 +21,24 @@ public class MetricsStatisticsVO<T> {
      * 最大值
      */
     @JSONField(ordinal = 0)
-    private Double max;
+    private T max;
 
     /**
      * 最小值
      */
     @JSONField(ordinal = 1)
-
-    private Double min;
+    private T min;
 
     /**
      * 平均值
      */
     @JSONField(ordinal = 2)
-
     private Double avg;
 
     /**
      * 指标
      */
     @JSONField(ordinal = 3)
-
     private List<TimestampValue<T>> metrics;
 
     public MetricsStatisticsVO() {

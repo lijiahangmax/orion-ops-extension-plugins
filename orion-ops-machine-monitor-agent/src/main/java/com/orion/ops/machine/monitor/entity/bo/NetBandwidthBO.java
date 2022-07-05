@@ -15,14 +15,14 @@ import lombok.EqualsAndHashCode;
 public class NetBandwidthBO extends BaseRangeBO {
 
     /**
-     * 上行流量 kb sentKB
+     * 上行流量 kb sentSize
      */
-    private Long sk;
+    private Long ss;
 
     /**
-     * 下行流量 kb receivedKB
+     * 下行流量 kb receivedSize
      */
-    private Long rk;
+    private Long rs;
 
     /**
      * 上行包 sentPacket

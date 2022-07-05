@@ -26,11 +26,11 @@ public class NetBandwidthMetricsStatisticVO implements BaseMetricsStatisticsEnti
     /**
      * 上行包数
      */
-    private MetricsStatisticsVO<Double> sentPacket;
+    private MetricsStatisticsVO<Long> sentPacket;
 
     /**
      * 下行包数
      */
-    private MetricsStatisticsVO<Double> recvPacket;
+    private MetricsStatisticsVO<Long> recvPacket;
 
 }

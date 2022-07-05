@@ -37,8 +37,7 @@ public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<Cp
 
     @Override
     protected void computeMetricsData(List<CpuUsageBO> rows, Long start, Long end) {
-        double avgUsage = rows.stream()
-                .mapToDouble(CpuUsageBO::getU)
+        double avgUsage = Utils.getDoubleStream(rows, CpuUsageBO::getU)
                 .average()
                 .orElse(Const.D_0);
         usage.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble(avgUsage, 3)));

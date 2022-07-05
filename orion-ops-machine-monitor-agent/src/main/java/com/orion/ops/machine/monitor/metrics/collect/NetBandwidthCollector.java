@@ -1,11 +1,11 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.alibaba.fastjson.JSON;
+import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -70,8 +70,8 @@ public class NetBandwidthCollector implements IMetricsCollector<NetBandwidthBO> 
         NetBandwidthBO net = new NetBandwidthBO();
         net.setSr(Utils.getSecondTime(prevTime));
         net.setEr(Utils.getSecondTime(currentTime));
-        net.setSk(currentSentSize - beforeSentSize);
-        net.setRk(currentReceiveSize - beforeReceiveSize);
+        net.setSs((currentSentSize - beforeSentSize) / Const.BUFFER_KB_1);
+        net.setRs((currentReceiveSize - beforeReceiveSize) / Const.BUFFER_KB_1);
         net.setSp(currentSentPacket - beforeSentPacket);
         net.setRp(currentReceivePacket - beforeReceivePacket);
         log.debug("网络带宽指标: {}", JSON.toJSONString(net));
