@@ -1,63 +1,36 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
+import com.alibaba.fastjson.JSON;
+import com.orion.lang.wrapper.Pair;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
+import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsingBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
 import com.orion.ops.machine.monitor.entity.vo.CpuMetricsStatisticsVO;
 import com.orion.ops.machine.monitor.utils.Utils;
+import com.orion.utils.collect.Lists;
 import com.orion.utils.time.Dates;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
+ * 处理器数据指标统计
+ *
  * @author Jiahang Li
  * @version 1.0.0
  * @since 2022/7/4 17:51
  */
-public class CpuMetricsStatisticResolver {
-
-    /**
-     * 访问器
-     */
-    private final MetricsFileAccessor<CpuUsingBO> accessor;
-
-    /**
-     * 监控指标
-     */
-    private final CpuMetricsStatisticsVO metrics;
+public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<CpuUsingBO, CpuMetricsStatisticsVO> {
 
     public CpuMetricsStatisticResolver(MetricsStatisticsRequest request) {
-        this.accessor = new MetricsFileAccessor<>(request.getStartRange(),
-                request.getEndRange(),
-                DataMetricsType.CPU,
-                GranularityType.of(request.getGranularity()));
-        this.metrics = new CpuMetricsStatisticsVO();
+        super(request, DataMetricsType.CPU, new CpuMetricsStatisticsVO());
     }
 
-    /**
-     * 执行统计
-     *
-     * @return 统计信息
-     */
-    public CpuMetricsStatisticsVO statistics() {
-        // 查询数据
-        List<CpuUsingBO> rows = accessor.access();
-        // 计算数据指标
-        this.setMax(rows);
-        this.setMin(rows);
-        this.setAvg(rows);
-        // 绘制图表数据
-        this.computeMetricsChart();
-        return metrics;
-    }
-
-    /**
-     * 设置最大值
-     *
-     * @param rows rows
-     */
+    @Override
     protected void setMax(List<CpuUsingBO> rows) {
         double max = rows.stream()
                 .mapToDouble(CpuUsingBO::getU)
@@ -66,48 +39,77 @@ public class CpuMetricsStatisticResolver {
         metrics.setMax(max);
     }
 
-    /**
-     * 设置最小值
-     *
-     * @param rows rows
-     */
+    @Override
     protected void setMin(List<CpuUsingBO> rows) {
         double min = rows.stream()
                 .mapToDouble(CpuUsingBO::getU)
                 .min()
                 .orElse(Const.D_0);
-        metrics.setMax(min);
+        metrics.setMin(min);
     }
 
-    /**
-     * 设置平均值
-     *
-     * @param rows rows
-     */
+    @Override
     protected void setAvg(List<CpuUsingBO> rows) {
         double avg = rows.stream()
                 .mapToDouble(CpuUsingBO::getU)
                 .average()
                 .orElse(Const.D_0);
-        metrics.setMax(Utils.roundToDouble(avg, 3));
+        metrics.setAvg(Utils.roundToDouble(avg, 3));
     }
 
-    /**
-     * 计算表格数据
-     */
-    protected void computeMetricsChart() {
+    @Override
+    protected void computeGranularityMetrics(List<CpuUsingBO> rows, List<Long> datelines) {
+        System.out.println("-------------- rows ---------------");
+        rows.stream().map(JSON::toJSONString).forEach(System.out::println);
+        System.out.println("\n------------ datelines ------------");
+        datelines.stream()
+                // .map(s -> s * 1000)
+                // .map(Dates::date)
+                // .map(Dates::format)
+                .forEach(System.out::println);
+        System.out.println();
+
+        List<Pair<Long, Double>> chartMetrics = Lists.newList();
+        for (int i = 0; i < datelines.size() - 1; i++) {
+            Long start = datelines.get(i);
+            Long end = datelines.get(i + 1);
+            List<CpuUsingBO> currentRows = Lists.newList();
+            // 设置数据到当前区间并且移除元素
+            Iterator<CpuUsingBO> iter = rows.iterator();
+            while (iter.hasNext()) {
+                CpuUsingBO row = iter.next();
+                Long sr = row.getSr();
+                if (start <= sr && sr < end) {
+                    currentRows.add(row);
+                    iter.remove();
+                }
+            }
+            // 统计数据
+            System.out.print(start + "-" + end + " ");
+            System.out.println(currentRows.stream().map(BaseRangeBO::getSr).collect(Collectors.toList()));
+            double use = currentRows
+                    .stream()
+                    .mapToDouble(CpuUsingBO::getU)
+                    .average()
+                    .orElse(Const.D_0);
+            chartMetrics.add(Pair.of(start, Utils.roundToDouble(use)));
+        }
+        metrics.setMetrics(chartMetrics);
 
     }
 
     public static void main(String[] args) {
-        long s = Dates.parse("202207042239").getTime() / 1000;
-        long e = Dates.parse("202207042240").getTime() / 1000;
+        long s = Dates.parse("202207051225").getTime();
+        long e = Dates.parse("202207051325").getTime();
         MetricsStatisticsRequest r = new MetricsStatisticsRequest();
         r.setStartRange(s);
         r.setEndRange(e);
         r.setGranularity(GranularityType.MINUTE.getType());
         CpuMetricsStatisticResolver res = new CpuMetricsStatisticResolver(r);
-        System.out.println(res.statistics());
+        res.statistics();
+        System.out.println();
+        System.out.println(JSON.toJSONString(res.getMetrics()));
+        System.out.println();
     }
 
 }

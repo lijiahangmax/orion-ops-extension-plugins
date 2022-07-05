@@ -55,7 +55,7 @@ public class MemoryMetricsCollector implements IMetricsCollector<MemoryUsingBO> 
         long currentTime = this.prevTime = System.currentTimeMillis();
         // 计算
         MemoryUsingBO mem = new MemoryUsingBO();
-        mem.setUr(Utils.roundToDouble((double) using / (double) total, 3));
+        mem.setUr(Utils.roundToDouble((double) using / (double) total * 100, 3));
         mem.setUs(using / Const.BUFFER_KB_1 / Const.BUFFER_KB_1);
         mem.setSr(Utils.getSecondTime(prevTime));
         mem.setEr(Utils.getSecondTime(currentTime));
