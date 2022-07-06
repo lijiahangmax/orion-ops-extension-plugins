@@ -51,9 +51,7 @@ public class MetricsCollectScheduler implements DisposableBean {
                 .setPrefix("machine-collector-thread-")
                 .build();
         this.scheduler = new ScheduledThreadPoolExecutor(1, threadFactory);
-        scheduler.scheduleAtFixedRate(metricsCollectTask, 0, 10, TimeUnit.SECONDS);
-        // FIXME
-        // scheduler.scheduleAtFixedRate(metricsCollectTask, collectPeriodSecond, collectPeriodSecond, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(metricsCollectTask, collectPeriodSecond, collectPeriodSecond, TimeUnit.SECONDS);
     }
 
     @Override

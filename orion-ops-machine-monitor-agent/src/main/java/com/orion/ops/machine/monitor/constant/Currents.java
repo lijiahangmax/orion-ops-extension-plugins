@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.constant;
 
+import com.orion.utils.Valid;
+
 /**
  * @author Jiahang Li
  * @version 1.0.0
@@ -18,7 +20,7 @@ public class Currents {
      * @param seq seq
      */
     public static void setDiskSeq(String seq) {
-        DISK_SEQ.set(seq);
+        DISK_SEQ.set(Valid.notNull(seq));
     }
 
     /**

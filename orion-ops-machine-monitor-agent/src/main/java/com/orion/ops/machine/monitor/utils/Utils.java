@@ -33,10 +33,7 @@ public class Utils {
     private Utils() {
     }
 
-    // FIXME
-    // private static final String YMDH = "yyyyMMddHH";
-
-    private static final String YMDH = "yyyyMMddHHmm";
+    private static final String YMDH = "yyyyMMddHH";
 
     private static final String YM = "yyyyMM";
 
