@@ -3,8 +3,7 @@
 
     <Properties>
         <Property name="baseDir" value="../.log"/>
-        <!-- <Property name="baseDir" value="${logging.root.path}/${spring.application.name}"/> -->
-        <!-- <Property name="baseDir" value="${sys:user.home}/log/orion-ops"/> -->
+        <!-- <Property name="baseDir" value="${sys:user.home}/orion/log/machine-monitor-agent"/> -->
     </Properties>
 
     <Appenders>

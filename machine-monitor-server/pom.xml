@@ -9,10 +9,10 @@
     </parent>
 
     <groupId>com.orion.ops</groupId>
-    <artifactId>orion-ops-machine-monitor-agent</artifactId>
+    <artifactId>machine-monitor-server</artifactId>
     <version>1.0.0</version>
-    <name>orion-ops-machine-monitor-agent</name>
-    <description>machine monitor agent</description>
+    <name>machine-monitor-server</name>
+    <description>machine monitor server</description>
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
@@ -26,12 +26,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- devtools -->
@@ -125,75 +119,6 @@
         </testResources>
 
         <plugins>
-            <!-- 普通打包 -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-            <!-- 分离依赖打包 -->
-            <!--            <plugin>-->
-            <!--                <groupId>org.springframework.boot</groupId>-->
-            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--                <configuration>-->
-            <!--                    <mainClass>com.orion.ops.OrionOpsServiceApplication</mainClass>-->
-            <!--                    <layout>ZIP</layout>-->
-            <!--                    &lt;!&ndash; 注释后和依赖包一起打包 取消注释则不打包依赖 &ndash;&gt;-->
-            <!--                    <includes>-->
-            <!--                        <include>-->
-            <!--                            <groupId>nothing</groupId>-->
-            <!--                            <artifactId>nothing</artifactId>-->
-            <!--                        </include>-->
-            <!--                    </includes>-->
-            <!--                    <excludes>-->
-            <!--                        <exclude>-->
-            <!--                            <groupId>org.projectlombok</groupId>-->
-            <!--                            <artifactId>lombok</artifactId>-->
-            <!--                        </exclude>-->
-            <!--                    </excludes>-->
-            <!--                </configuration>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <goals>-->
-            <!--                            <goal>repackage</goal>-->
-            <!--                        </goals>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <configuration>
-                    <attach>true</attach>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 

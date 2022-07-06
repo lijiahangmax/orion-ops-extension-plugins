@@ -1,5 +1,6 @@
 package com.orion.ops.machine.monitor.controller;
 
+import com.orion.ops.machine.monitor.annotation.IgnoreLog;
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
 import com.orion.ops.machine.monitor.constant.Currents;
 import com.orion.ops.machine.monitor.constant.GranularityType;
@@ -33,6 +34,7 @@ public class MachineMonitorController {
     /**
      * 获取处理器数据
      */
+    @IgnoreLog
     @PostMapping("/get-cpu")
     public CpuMetricsStatisticsVO getCpuData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
@@ -45,6 +47,7 @@ public class MachineMonitorController {
     /**
      * 获取内存数据
      */
+    @IgnoreLog
     @PostMapping("/get-memory")
     public MemoryMetricsStatisticsVO getMemoryData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
@@ -57,6 +60,7 @@ public class MachineMonitorController {
     /**
      * 获取网络数据
      */
+    @IgnoreLog
     @PostMapping("/get-net")
     public NetBandwidthMetricsStatisticVO getNetBandwidthData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
@@ -69,6 +73,7 @@ public class MachineMonitorController {
     /**
      * 获取磁盘数据
      */
+    @IgnoreLog
     @PostMapping("/get-disk")
     public DiskMetricsStatisticVO getDiskData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
