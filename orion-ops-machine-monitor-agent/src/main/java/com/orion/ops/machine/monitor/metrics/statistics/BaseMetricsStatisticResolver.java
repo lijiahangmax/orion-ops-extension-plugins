@@ -1,6 +1,5 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
-import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
@@ -14,7 +13,6 @@ import lombok.Getter;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import java.util.stream.LongStream;
 
@@ -25,7 +23,7 @@ import java.util.stream.LongStream;
  * @version 1.0.0
  * @since 2022/7/5 10:26
  */
-public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S extends BaseMetricsStatisticsEntity> {
+public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S extends BaseMetricsStatisticsEntity> implements IMetricsStatisticResolver<S> {
 
     /**
      * 访问器
@@ -52,9 +50,7 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
                 GranularityType.of(request.getGranularity()));
     }
 
-    /**
-     * 执行统计
-     */
+    @Override
     public void statistics() {
         // 读取数据
         List<T> rows = accessor.access();
@@ -102,12 +98,6 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      * @param datelines datelines
      */
     protected void groupingGranularityMetrics(List<T> rows, List<Long> datelines) {
-        System.out.println("-------------- rows ---------------");
-        rows.stream().map(JSON::toJSONString).forEach(System.out::println);
-        System.out.println("\n------------ datelines ------------");
-        datelines.forEach(System.out::println);
-        System.out.println();
-
         // 数据分组
         for (int i = 0; i < datelines.size() - 1; i++) {
             Long start = datelines.get(i);
@@ -124,8 +114,6 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
                 }
             }
             // 计算数据
-            System.out.print(start + "-" + end + " ");
-            System.out.println(currentRows.stream().map(BaseRangeBO::getSr).collect(Collectors.toList()));
             this.computeMetricsData(currentRows, start, end);
         }
     }
@@ -187,16 +175,15 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
     /**
      * 计算平均值
      *
-     * @param data  data
-     * @param scale scale
+     * @param data data
      * @return data
      */
-    protected double calcDataAvgLong(List<TimestampValue<Long>> data, int scale) {
+    protected double calcDataAvgLong(List<TimestampValue<Long>> data) {
         double d = data.stream()
                 .mapToLong(TimestampValue::getValue)
                 .average()
                 .orElse(Const.D_0);
-        return Utils.roundToDouble(d, scale);
+        return Utils.roundToDouble(d, 3);
     }
 
 }

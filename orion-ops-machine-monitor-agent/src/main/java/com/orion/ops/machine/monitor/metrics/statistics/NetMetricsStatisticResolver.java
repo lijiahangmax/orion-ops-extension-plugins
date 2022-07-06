@@ -1,15 +1,12 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
-import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
-import com.orion.ops.machine.monitor.constant.GranularityType;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
 import com.orion.ops.machine.monitor.entity.vo.MetricsStatisticsVO;
 import com.orion.ops.machine.monitor.entity.vo.NetBandwidthMetricsStatisticVO;
 import com.orion.ops.machine.monitor.utils.TimestampValue;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.time.Dates;
 
 import java.util.List;
 import java.util.stream.DoubleStream;
@@ -97,26 +94,12 @@ public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<Ne
     protected void computeMetricsAvg() {
         double sentSpeedAvg = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::average, 5);
         double recvSpeedAvg = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::average, 5);
-        double sentPacketAvg = super.calcDataAvgLong(sentPacket.getMetrics(), 3);
-        double recvPacketAvg = super.calcDataAvgLong(recvPacket.getMetrics(), 3);
+        double sentPacketAvg = super.calcDataAvgLong(sentPacket.getMetrics());
+        double recvPacketAvg = super.calcDataAvgLong(recvPacket.getMetrics());
         sentSpeed.setAvg(sentSpeedAvg);
         recvSpeed.setAvg(recvSpeedAvg);
         sentPacket.setAvg(sentPacketAvg);
         recvPacket.setAvg(recvPacketAvg);
-    }
-
-    public static void main(String[] args) {
-        long s = Dates.parse("202207051600").getTime();
-        long e = Dates.parse("202207051605").getTime();
-        MetricsStatisticsRequest r = new MetricsStatisticsRequest();
-        r.setStartRange(s);
-        r.setEndRange(e);
-        r.setGranularity(GranularityType.MINUTE_1.getType());
-        NetMetricsStatisticResolver res = new NetMetricsStatisticResolver(r);
-        res.statistics();
-        System.out.println();
-        System.out.println(JSON.toJSONString(res.getMetrics()));
-        System.out.println();
     }
 
 }

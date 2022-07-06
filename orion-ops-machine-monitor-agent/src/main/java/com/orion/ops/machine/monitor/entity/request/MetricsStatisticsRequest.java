@@ -1,6 +1,5 @@
 package com.orion.ops.machine.monitor.entity.request;
 
-import com.orion.utils.time.Dates;
 import lombok.Data;
 
 /**
@@ -21,21 +20,18 @@ public class MetricsStatisticsRequest {
     private Integer granularity;
 
     /**
-     * 开始区间
+     * 开始区间 秒
      */
     private Long startRange;
 
     /**
-     * 结束区间
+     * 结束区间 秒
      */
     private Long endRange;
 
-    public void setStartRange(Long startRange) {
-        this.startRange = startRange / Dates.SECOND_STAMP;
-    }
-
-    public void setEndRange(Long endRange) {
-        this.endRange = endRange / Dates.SECOND_STAMP;
-    }
+    /**
+     * 序列
+     */
+    private String seq;
 
 }

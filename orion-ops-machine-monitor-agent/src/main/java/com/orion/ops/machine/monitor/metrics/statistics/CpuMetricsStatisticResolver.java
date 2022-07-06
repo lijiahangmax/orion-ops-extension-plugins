@@ -1,16 +1,13 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
-import com.alibaba.fastjson.JSON;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
-import com.orion.ops.machine.monitor.constant.GranularityType;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
 import com.orion.ops.machine.monitor.entity.vo.CpuMetricsStatisticsVO;
 import com.orion.ops.machine.monitor.entity.vo.MetricsStatisticsVO;
 import com.orion.ops.machine.monitor.utils.TimestampValue;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.time.Dates;
 
 import java.util.List;
 import java.util.stream.DoubleStream;
@@ -59,20 +56,6 @@ public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<Cp
     protected void computeMetricsAvg() {
         double avg = super.calcDataAgg(usage.getMetrics(), DoubleStream::average);
         usage.setAvg(avg);
-    }
-
-    public static void main(String[] args) {
-        long s = Dates.parse("202207051225").getTime();
-        long e = Dates.parse("202207051325").getTime();
-        MetricsStatisticsRequest r = new MetricsStatisticsRequest();
-        r.setStartRange(s);
-        r.setEndRange(e);
-        r.setGranularity(GranularityType.MINUTE_1.getType());
-        CpuMetricsStatisticResolver res = new CpuMetricsStatisticResolver(r);
-        res.statistics();
-        System.out.println();
-        System.out.println(JSON.toJSONString(res.getMetrics()));
-        System.out.println();
     }
 
 }

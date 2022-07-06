@@ -1,16 +1,12 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
-import com.alibaba.fastjson.JSON;
-import com.orion.ops.machine.monitor.constant.Currents;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
-import com.orion.ops.machine.monitor.constant.GranularityType;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
 import com.orion.ops.machine.monitor.entity.vo.DiskMetricsStatisticVO;
 import com.orion.ops.machine.monitor.entity.vo.MetricsStatisticsVO;
 import com.orion.ops.machine.monitor.utils.TimestampValue;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.time.Dates;
 
 import java.util.List;
 import java.util.stream.DoubleStream;
@@ -111,30 +107,14 @@ public class DiskMetricsStatisticResolver extends BaseMetricsStatisticResolver<D
     protected void computeMetricsAvg() {
         double readSpeedAvg = super.calcDataAgg(readSpeed.getMetrics(), DoubleStream::average, 5);
         double writeSpeedAvg = super.calcDataAgg(writeSpeed.getMetrics(), DoubleStream::average, 5);
-        double readCountAvg = super.calcDataAvgLong(readCount.getMetrics(), 3);
-        double writeCountAvg = super.calcDataAvgLong(writeCount.getMetrics(), 3);
-        double usageTimeAvg = super.calcDataAvgLong(usageTime.getMetrics(), 3);
+        double readCountAvg = super.calcDataAvgLong(readCount.getMetrics());
+        double writeCountAvg = super.calcDataAvgLong(writeCount.getMetrics());
+        double usageTimeAvg = super.calcDataAvgLong(usageTime.getMetrics());
         readSpeed.setAvg(readSpeedAvg);
         writeSpeed.setAvg(writeSpeedAvg);
         readCount.setAvg(readCountAvg);
         writeCount.setAvg(writeCountAvg);
         usageTime.setAvg(usageTimeAvg);
-    }
-
-    // 2.6E-4
-    public static void main(String[] args) {
-        long s = Dates.parse("202207051225").getTime();
-        long e = Dates.parse("202207051325").getTime();
-        Currents.setDiskSeq("e43c18c4");
-        MetricsStatisticsRequest r = new MetricsStatisticsRequest();
-        r.setStartRange(s);
-        r.setEndRange(e);
-        r.setGranularity(GranularityType.MINUTE_1.getType());
-        DiskMetricsStatisticResolver res = new DiskMetricsStatisticResolver(r);
-        res.statistics();
-        System.out.println();
-        System.out.println(JSON.toJSONString(res.getMetrics()));
-        System.out.println();
     }
 
 }
