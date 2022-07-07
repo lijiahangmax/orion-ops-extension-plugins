@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.orion.lang.utils.collect.Lists;
 import com.orion.lang.utils.collect.Maps;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.DiskIoUsageBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
 import lombok.extern.slf4j.Slf4j;

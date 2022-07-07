@@ -3,7 +3,7 @@ package com.orion.ops.machine.monitor.metrics.collect;
 import com.alibaba.fastjson.JSON;
 import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;

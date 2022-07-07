@@ -6,7 +6,7 @@ import com.orion.lang.utils.collect.Lists;
 import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
-import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.BaseRangeBO;
 import com.orion.ops.machine.monitor.utils.Utils;
 
 import java.io.BufferedReader;

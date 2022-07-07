@@ -1,7 +1,7 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
 import com.alibaba.fastjson.JSON;
-import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.CpuUsageBO;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
 import lombok.extern.slf4j.Slf4j;

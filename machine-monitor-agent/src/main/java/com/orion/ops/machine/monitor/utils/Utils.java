@@ -6,7 +6,7 @@ import com.orion.lang.utils.crypto.Signatures;
 import com.orion.lang.utils.io.Files1;
 import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.BaseRangeBO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -40,31 +40,6 @@ public class Utils {
     private static final int MPB = 128;
 
     /**
-     * 四舍五入到整数
-     *
-     * @param d d
-     * @return 整数
-     */
-    public static int roundToInt(double d) {
-        return (int) Math.round(d);
-    }
-
-    public static Double roundToDouble(double d) {
-        return roundToDouble(d, 2);
-    }
-
-    /**
-     * 四舍五入
-     *
-     * @param d     d
-     * @param scale 小数位
-     * @return 四舍五入
-     */
-    public static Double roundToDouble(double d, int scale) {
-        return Double.valueOf(String.format("%." + scale + "f", d));
-    }
-
-    /**
      * 计算 cpu 使用率
      *
      * @param prevTicks    prevTicks
@@ -81,7 +56,7 @@ public class Utils {
                 - prevTicks[TickType.IDLE.getIndex()]
                 - prevTicks[TickType.IOWAIT.getIndex()];
         double use = total > 0 ? (double) (total - idle) / total : 0D;
-        return roundToDouble(use * 100, 3);
+        return Formats.roundToDouble(use * 100, 3);
     }
 
     /**
@@ -102,7 +77,7 @@ public class Utils {
      * @return mpb/s
      */
     public static Double computeMpbSecondSpeed(long second, long kb) {
-        return roundToDouble((double) kb / MPB / second, 5);
+        return Formats.roundToDouble((double) kb / MPB / second, 5);
     }
 
     /**
@@ -113,7 +88,7 @@ public class Utils {
      * @return mb/s
      */
     public static Double computeMbSecondSpeed(long second, long kb) {
-        return roundToDouble((double) kb / Const.BUFFER_KB_1 / second, 5);
+        return Formats.roundToDouble((double) kb / Const.BUFFER_KB_1 / second, 5);
     }
 
     /**

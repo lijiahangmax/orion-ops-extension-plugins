@@ -3,10 +3,11 @@ package com.orion.ops.machine.monitor.metrics.statistics;
 import com.orion.lang.define.wrapper.TimestampValue;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
-import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
-import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
-import com.orion.ops.machine.monitor.entity.vo.CpuMetricsStatisticsVO;
-import com.orion.ops.machine.monitor.entity.vo.MetricsStatisticsVO;
+import com.orion.ops.machine.monitor.entity.agent.bo.CpuUsageBO;
+import com.orion.ops.machine.monitor.entity.agent.request.MetricsStatisticsRequest;
+import com.orion.ops.machine.monitor.entity.agent.vo.CpuMetricsStatisticsVO;
+import com.orion.ops.machine.monitor.entity.agent.vo.MetricsStatisticsVO;
+import com.orion.ops.machine.monitor.utils.Formats;
 import com.orion.ops.machine.monitor.utils.Utils;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<Cp
         double avgUsage = Utils.getDoubleStream(rows, CpuUsageBO::getU)
                 .average()
                 .orElse(Const.D_0);
-        usage.getMetrics().add(new TimestampValue<>(start, Utils.roundToDouble(avgUsage, 3)));
+        usage.getMetrics().add(new TimestampValue<>(start, Formats.roundToDouble(avgUsage, 3)));
     }
 
     @Override

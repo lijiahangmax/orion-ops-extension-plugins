@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
-import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.BaseRangeBO;
 
 /**
  * 时级数据规约器接口

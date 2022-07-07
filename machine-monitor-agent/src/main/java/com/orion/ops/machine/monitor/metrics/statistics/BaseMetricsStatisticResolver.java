@@ -6,10 +6,10 @@ import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.constant.GranularityType;
-import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
-import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
-import com.orion.ops.machine.monitor.entity.vo.BaseMetricsStatisticsEntity;
-import com.orion.ops.machine.monitor.utils.Utils;
+import com.orion.ops.machine.monitor.entity.agent.bo.BaseRangeBO;
+import com.orion.ops.machine.monitor.entity.agent.request.MetricsStatisticsRequest;
+import com.orion.ops.machine.monitor.entity.agent.vo.BaseMetricsStatisticsEntity;
+import com.orion.ops.machine.monitor.utils.Formats;
 import lombok.Getter;
 
 import java.util.*;
@@ -158,7 +158,7 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
     protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc, int scale) {
         DoubleStream stream = data.stream().mapToDouble(TimestampValue::getValue);
         double max = calc.apply(stream).orElse(Const.D_0);
-        return Utils.roundToDouble(max, scale);
+        return Formats.roundToDouble(max, scale);
     }
 
     /**
@@ -184,7 +184,7 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
                 .mapToLong(TimestampValue::getValue)
                 .average()
                 .orElse(Const.D_0);
-        return Utils.roundToDouble(d, 3);
+        return Formats.roundToDouble(d, 3);
     }
 
 }

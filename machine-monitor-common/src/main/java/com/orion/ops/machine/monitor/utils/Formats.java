@@ -35,6 +35,16 @@ public class Formats {
         return String.format("%d days, %02d:%02d:%02d", days, hr, min, sec);
     }
 
+    /**
+     * 四舍五入到整数
+     *
+     * @param d d
+     * @return 整数
+     */
+    public static int roundToInt(double d) {
+        return (int) Math.round(d);
+    }
+
     public static Double roundToDouble(double d) {
         return roundToDouble(d, 2);
     }

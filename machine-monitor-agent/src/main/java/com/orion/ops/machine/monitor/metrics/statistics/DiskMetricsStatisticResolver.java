@@ -2,10 +2,10 @@ package com.orion.ops.machine.monitor.metrics.statistics;
 
 import com.orion.lang.define.wrapper.TimestampValue;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
-import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
-import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
-import com.orion.ops.machine.monitor.entity.vo.DiskMetricsStatisticVO;
-import com.orion.ops.machine.monitor.entity.vo.MetricsStatisticsVO;
+import com.orion.ops.machine.monitor.entity.agent.bo.DiskIoUsageBO;
+import com.orion.ops.machine.monitor.entity.agent.request.MetricsStatisticsRequest;
+import com.orion.ops.machine.monitor.entity.agent.vo.DiskMetricsStatisticVO;
+import com.orion.ops.machine.monitor.entity.agent.vo.MetricsStatisticsVO;
 import com.orion.ops.machine.monitor.utils.Utils;
 
 import java.util.List;

@@ -2,9 +2,9 @@ package com.orion.ops.machine.monitor.controller;
 
 import com.orion.lang.utils.convert.Converts;
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
-import com.orion.ops.machine.monitor.entity.dto.DiskIoUsageDTO;
-import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsageDTO;
-import com.orion.ops.machine.monitor.entity.vo.*;
+import com.orion.ops.machine.monitor.entity.agent.dto.DiskIoUsageDTO;
+import com.orion.ops.machine.monitor.entity.agent.dto.DiskStoreUsageDTO;
+import com.orion.ops.machine.monitor.entity.agent.vo.*;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

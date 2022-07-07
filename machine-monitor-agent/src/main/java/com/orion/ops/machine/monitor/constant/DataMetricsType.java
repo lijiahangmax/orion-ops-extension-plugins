@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.constant;
 
-import com.orion.ops.machine.monitor.entity.bo.*;
+import com.orion.ops.machine.monitor.entity.agent.bo.*;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

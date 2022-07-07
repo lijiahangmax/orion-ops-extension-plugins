@@ -1,10 +1,10 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.orion.lang.utils.time.Dates;
-import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
-import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
-import com.orion.ops.machine.monitor.entity.bo.MemoryUsageBO;
-import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.CpuUsageBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.DiskIoUsageBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.MemoryUsageBO;
+import com.orion.ops.machine.monitor.entity.agent.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReduceCalculator;
 import lombok.Getter;
 import lombok.Setter;
