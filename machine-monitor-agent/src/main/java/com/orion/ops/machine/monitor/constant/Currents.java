@@ -3,6 +3,8 @@ package com.orion.ops.machine.monitor.constant;
 import com.orion.lang.utils.Valid;
 
 /**
+ * 当前上下文
+ *
  * @author Jiahang Li
  * @version 1.0.0
  * @since 2022/7/4 23:18

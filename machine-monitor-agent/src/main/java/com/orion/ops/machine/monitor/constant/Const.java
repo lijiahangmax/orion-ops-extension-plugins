@@ -20,6 +20,4 @@ public class Const extends com.orion.lang.constant.Const {
 
     public static final String PUSH_TOKEN = "pushToken";
 
-    public static final String INVALID_ACCESS_TOKEN = "非法访问";
-
 }
