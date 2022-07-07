@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.runner;
 
-import com.orion.ops.machine.monitor.OrionOpsMachineMonitorAgentApplication;
+import com.orion.ops.machine.monitor.AgentApplication;
 import com.orion.support.Attempt;
 import com.orion.utils.reflect.PackageScanner;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class TypeStoreRegisterRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("注册对象转换器-开始");
         new PackageScanner(scanPackages)
-                .with(OrionOpsMachineMonitorAgentApplication.class)
+                .with(AgentApplication.class)
                 .scan()
                 .getClasses()
                 .forEach(Attempt.rethrows(s -> {

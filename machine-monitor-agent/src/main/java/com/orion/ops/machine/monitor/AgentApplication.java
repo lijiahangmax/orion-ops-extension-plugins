@@ -9,10 +9,10 @@ import org.springframework.context.annotation.ImportResource;
  */
 @SpringBootApplication
 @ImportResource(locations = {"classpath:config/spring-*.xml"})
-public class OrionOpsMachineMonitorAgentApplication {
+public class AgentApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OrionOpsMachineMonitorAgentApplication.class, args);
+        SpringApplication.run(AgentApplication.class, args);
     }
 
 }
