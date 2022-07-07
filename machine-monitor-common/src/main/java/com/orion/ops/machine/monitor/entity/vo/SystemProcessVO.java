@@ -1,11 +1,10 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
 import com.orion.ops.machine.monitor.entity.dto.SystemProcessDTO;
-import com.orion.ops.machine.monitor.utils.Utils;
+import com.orion.ops.machine.monitor.utils.CommonUtils;
 import com.orion.utils.convert.TypeStore;
 import com.orion.utils.io.Files1;
 import lombok.Data;
-import oshi.util.FormatUtil;
 
 /**
  * 系统进程
@@ -63,10 +62,10 @@ public class SystemProcessVO {
             vo.setPid(p.getPid());
             vo.setName(p.getName());
             vo.setUser(p.getUser());
-            vo.setCpuLoad(Utils.roundToDouble(p.getCpuLoad()));
+            vo.setCpuLoad(CommonUtils.roundToDouble(p.getCpuLoad()));
             vo.setMemory(Files1.getSize(p.getMemory()));
             vo.setOpenFile(p.getOpenFile());
-            vo.setUptime(FormatUtil.formatElapsedSecs(p.getUptime()));
+            vo.setUptime(CommonUtils.formatElapsedSecs(p.getUptime()));
             vo.setCommandLine(p.getCommandLine());
             return vo;
         });

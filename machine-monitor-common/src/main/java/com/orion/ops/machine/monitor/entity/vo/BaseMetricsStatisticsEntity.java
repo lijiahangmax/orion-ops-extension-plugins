@@ -1,4 +1,4 @@
-package com.orion.ops.machine.monitor.metrics.statistics;
+package com.orion.ops.machine.monitor.entity.vo;
 
 /**
  * 监控指标统计数据

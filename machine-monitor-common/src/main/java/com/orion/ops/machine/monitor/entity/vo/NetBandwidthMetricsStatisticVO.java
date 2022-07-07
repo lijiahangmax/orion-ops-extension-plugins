@@ -1,6 +1,5 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
-import com.orion.ops.machine.monitor.metrics.statistics.BaseMetricsStatisticsEntity;
 import lombok.Data;
 
 /**

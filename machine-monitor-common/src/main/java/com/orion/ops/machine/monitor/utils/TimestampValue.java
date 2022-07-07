@@ -12,6 +12,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+// FIXME 放到kit
 public class TimestampValue<T> {
 
     /**

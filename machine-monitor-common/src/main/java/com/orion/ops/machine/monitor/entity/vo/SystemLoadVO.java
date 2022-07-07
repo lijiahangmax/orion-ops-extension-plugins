@@ -1,7 +1,7 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
 import com.orion.ops.machine.monitor.entity.dto.SystemLoadDTO;
-import com.orion.ops.machine.monitor.utils.Utils;
+import com.orion.ops.machine.monitor.utils.CommonUtils;
 import com.orion.utils.convert.TypeStore;
 import lombok.Data;
 
@@ -33,9 +33,9 @@ public class SystemLoadVO {
     static {
         TypeStore.STORE.register(SystemLoadDTO.class, SystemLoadVO.class, p -> {
             SystemLoadVO vo = new SystemLoadVO();
-            vo.setOneMinuteLoad(Utils.roundToDouble(p.getOneMinuteLoad()));
-            vo.setFiveMinuteLoad(Utils.roundToDouble(p.getFiveMinuteLoad()));
-            vo.setFifteenMinuteLoad(Utils.roundToDouble(p.getFifteenMinuteLoad()));
+            vo.setOneMinuteLoad(CommonUtils.roundToDouble(p.getOneMinuteLoad()));
+            vo.setFiveMinuteLoad(CommonUtils.roundToDouble(p.getFiveMinuteLoad()));
+            vo.setFifteenMinuteLoad(CommonUtils.roundToDouble(p.getFifteenMinuteLoad()));
             return vo;
         });
     }

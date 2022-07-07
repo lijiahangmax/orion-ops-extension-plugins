@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
+import com.orion.ops.machine.monitor.entity.vo.BaseMetricsStatisticsEntity;
+
 /**
  * 数据指标统计接口
  *

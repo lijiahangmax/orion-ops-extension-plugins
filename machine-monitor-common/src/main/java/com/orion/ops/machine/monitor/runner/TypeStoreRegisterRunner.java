@@ -1,6 +1,5 @@
 package com.orion.ops.machine.monitor.runner;
 
-import com.orion.ops.machine.monitor.AgentApplication;
 import com.orion.support.Attempt;
 import com.orion.utils.reflect.PackageScanner;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +23,15 @@ public class TypeStoreRegisterRunner implements CommandLineRunner {
     @Value("#{'${type.store.scan.packages}'.split(',')}")
     private String[] scanPackages;
 
+    @Value("${type.store.scan.class}")
+    private Class<?> scanClass;
+
+    // FIXME 这里不行
     @Override
     public void run(String... args) throws Exception {
         log.info("注册对象转换器-开始");
         new PackageScanner(scanPackages)
-                .with(AgentApplication.class)
+                .with(scanClass)
                 .scan()
                 .getClasses()
                 .forEach(Attempt.rethrows(s -> {
