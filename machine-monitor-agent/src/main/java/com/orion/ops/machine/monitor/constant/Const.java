@@ -7,7 +7,7 @@ package com.orion.ops.machine.monitor.constant;
  * @version 1.0.0
  * @since 2022/6/29 15:06
  */
-public class Const extends com.orion.constant.Const {
+public class Const extends com.orion.lang.constant.Const {
 
     private Const() {
     }

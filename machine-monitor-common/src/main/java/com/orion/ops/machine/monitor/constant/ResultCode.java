@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.constant;
 
-import com.orion.lang.wrapper.CodeInfo;
+import com.orion.lang.define.wrapper.CodeInfo;
 
 /**
  * 返回code
@@ -14,8 +14,7 @@ public enum ResultCode implements CodeInfo {
     /**
      * 非法访问
      */
-    INVALID_ACCESS_TOKEN(1010, Const.INVALID_ACCESS_TOKEN),
-
+    INVALID_ACCESS_TOKEN(1010, MessageConst.INVALID_ACCESS_TOKEN),
 
     ;
 

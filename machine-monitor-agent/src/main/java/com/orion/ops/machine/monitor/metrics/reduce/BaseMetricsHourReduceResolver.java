@@ -1,9 +1,9 @@
 package com.orion.ops.machine.monitor.metrics.reduce;
 
+import com.orion.lang.utils.collect.Lists;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.collect.Lists;
 
 import java.util.List;
 import java.util.function.Function;

@@ -1,9 +1,9 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
+import com.orion.lang.utils.convert.TypeStore;
+import com.orion.lang.utils.io.Files1;
 import com.orion.ops.machine.monitor.entity.dto.MemoryUsageDTO;
-import com.orion.ops.machine.monitor.utils.CommonUtils;
-import com.orion.utils.convert.TypeStore;
-import com.orion.utils.io.Files1;
+import com.orion.ops.machine.monitor.utils.Formats;
 import lombok.Data;
 
 /**
@@ -42,7 +42,7 @@ public class MemoryUsageVO {
             vo.setTotalMemory(Files1.getSize(p.getTotalMemory()));
             vo.setUsageMemory(Files1.getSize(p.getUsageMemory()));
             vo.setFreeMemory(Files1.getSize(p.getFreeMemory()));
-            vo.setUsage(CommonUtils.roundToDouble(p.getUsage()));
+            vo.setUsage(Formats.roundToDouble(p.getUsage()));
             return vo;
         });
     }

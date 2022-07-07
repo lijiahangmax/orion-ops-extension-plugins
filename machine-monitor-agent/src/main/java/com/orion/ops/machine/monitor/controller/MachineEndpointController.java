@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.controller;
 
-import com.orion.lang.wrapper.HttpWrapper;
+import com.orion.lang.define.wrapper.HttpWrapper;
 import com.orion.ops.machine.monitor.annotation.RestWrapper;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.metrics.collect.MetricsCollectTask;

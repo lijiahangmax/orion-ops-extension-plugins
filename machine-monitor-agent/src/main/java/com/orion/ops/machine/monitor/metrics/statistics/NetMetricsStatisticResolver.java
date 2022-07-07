@@ -1,11 +1,11 @@
 package com.orion.ops.machine.monitor.metrics.statistics;
 
+import com.orion.lang.define.wrapper.TimestampValue;
 import com.orion.ops.machine.monitor.constant.DataMetricsType;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.entity.request.MetricsStatisticsRequest;
 import com.orion.ops.machine.monitor.entity.vo.MetricsStatisticsVO;
 import com.orion.ops.machine.monitor.entity.vo.NetBandwidthMetricsStatisticVO;
-import com.orion.ops.machine.monitor.utils.TimestampValue;
 import com.orion.ops.machine.monitor.utils.Utils;
 
 import java.util.List;

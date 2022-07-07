@@ -1,8 +1,8 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
+import com.orion.lang.utils.convert.TypeStore;
 import com.orion.ops.machine.monitor.entity.dto.CpuUsageDTO;
-import com.orion.ops.machine.monitor.utils.CommonUtils;
-import com.orion.utils.convert.TypeStore;
+import com.orion.ops.machine.monitor.utils.Formats;
 import lombok.Data;
 
 import java.util.List;
@@ -31,9 +31,9 @@ public class CpuUsageVO {
     static {
         TypeStore.STORE.register(CpuUsageDTO.class, CpuUsageVO.class, p -> {
             CpuUsageVO vo = new CpuUsageVO();
-            vo.setUsage(CommonUtils.roundToDouble(p.getUsage()));
+            vo.setUsage(Formats.roundToDouble(p.getUsage()));
             vo.setCoreUsage(p.getCoreUsage().stream()
-                    .map(CommonUtils::roundToDouble)
+                    .map(Formats::roundToDouble)
                     .collect(Collectors.toList()));
             return vo;
         });

@@ -1,6 +1,6 @@
 package com.orion.ops.machine.monitor.constant;
 
-import com.orion.utils.Valid;
+import com.orion.lang.utils.Valid;
 
 /**
  * @author Jiahang Li

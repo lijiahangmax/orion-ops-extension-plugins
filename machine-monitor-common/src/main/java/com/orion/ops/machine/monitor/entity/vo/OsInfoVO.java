@@ -1,9 +1,9 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
+import com.orion.lang.utils.convert.TypeStore;
+import com.orion.lang.utils.io.Files1;
 import com.orion.ops.machine.monitor.entity.dto.OsInfoDTO;
-import com.orion.ops.machine.monitor.utils.CommonUtils;
-import com.orion.utils.convert.TypeStore;
-import com.orion.utils.io.Files1;
+import com.orion.ops.machine.monitor.utils.Formats;
 import lombok.Data;
 
 /**
@@ -66,7 +66,7 @@ public class OsInfoVO {
             OsInfoVO vo = new OsInfoVO();
             vo.setPid(p.getPid());
             vo.setOsName(p.getOsName());
-            vo.setUptime(CommonUtils.formatElapsedSecs(p.getUptime()));
+            vo.setUptime(Formats.formatElapsedSecs(p.getUptime()));
             vo.setCpuName(p.getCpuName());
             vo.setCpuPhysicalCore(p.getCpuPhysicalCore());
             vo.setCpuLogicalCore(p.getCpuLogicalCore());

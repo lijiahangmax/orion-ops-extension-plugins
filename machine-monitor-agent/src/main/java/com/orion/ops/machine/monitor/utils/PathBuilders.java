@@ -1,7 +1,7 @@
 package com.orion.ops.machine.monitor.utils;
 
+import com.orion.lang.utils.Systems;
 import com.orion.ops.machine.monitor.constant.Const;
-import com.orion.utils.Systems;
 
 /**
  * 路径构建器

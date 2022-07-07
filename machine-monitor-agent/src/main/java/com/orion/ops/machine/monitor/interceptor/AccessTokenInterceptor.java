@@ -1,10 +1,10 @@
 package com.orion.ops.machine.monitor.interceptor;
 
-import com.orion.constant.StandardContentType;
-import com.orion.lang.wrapper.HttpWrapper;
+import com.orion.lang.constant.StandardContentType;
+import com.orion.lang.define.wrapper.HttpWrapper;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.ResultCode;
-import com.orion.servlet.web.Servlets;
+import com.orion.web.servlet.web.Servlets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

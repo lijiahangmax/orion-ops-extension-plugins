@@ -1,6 +1,7 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.alibaba.fastjson.JSON;
+import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsageBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
@@ -56,8 +57,8 @@ public class MemoryMetricsCollector implements IMetricsCollector<MemoryUsageBO> 
         MemoryUsageBO mem = new MemoryUsageBO();
         mem.setUr(Utils.roundToDouble((double) usage / (double) total * 100, 3));
         mem.setUs(usage / Const.BUFFER_KB_1 / Const.BUFFER_KB_1);
-        mem.setSr(Utils.getSecondTime(prevTime));
-        mem.setEr(Utils.getSecondTime(currentTime));
+        mem.setSr(Dates.getSecondTime(prevTime));
+        mem.setEr(Dates.getSecondTime(currentTime));
         log.debug("内存指标: {}", JSON.toJSONString(mem));
         // 拼接到天级数据
         String path = PathBuilders.getMemoryDayDataPath(Utils.getRangeStartTime(mem.getSr()));

@@ -1,6 +1,5 @@
 package com.orion.ops.machine.monitor.utils;
 
-import com.orion.utils.crypto.Signatures;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
@@ -13,9 +12,9 @@ import java.util.concurrent.TimeUnit;
  * @since 2022/6/29 18:55
  */
 @Slf4j
-public class CommonUtils {
+public class Formats {
 
-    private CommonUtils() {
+    private Formats() {
     }
 
     /**
@@ -50,17 +49,5 @@ public class CommonUtils {
     public static Double roundToDouble(double d, int scale) {
         return Double.valueOf(String.format("%." + scale + "f", d));
     }
-
-
-    /**
-     * 获取硬盘序列
-     *
-     * @param model model
-     * @return seq
-     */
-    public static String getDiskSeq(String model) {
-        return Signatures.md5(model).substring(0, 8);
-    }
-
 
 }

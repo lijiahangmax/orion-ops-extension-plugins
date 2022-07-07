@@ -1,9 +1,9 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
+import com.orion.lang.utils.convert.TypeStore;
+import com.orion.lang.utils.io.Files1;
 import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsageDTO;
-import com.orion.ops.machine.monitor.utils.CommonUtils;
-import com.orion.utils.convert.TypeStore;
-import com.orion.utils.io.Files1;
+import com.orion.ops.machine.monitor.utils.Formats;
 import lombok.Data;
 
 /**
@@ -48,7 +48,7 @@ public class DiskStoreUsageVO {
             vo.setTotalSpace(Files1.getSize(p.getTotalSpace()));
             vo.setUsageSpace(Files1.getSize(p.getUsageSpace()));
             vo.setFreeSpace(Files1.getSize(p.getFreeSpace()));
-            vo.setUsage(CommonUtils.roundToDouble(p.getUsage()));
+            vo.setUsage(Formats.roundToDouble(p.getUsage()));
             return vo;
         });
     }

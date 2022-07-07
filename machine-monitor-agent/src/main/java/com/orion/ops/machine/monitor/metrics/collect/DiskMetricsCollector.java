@@ -1,12 +1,13 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.alibaba.fastjson.JSON;
+import com.orion.lang.utils.collect.Lists;
+import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
 import com.orion.ops.machine.monitor.utils.Utils;
-import com.orion.utils.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -77,8 +78,8 @@ public class DiskMetricsCollector implements IMetricsCollector<DiskIoUsageBO> {
             disk.setRc(currentDisk.getReads() - prevDisk.getReads());
             disk.setWc(currentDisk.getWrites() - prevDisk.getWrites());
             disk.setUt(currentDisk.getTransferTime() - prevDisk.getTransferTime());
-            disk.setSr(Utils.getSecondTime(prevTime));
-            disk.setEr(Utils.getSecondTime(currentTime));
+            disk.setSr(Dates.getSecondTime(prevTime));
+            disk.setEr(Dates.getSecondTime(currentTime));
             list.add(disk);
             log.debug("硬盘读写指标-{}: {}", seq, JSON.toJSONString(disk));
             // 拼接到天级数据

@@ -1,8 +1,8 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
-import com.orion.constant.Const;
-import com.orion.lang.thread.ThreadFactoryBuilder;
-import com.orion.utils.Threads;
+import com.orion.lang.define.thread.NamedThreadFactory;
+import com.orion.lang.utils.Threads;
+import com.orion.ops.machine.monitor.constant.Const;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,11 +45,7 @@ public class MetricsCollectScheduler implements DisposableBean {
     private void initScheduler() {
         log.info("初始化数据采集调度器-machineId: {}, 采集周期: {}s", machineId, collectPeriodSecond);
         // 初始化线程池
-        // FIXME 使用工具
-        ThreadFactory threadFactory = ThreadFactoryBuilder.create()
-                .setPrefix("machine-collector-thread-")
-                .build();
-        this.scheduler = new ScheduledThreadPoolExecutor(1, threadFactory);
+        this.scheduler = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("machine-collector-thread-"));
         scheduler.scheduleAtFixedRate(metricsCollectTask, collectPeriodSecond, collectPeriodSecond, TimeUnit.SECONDS);
     }
 

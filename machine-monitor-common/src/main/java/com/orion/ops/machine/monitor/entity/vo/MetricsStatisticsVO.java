@@ -1,8 +1,8 @@
 package com.orion.ops.machine.monitor.entity.vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.orion.ops.machine.monitor.utils.TimestampValue;
-import com.orion.utils.collect.Lists;
+import com.orion.lang.define.wrapper.TimestampValue;
+import com.orion.lang.utils.collect.Lists;
 import lombok.Data;
 
 import java.util.List;

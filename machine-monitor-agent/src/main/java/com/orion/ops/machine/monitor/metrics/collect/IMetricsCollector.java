@@ -1,7 +1,7 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
+import com.orion.lang.utils.collect.Lists;
 import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
-import com.orion.utils.collect.Lists;
 
 import java.util.List;
 

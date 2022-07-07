@@ -1,7 +1,7 @@
 package com.orion.ops.machine.monitor.config;
 
-import com.orion.id.UUIds;
-import com.orion.lang.wrapper.HttpWrapper;
+import com.orion.lang.define.wrapper.HttpWrapper;
+import com.orion.lang.id.UUIds;
 import com.orion.ops.machine.monitor.interceptor.AccessTokenInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

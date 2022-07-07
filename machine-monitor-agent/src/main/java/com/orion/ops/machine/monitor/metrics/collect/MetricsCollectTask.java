@@ -1,11 +1,11 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
+import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsageBO;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
 import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReduceCalculator;
-import com.orion.utils.time.Dates;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

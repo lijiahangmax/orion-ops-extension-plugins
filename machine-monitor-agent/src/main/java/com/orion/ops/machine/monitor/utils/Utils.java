@@ -1,12 +1,12 @@
 package com.orion.ops.machine.monitor.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.orion.constant.Const;
-import com.orion.constant.Letters;
+import com.orion.lang.constant.Letters;
+import com.orion.lang.utils.crypto.Signatures;
+import com.orion.lang.utils.io.Files1;
+import com.orion.lang.utils.time.Dates;
+import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
-import com.orion.utils.crypto.Signatures;
-import com.orion.utils.io.Files1;
-import com.orion.utils.time.Dates;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -147,17 +147,6 @@ public class Utils {
     }
 
     /**
-     * 时间戳毫秒转时间戳秒
-     *
-     * @param timestamp 时间戳毫秒
-     * @return 时间戳秒
-     */
-    // FIXME: 放到kit
-    public static long getSecondTime(long timestamp) {
-        return timestamp / Dates.SECOND_STAMP;
-    }
-
-    /**
      * 获取区间开始时间
      *
      * @param sr 开始时间
@@ -206,8 +195,8 @@ public class Utils {
      * @param <T>       T
      */
     public static <T extends BaseRangeBO> void setReduceHourRange(T t, String startHour, String endHour) {
-        t.setSr(getSecondTime(Dates.parse(startHour, YMDH).getTime()));
-        t.setEr(getSecondTime(Dates.parse(endHour, YMDH).getTime()));
+        t.setSr(Dates.getSecondTime(Dates.parse(startHour, YMDH).getTime()));
+        t.setEr(Dates.getSecondTime(Dates.parse(endHour, YMDH).getTime()));
     }
 
     /**
@@ -218,8 +207,7 @@ public class Utils {
      * @param <T>  data type
      */
     public static <T extends BaseRangeBO> void appendMetricsData(String path, T data) {
-        // FIXME 升级KIT后需要把这个改为 fast
-        try (OutputStream out = Files1.openOutputStream(path, true)) {
+        try (OutputStream out = Files1.openOutputStreamFast(path, true)) {
             out.write(JSON.toJSONBytes(data));
             out.write(Letters.LF);
             out.flush();

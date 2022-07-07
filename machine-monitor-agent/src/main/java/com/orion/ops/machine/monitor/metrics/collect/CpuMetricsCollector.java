@@ -1,6 +1,7 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.alibaba.fastjson.JSON;
+import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
 import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.utils.PathBuilders;
@@ -57,8 +58,8 @@ public class CpuMetricsCollector implements IMetricsCollector<CpuUsageBO> {
         // 计算
         CpuUsageBO cpu = new CpuUsageBO();
         cpu.setU(Utils.computeCpuLoad(prevCpu, currentCpu));
-        cpu.setSr(Utils.getSecondTime(prevTime));
-        cpu.setEr(Utils.getSecondTime(currentTime));
+        cpu.setSr(Dates.getSecondTime(prevTime));
+        cpu.setEr(Dates.getSecondTime(currentTime));
         log.debug("处理器指标: {}", JSON.toJSONString(cpu));
         // 拼接到天级数据
         String path = PathBuilders.getCpuDayDataPath(Utils.getRangeStartTime(cpu.getSr()));
