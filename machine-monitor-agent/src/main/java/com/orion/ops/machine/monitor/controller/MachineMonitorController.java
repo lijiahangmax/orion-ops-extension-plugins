@@ -14,28 +14,29 @@ import com.orion.ops.machine.monitor.metrics.statistics.CpuMetricsStatisticResol
 import com.orion.ops.machine.monitor.metrics.statistics.DiskMetricsStatisticResolver;
 import com.orion.ops.machine.monitor.metrics.statistics.MemoryMetricsStatisticResolver;
 import com.orion.ops.machine.monitor.metrics.statistics.NetMetricsStatisticResolver;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 机器监控 api
+ * 监控统计 api
  *
  * @author Jiahang Li
  * @version 1.0.0
  * @since 2022/7/4 16:59
  */
+@Api(tags = "监控统计")
 @RestWrapper
 @RestController
 @RequestMapping("/orion/machine-monitor-agent/api/monitor-statistic")
 public class MachineMonitorController {
 
-    /**
-     * 获取处理器数据
-     */
     @IgnoreLog
     @PostMapping("/get-cpu")
+    @ApiOperation(value = "获取cpu数据")
     public CpuMetricsStatisticsVO getCpuData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
         // 统计
@@ -44,11 +45,9 @@ public class MachineMonitorController {
         return resolver.getMetrics();
     }
 
-    /**
-     * 获取内存数据
-     */
     @IgnoreLog
     @PostMapping("/get-memory")
+    @ApiOperation(value = "获取内存数据")
     public MemoryMetricsStatisticsVO getMemoryData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
         // 统计
@@ -57,11 +56,9 @@ public class MachineMonitorController {
         return resolver.getMetrics();
     }
 
-    /**
-     * 获取网络数据
-     */
     @IgnoreLog
     @PostMapping("/get-net")
+    @ApiOperation(value = "获取网络数据")
     public NetBandwidthMetricsStatisticVO getNetBandwidthData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
         // 统计
@@ -70,11 +67,9 @@ public class MachineMonitorController {
         return resolver.getMetrics();
     }
 
-    /**
-     * 获取磁盘数据
-     */
     @IgnoreLog
     @PostMapping("/get-disk")
+    @ApiOperation(value = "获取磁盘数据")
     public DiskMetricsStatisticVO getDiskData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
         Currents.setDiskSeq(request.getSeq());

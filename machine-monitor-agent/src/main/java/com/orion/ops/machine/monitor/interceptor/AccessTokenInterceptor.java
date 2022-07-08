@@ -2,7 +2,6 @@ package com.orion.ops.machine.monitor.interceptor;
 
 import com.orion.lang.constant.StandardContentType;
 import com.orion.lang.define.wrapper.HttpWrapper;
-import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.constant.ResultCode;
 import com.orion.web.servlet.web.Servlets;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,16 +23,19 @@ import java.io.IOException;
 @Component
 public class AccessTokenInterceptor implements HandlerInterceptor {
 
-    @Value("${access.token}")
-    private String accessToken;
+    @Value("${access.key}")
+    private String accessKey;
+
+    @Value("${access.secret}")
+    private String accessSecret;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        String accessTokenHeader = request.getHeader(Const.ACCESS_TOKEN);
-        if (accessToken.equals(accessTokenHeader)) {
+        String accessKeyHeader = request.getHeader(accessKey);
+        if (accessSecret.equals(accessKeyHeader)) {
             return true;
         }
         // 非法访问

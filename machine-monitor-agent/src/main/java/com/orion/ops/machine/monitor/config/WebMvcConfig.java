@@ -33,7 +33,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 访问拦截器
         registry.addInterceptor(accessTokenInterceptor)
-                .addPathPatterns("/**")
+                .addPathPatterns("/orion/machine-monitor-agent/api/**")
                 .order(5);
     }
 

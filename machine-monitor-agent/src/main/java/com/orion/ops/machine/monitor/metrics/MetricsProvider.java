@@ -232,8 +232,8 @@ public class MetricsProvider {
                     p.setPid(s.getProcessID());
                     p.setName(s.getName());
                     p.setUser(s.getUser());
-                    p.setCpuLoad(s.getProcessCpuLoadBetweenTicks(s));
-                    p.setMemory(s.getResidentSetSize());
+                    p.setCpuUsage(s.getProcessCpuLoadBetweenTicks(s));
+                    p.setMemoryUsage(s.getResidentSetSize());
                     p.setOpenFile(s.getOpenFiles());
                     p.setUptime(s.getUpTime());
                     p.setCommandLine(s.getCommandLine());
