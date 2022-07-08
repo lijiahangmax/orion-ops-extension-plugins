@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * swagger 配置
  * <p>
- * http://localhost:9220/doc.html
+ * http://localhost:9210/doc.html
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -35,7 +35,7 @@ import java.util.List;
 @Profile({"dev"})
 public class SwaggerConfig {
 
-    @Value("${monitor.agent.access.key}")
+    @Value("${monitor.server.access.key}")
     private String accessKey;
 
     @Bean
@@ -57,10 +57,10 @@ public class SwaggerConfig {
      */
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()
-                .title("ops-machine-monitor-agent restful API")
+                .title("ops-machine-monitor-server restful API")
                 .contact(new Contact(Const.ORION_AUTHOR, Const.ORION_GITEE, Const.ORION_EMAIL))
                 .version(Const.AGENT_VERSION)
-                .description("ops-machine-monitor-agent api 管理")
+                .description("ops-machine-monitor-server api 管理")
                 .build();
     }
 
