@@ -23,10 +23,10 @@ import java.io.IOException;
 @Component
 public class AccessTokenInterceptor implements HandlerInterceptor {
 
-    @Value("${access.key}")
+    @Value("${monitor.agent.access.key}")
     private String accessKey;
 
-    @Value("${access.secret}")
+    @Value("${monitor.agent.access.secret}")
     private String accessSecret;
 
     @Override

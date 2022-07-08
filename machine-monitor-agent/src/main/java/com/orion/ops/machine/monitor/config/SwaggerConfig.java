@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * swagger 配置
  * <p>
- * http://localhost:9210/doc.html
+ * http://localhost:9220/doc.html
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -35,7 +35,7 @@ import java.util.List;
 @Profile({"dev"})
 public class SwaggerConfig {
 
-    @Value("${access.key}")
+    @Value("${monitor.agent.access.key}")
     private String accessKey;
 
     @Bean
