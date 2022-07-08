@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -10,26 +12,19 @@ import lombok.Data;
  * @since 2022/6/27 18:09
  */
 @Data
+@ApiModel(value = "内存使用信息")
 public class MemoryUsageDTO {
 
-    /**
-     * 总内存
-     */
+    @ApiModelProperty(value = "总内存")
     private Long totalMemory;
 
-    /**
-     * 使用内存
-     */
+    @ApiModelProperty(value = "使用内存")
     private Long usageMemory;
 
-    /**
-     * 空闲内存
-     */
+    @ApiModelProperty(value = "空闲内存")
     private Long freeMemory;
 
-    /**
-     * 内存使用率
-     */
+    @ApiModelProperty(value = "内存使用率")
     private Double usage;
 
 }

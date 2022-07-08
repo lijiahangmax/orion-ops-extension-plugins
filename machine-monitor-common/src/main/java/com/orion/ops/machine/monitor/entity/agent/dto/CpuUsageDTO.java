@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -12,16 +14,13 @@ import java.util.List;
  * @since 2022/6/27 17:53
  */
 @Data
+@ApiModel(value = "cpu使用率")
 public class CpuUsageDTO {
 
-    /**
-     * 使用率
-     */
+    @ApiModelProperty(value = "使用率")
     private Double usage;
 
-    /**
-     * 核心使用率
-     */
+    @ApiModelProperty(value = "核心使用率")
     private List<Double> coreUsage;
 
 }

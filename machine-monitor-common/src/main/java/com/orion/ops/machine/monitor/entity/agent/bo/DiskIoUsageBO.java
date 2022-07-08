@@ -1,6 +1,8 @@
 package com.orion.ops.machine.monitor.entity.agent.bo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,37 +15,26 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "硬盘io使用指标")
 public class DiskIoUsageBO extends BaseRangeBO {
 
-    /**
-     * 硬盘序列
-     */
     @JSONField(serialize = false)
+    @ApiModelProperty(value = "硬盘序列")
     private String seq;
 
-    /**
-     * 读取次数 readCount
-     */
+    @ApiModelProperty(value = "读取次数 readCount")
     private Long rc;
 
-    /**
-     * 读取流量数 kb readSize
-     */
+    @ApiModelProperty(value = "读取流量数 kb readSize")
     private Long rs;
 
-    /**
-     * 写入次数 writeCount
-     */
+    @ApiModelProperty(value = "写入次数 writeCount")
     private Long wc;
 
-    /**
-     * 写入流量数 kb writeSize
-     */
+    @ApiModelProperty(value = "写入流量数 kb writeSize")
     private Long ws;
 
-    /**
-     * 使用时间 ms usageTime
-     */
+    @ApiModelProperty(value = "使用时间 ms usageTime")
     private Long ut;
 
 }

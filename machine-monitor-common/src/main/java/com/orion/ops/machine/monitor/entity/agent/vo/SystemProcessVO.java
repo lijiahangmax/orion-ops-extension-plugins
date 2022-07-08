@@ -4,6 +4,8 @@ import com.orion.lang.utils.convert.TypeStore;
 import com.orion.lang.utils.io.Files1;
 import com.orion.ops.machine.monitor.entity.agent.dto.SystemProcessDTO;
 import com.orion.ops.machine.monitor.utils.Formats;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -14,46 +16,31 @@ import lombok.Data;
  * @since 2022/6/30 17:44
  */
 @Data
+@ApiModel(value = "系统进程")
 public class SystemProcessVO {
 
-    /**
-     * 进程id
-     */
+    @ApiModelProperty(value = "进程id")
     private Integer pid;
 
-    /**
-     * 名称
-     */
+    @ApiModelProperty(value = "名称")
     private String name;
 
-    /**
-     * 用户
-     */
+    @ApiModelProperty(value = "用户")
     private String user;
 
-    /**
-     * cpu 使用率
-     */
-    private Double cpuLoad;
+    @ApiModelProperty(value = "cpu使用率")
+    private Double cpuUsage;
 
-    /**
-     * 使用内存
-     */
-    private String memory;
+    @ApiModelProperty(value = "使用内存")
+    private String memoryUsage;
 
-    /**
-     * 句柄数
-     */
+    @ApiModelProperty(value = "句柄数")
     private Long openFile;
 
-    /**
-     * 启用时长
-     */
+    @ApiModelProperty(value = "启用时长")
     private String uptime;
 
-    /**
-     * 命令行
-     */
+    @ApiModelProperty(value = "命令行")
     private String commandLine;
 
     static {
@@ -62,8 +49,8 @@ public class SystemProcessVO {
             vo.setPid(p.getPid());
             vo.setName(p.getName());
             vo.setUser(p.getUser());
-            vo.setCpuLoad(Formats.roundToDouble(p.getCpuLoad()));
-            vo.setMemory(Files1.getSize(p.getMemory()));
+            vo.setCpuUsage(Formats.roundToDouble(p.getCpuUsage()));
+            vo.setMemoryUsage(Files1.getSize(p.getMemoryUsage()));
             vo.setOpenFile(p.getOpenFile());
             vo.setUptime(Formats.formatElapsedSecs(p.getUptime()));
             vo.setCommandLine(p.getCommandLine());

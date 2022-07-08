@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.request;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -10,28 +12,22 @@ import lombok.Data;
  * @since 2022/7/4 17:20
  */
 @Data
+@ApiModel(value = "监控统计请求")
 public class MetricsStatisticsRequest {
 
     /**
-     * 粒度
-     *
      * @see com.orion.ops.machine.monitor.constant.GranularityType
      */
+    @ApiModelProperty(value = "数据粒度")
     private Integer granularity;
 
-    /**
-     * 开始区间 秒
-     */
+    @ApiModelProperty(value = "开始区间 (秒)")
     private Long startRange;
 
-    /**
-     * 结束区间 秒
-     */
+    @ApiModelProperty(value = "结束区间 (秒)")
     private Long endRange;
 
-    /**
-     * 序列
-     */
+    @ApiModelProperty(value = "磁盘序列")
     private String seq;
 
 }

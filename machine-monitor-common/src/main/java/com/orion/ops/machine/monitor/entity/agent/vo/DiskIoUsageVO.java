@@ -3,6 +3,8 @@ package com.orion.ops.machine.monitor.entity.agent.vo;
 import com.orion.lang.utils.convert.TypeStore;
 import com.orion.lang.utils.io.Files1;
 import com.orion.ops.machine.monitor.entity.agent.dto.DiskIoUsageDTO;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -13,31 +15,22 @@ import lombok.Data;
  * @since 2022/6/30 18:46
  */
 @Data
+@ApiModel(value = "硬盘IO使用信息")
 public class DiskIoUsageVO {
 
-    /**
-     * 名称
-     */
+    @ApiModelProperty(value = "硬盘名称")
     private String model;
 
-    /**
-     * 读取次数
-     */
+    @ApiModelProperty(value = "读取次数")
     private Long readCount;
 
-    /**
-     * 读取大小
-     */
+    @ApiModelProperty(value = "读取大小")
     private String readSize;
 
-    /**
-     * 写入次数
-     */
+    @ApiModelProperty(value = "写入次数")
     private Long writeCount;
 
-    /**
-     * 写入大小
-     */
+    @ApiModelProperty(value = "写入大小")
     private String writeSize;
 
     static {

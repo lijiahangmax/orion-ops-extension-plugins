@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -10,21 +12,16 @@ import lombok.Data;
  * @since 2022/6/27 18:43
  */
 @Data
+@ApiModel(value = "系统负载信息")
 public class SystemLoadDTO {
 
-    /**
-     * 1分 负载
-     */
+    @ApiModelProperty(value = "系统1分钟负载")
     private Double oneMinuteLoad;
 
-    /**
-     * 5分 负载
-     */
+    @ApiModelProperty(value = "系统5分钟负载")
     private Double fiveMinuteLoad;
 
-    /**
-     * 15分 负载
-     */
+    @ApiModelProperty(value = "系统15分钟负载")
     private Double fifteenMinuteLoad;
 
 }

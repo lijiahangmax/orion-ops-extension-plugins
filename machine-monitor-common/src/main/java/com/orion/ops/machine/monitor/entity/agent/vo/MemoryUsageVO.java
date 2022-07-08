@@ -4,6 +4,8 @@ import com.orion.lang.utils.convert.TypeStore;
 import com.orion.lang.utils.io.Files1;
 import com.orion.ops.machine.monitor.entity.agent.dto.MemoryUsageDTO;
 import com.orion.ops.machine.monitor.utils.Formats;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -14,26 +16,19 @@ import lombok.Data;
  * @since 2022/6/30 16:35
  */
 @Data
+@ApiModel(value = "内存使用信息")
 public class MemoryUsageVO {
 
-    /**
-     * 总内存
-     */
+    @ApiModelProperty(value = "总内存")
     private String totalMemory;
 
-    /**
-     * 使用内存
-     */
+    @ApiModelProperty(value = "使用内存")
     private String usageMemory;
 
-    /**
-     * 空闲内存
-     */
+    @ApiModelProperty(value = "空闲内存")
     private String freeMemory;
 
-    /**
-     * 内存使用率
-     */
+    @ApiModelProperty(value = "内存使用率")
     private Double usage;
 
     static {

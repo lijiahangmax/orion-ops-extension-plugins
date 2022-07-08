@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -10,26 +12,19 @@ import lombok.Data;
  * @since 2022/7/5 15:35
  */
 @Data
+@ApiModel(value = "网络指标统计数据")
 public class NetBandwidthMetricsStatisticVO implements BaseMetricsStatisticsEntity {
 
-    /**
-     * 上行sud mpb/s
-     */
+    @ApiModelProperty(value = "上行速率 mpb/s")
     private MetricsStatisticsVO<Double> sentSpeed;
 
-    /**
-     * 下行速率 mpb/s
-     */
+    @ApiModelProperty(value = "下行速率 mpb/s")
     private MetricsStatisticsVO<Double> recvSpeed;
 
-    /**
-     * 上行包数
-     */
+    @ApiModelProperty(value = "上行包数")
     private MetricsStatisticsVO<Long> sentPacket;
 
-    /**
-     * 下行包数
-     */
+    @ApiModelProperty(value = "下行包数")
     private MetricsStatisticsVO<Long> recvPacket;
 
 }

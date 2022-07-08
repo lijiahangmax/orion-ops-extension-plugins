@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -10,16 +12,13 @@ import lombok.Data;
  * @since 2022/7/1 15:51
  */
 @Data
+@ApiModel(value = "硬盘名称")
 public class DiskNameVO {
 
-    /**
-     * 硬盘名称
-     */
+    @ApiModelProperty(value = "硬盘名称")
     private String name;
 
-    /**
-     * 硬盘序列
-     */
+    @ApiModelProperty(value = "硬盘序列")
     private String seq;
 
 }

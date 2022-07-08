@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.bo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,26 +14,19 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "网络带宽指标")
 public class NetBandwidthBO extends BaseRangeBO {
 
-    /**
-     * 上行流量 kb sentSize
-     */
+    @ApiModelProperty(value = "上行流量 kb sentSize")
     private Long ss;
 
-    /**
-     * 下行流量 kb receivedSize
-     */
+    @ApiModelProperty(value = "下行流量 kb receivedSize")
     private Long rs;
 
-    /**
-     * 上行包 sentPacket
-     */
+    @ApiModelProperty(value = "上行包 sentPacket")
     private Long sp;
 
-    /**
-     * 下行包 receivedPacket
-     */
+    @ApiModelProperty(value = "下行包 receivedPacket")
     private Long rp;
 
 }

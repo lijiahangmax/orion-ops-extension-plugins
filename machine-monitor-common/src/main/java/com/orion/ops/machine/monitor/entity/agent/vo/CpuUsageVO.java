@@ -3,6 +3,8 @@ package com.orion.ops.machine.monitor.entity.agent.vo;
 import com.orion.lang.utils.convert.TypeStore;
 import com.orion.ops.machine.monitor.entity.agent.dto.CpuUsageDTO;
 import com.orion.ops.machine.monitor.utils.Formats;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -16,16 +18,13 @@ import java.util.stream.Collectors;
  * @since 2022/6/29 19:04
  */
 @Data
+@ApiModel(value = "cpu使用信息")
 public class CpuUsageVO {
 
-    /**
-     * 使用率
-     */
+    @ApiModelProperty(value = "使用率")
     private Double usage;
 
-    /**
-     * 核心使用率
-     */
+    @ApiModelProperty(value = "核心使用率")
     private List<Double> coreUsage;
 
     static {

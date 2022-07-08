@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -10,31 +12,22 @@ import lombok.Data;
  * @since 2022/6/27 18:37
  */
 @Data
+@ApiModel(value = "硬盘空间使用信息")
 public class DiskStoreUsageDTO {
 
-    /**
-     * 硬盘名称
-     */
+    @ApiModelProperty(value = "硬盘名称")
     private String name;
 
-    /**
-     * 硬盘总空间
-     */
+    @ApiModelProperty(value = "硬盘总空间")
     private Long totalSpace;
 
-    /**
-     * 使用空间
-     */
+    @ApiModelProperty(value = "使用空间")
     private Long usageSpace;
 
-    /**
-     * 空闲空间
-     */
+    @ApiModelProperty(value = "空闲空间")
     private Long freeSpace;
 
-    /**
-     * 硬盘使用率
-     */
+    @ApiModelProperty(value = "硬盘使用率")
     private Double usage;
 
 }

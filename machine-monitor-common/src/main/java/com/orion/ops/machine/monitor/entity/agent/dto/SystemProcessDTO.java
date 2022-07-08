@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -10,46 +12,31 @@ import lombok.Data;
  * @since 2022/6/28 14:06
  */
 @Data
+@ApiModel(value = "系统进程")
 public class SystemProcessDTO {
 
-    /**
-     * 进程id
-     */
+    @ApiModelProperty(value = "进程id")
     private Integer pid;
 
-    /**
-     * 名称
-     */
+    @ApiModelProperty(value = "名称")
     private String name;
 
-    /**
-     * 用户
-     */
+    @ApiModelProperty(value = "用户")
     private String user;
 
-    /**
-     * cpu 使用率
-     */
-    private Double cpuLoad;
+    @ApiModelProperty(value = "cpu使用率")
+    private Double cpuUsage;
 
-    /**
-     * 使用内存
-     */
-    private Long memory;
+    @ApiModelProperty(value = "使用内存")
+    private Long memoryUsage;
 
-    /**
-     * 句柄数
-     */
+    @ApiModelProperty(value = "句柄数")
     private Long openFile;
 
-    /**
-     * 启用时长
-     */
+    @ApiModelProperty(value = "启用时长")
     private Long uptime;
 
-    /**
-     * 命令行
-     */
+    @ApiModelProperty(value = "命令行")
     private String commandLine;
 
 }

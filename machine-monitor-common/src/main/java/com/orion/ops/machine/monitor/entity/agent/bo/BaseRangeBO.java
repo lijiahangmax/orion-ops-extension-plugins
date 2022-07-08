@@ -1,6 +1,8 @@
 package com.orion.ops.machine.monitor.entity.agent.bo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -11,18 +13,15 @@ import lombok.Data;
  * @since 2022/7/1 11:23
  */
 @Data
+@ApiModel(value = "时间区间")
 public class BaseRangeBO {
 
-    /**
-     * 开始时间 秒 startRange
-     */
     @JSONField(ordinal = 1)
+    @ApiModelProperty(value = "开始时间 (秒) startRange")
     private Long sr;
 
-    /**
-     * 结束时间 秒 endRange
-     */
     @JSONField(ordinal = 2)
+    @ApiModelProperty(value = "结束时间 (秒) endRange")
     private Long er;
 
 }

@@ -1,5 +1,7 @@
 package com.orion.ops.machine.monitor.entity.agent.bo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,16 +14,13 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "内存使用率指标")
 public class MemoryUsageBO extends BaseRangeBO {
 
-    /**
-     * 使用率 usageRate
-     */
+    @ApiModelProperty(value = "使用率 usageRate")
     private Double ur;
 
-    /**
-     * 使用大小 usageSize MB
-     */
+    @ApiModelProperty(value = "使用大小 usageSize MB")
     private Long us;
 
 }
