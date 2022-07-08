@@ -37,7 +37,6 @@ public class MachineEndpointController {
     @GetMapping("/version")
     @ApiOperation(value = "获取版本")
     public String getVersion() {
-        // TODO ops version
         return Const.AGENT_VERSION;
     }
 

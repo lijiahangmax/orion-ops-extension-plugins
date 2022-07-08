@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MachineMonitorController {
 
     @IgnoreLog
-    @PostMapping("/get-cpu")
+    @PostMapping("/cpu")
     @ApiOperation(value = "获取cpu数据")
     public CpuMetricsStatisticsVO getCpuData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
@@ -46,7 +46,7 @@ public class MachineMonitorController {
     }
 
     @IgnoreLog
-    @PostMapping("/get-memory")
+    @PostMapping("/memory")
     @ApiOperation(value = "获取内存数据")
     public MemoryMetricsStatisticsVO getMemoryData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
@@ -57,7 +57,7 @@ public class MachineMonitorController {
     }
 
     @IgnoreLog
-    @PostMapping("/get-net")
+    @PostMapping("/net")
     @ApiOperation(value = "获取网络数据")
     public NetBandwidthMetricsStatisticVO getNetBandwidthData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
@@ -68,7 +68,7 @@ public class MachineMonitorController {
     }
 
     @IgnoreLog
-    @PostMapping("/get-disk")
+    @PostMapping("/disk")
     @ApiOperation(value = "获取磁盘数据")
     public DiskMetricsStatisticVO getDiskData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
