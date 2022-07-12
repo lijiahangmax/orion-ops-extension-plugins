@@ -1,0 +1,105 @@
+package com.orion.ops.monitor.agent.metrics.collect;
+
+import com.orion.lang.utils.time.Dates;
+import com.orion.ops.monitor.agent.metrics.reduce.MetricsHourReduceCalculator;
+import com.orion.ops.monitor.common.entity.agent.bo.CpuUsageBO;
+import com.orion.ops.monitor.common.entity.agent.bo.DiskIoUsageBO;
+import com.orion.ops.monitor.common.entity.agent.bo.MemoryUsageBO;
+import com.orion.ops.monitor.common.entity.agent.bo.NetBandwidthBO;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * 机器指标采集任务
+ *
+ * @author Jiahang Li
+ * @version 1.0.0
+ * @since 2022/6/29 14:50
+ */
+@Slf4j
+@Component
+public class MetricsCollectTask implements Runnable {
+
+    /**
+     * 计数器
+     */
+    private final AtomicInteger counter;
+
+    @Getter
+    @Setter
+    private volatile boolean run;
+
+    public MetricsCollectTask() {
+        this.run = true;
+        this.counter = new AtomicInteger();
+    }
+
+    // TODO 检查监控指标 push
+    // TODO pushApi Component
+
+    @Override
+    public void run() {
+        if (!run) {
+            return;
+        }
+        int seq = counter.incrementAndGet();
+        log.info("第 {} 次采集数据-开始 {}", seq, Dates.current());
+        // 采集处理器数据
+        this.collectCpuData();
+        // 采集内存数据
+        this.collectMemoryData();
+        // 采集网络带宽数据
+        this.collectNetData();
+        // 采集硬盘读写数据
+        this.collectDiskData();
+        log.info("第 {} 次采集数据-结束 {}", seq, Dates.current());
+    }
+
+    /**
+     * 采集处理器数据
+     */
+    private void collectCpuData() {
+        // 采集处理器数据
+        CpuUsageBO cpu = ((CpuMetricsCollector) MetricsCollectorType.CPU.getCollectBean()).collect();
+        // 规约小时数据粒度
+        MetricsHourReduceCalculator.CPU.getReduceResolverBean().reduce(cpu);
+    }
+
+    /**
+     * 采集内存数据
+     */
+    private void collectMemoryData() {
+        // 采集内存数据
+        MemoryUsageBO mem = ((MemoryMetricsCollector) MetricsCollectorType.MEMORY.getCollectBean()).collect();
+        // 规约小时数据粒度
+        MetricsHourReduceCalculator.MEMORY.getReduceResolverBean().reduce(mem);
+    }
+
+    /**
+     * 采集网络带宽数据
+     */
+    private void collectNetData() {
+        // 采集网络带宽数据
+        NetBandwidthBO net = ((NetBandwidthCollector) MetricsCollectorType.NET.getCollectBean()).collect();
+        // 规约小时数据粒度
+        MetricsHourReduceCalculator.NET.getReduceResolverBean().reduce(net);
+    }
+
+    /**
+     * 采集硬盘读写数据
+     */
+    private void collectDiskData() {
+        // 采集硬盘数据
+        List<DiskIoUsageBO> disks = ((DiskMetricsCollector) MetricsCollectorType.DISK.getCollectBean()).collectAsList();
+        for (DiskIoUsageBO disk : disks) {
+            // 规约小时数据粒度
+            MetricsHourReduceCalculator.DISK.getReduceResolverBean().reduce(disk);
+        }
+    }
+
+}
