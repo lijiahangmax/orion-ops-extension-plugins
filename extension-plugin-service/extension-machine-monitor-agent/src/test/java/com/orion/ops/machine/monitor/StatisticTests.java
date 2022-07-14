@@ -1,4 +1,4 @@
-package com.orion.ops.plugin;
+package com.orion.ops.machine.monitor;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;

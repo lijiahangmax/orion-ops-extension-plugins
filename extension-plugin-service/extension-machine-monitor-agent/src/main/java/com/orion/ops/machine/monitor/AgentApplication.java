@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ImportResource;
  * @author Jiahang Li
  */
 @SpringBootApplication
-@ComponentScan("com.orion.ops.plugin.*")
+@ComponentScan("com.orion.ops.*")
 @ImportResource(locations = {"classpath:config/spring-common.xml"})
 public class AgentApplication {
 
