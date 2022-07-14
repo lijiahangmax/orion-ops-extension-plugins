@@ -57,10 +57,10 @@ public class SwaggerConfig {
      */
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()
-                .title("ops-machine-monitor-agent restful API")
+                .title("machine-monitor-agent restful API")
                 .contact(new Contact(Const.ORION_AUTHOR, Const.ORION_GITEE, Const.ORION_EMAIL))
                 .version(Const.AGENT_VERSION)
-                .description("ops-machine-monitor-agent api 管理")
+                .description("机器监控agent端api管理")
                 .build();
     }
 
