@@ -8,7 +8,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>machine-monitor-agent</artifactId>
+    <artifactId>extension-machine-monitor-agent</artifactId>
     <name>${project.artifactId}</name>
     <description>machine monitor agent</description>
     <modelVersion>4.0.0</modelVersion>
