@@ -29,7 +29,6 @@
     <modules>
         <module>./machine-monitor-common</module>
         <module>./machine-monitor-agent</module>
-        <module>./machine-monitor-server</module>
     </modules>
 
     <dependencies>
