@@ -3,6 +3,7 @@ package com.orion.ops.machine.monitor.config;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.orion.lang.utils.collect.Lists;
 import com.orion.ops.machine.monitor.constant.Const;
+import com.orion.ops.machine.monitor.constant.PropertiesConst;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +36,8 @@ import java.util.List;
 @Profile({"dev"})
 public class SwaggerConfig {
 
-    @Value("${monitor.agent.access.key}")
-    private String accessKey;
+    @Value("${monitor.agent.access.header}")
+    private String accessHeader;
 
     @Bean
     public Docket createRestApi() {
@@ -59,7 +60,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("machine-monitor-agent restful API")
                 .contact(new Contact(Const.ORION_AUTHOR, Const.ORION_GITEE, Const.ORION_EMAIL))
-                .version(Const.AGENT_VERSION)
+                .version(PropertiesConst.AGENT_VERSION)
                 .description("机器监控agent端api管理")
                 .build();
     }
@@ -70,7 +71,7 @@ public class SwaggerConfig {
      * @return security scheme
      */
     private List<SecurityScheme> getSecuritySchemes() {
-        ApiKey loginToken = new ApiKey(accessKey, accessKey, "header");
+        ApiKey loginToken = new ApiKey(accessHeader, accessHeader, "header");
         return Lists.of(loginToken);
     }
 

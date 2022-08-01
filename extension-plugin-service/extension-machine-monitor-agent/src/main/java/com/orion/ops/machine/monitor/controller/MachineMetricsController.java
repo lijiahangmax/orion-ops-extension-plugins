@@ -32,6 +32,17 @@ public class MachineMetricsController {
     @Resource
     private MetricsProvider metricsProvider;
 
+    @GetMapping("/base")
+    @ApiOperation(value = "获取机器基本指标")
+    public BaseMetricsVO getBaseMetrics(@RequestParam("limit") Integer limit) {
+        BaseMetricsVO base = new BaseMetricsVO();
+        base.setOs(Converts.to(metricsProvider.getOsInfo(), OsInfoVO.class));
+        base.setLoad(Converts.to(metricsProvider.getSystemLoad(), SystemLoadVO.class));
+        base.setDisks(Converts.toList(metricsProvider.getDiskStoreUsage(), DiskStoreUsageVO.class));
+        base.setProcesses(Converts.toList(metricsProvider.getProcesses(null, limit), SystemProcessVO.class));
+        return base;
+    }
+
     @GetMapping("/info")
     @ApiOperation(value = "获取机器信息")
     public OsInfoVO getOsInfo() {
@@ -122,7 +133,7 @@ public class MachineMetricsController {
     }
 
     @GetMapping("/top-processes")
-    @ApiOperation(value = "获取Top进程")
+    @ApiOperation(value = "获取top进程")
     public List<SystemProcessVO> getTopProgress(@RequestParam(value = "name", required = false) String name,
                                                 @RequestParam("limit") Integer limit) {
         return Converts.toList(metricsProvider.getProcesses(name, limit), SystemProcessVO.class);

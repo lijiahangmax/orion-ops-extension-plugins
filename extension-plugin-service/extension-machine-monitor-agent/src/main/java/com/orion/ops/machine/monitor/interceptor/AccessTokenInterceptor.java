@@ -23,8 +23,8 @@ import java.io.IOException;
 @Component
 public class AccessTokenInterceptor implements HandlerInterceptor {
 
-    @Value("${monitor.agent.access.key}")
-    private String accessKey;
+    @Value("${monitor.agent.access.header}")
+    private String accessHeader;
 
     @Value("${monitor.agent.access.secret}")
     private String accessSecret;
@@ -34,7 +34,7 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        String accessKeyHeader = request.getHeader(accessKey);
+        String accessKeyHeader = request.getHeader(accessHeader);
         if (accessSecret.equals(accessKeyHeader)) {
             return true;
         }

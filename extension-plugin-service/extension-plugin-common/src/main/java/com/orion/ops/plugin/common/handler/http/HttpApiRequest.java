@@ -3,7 +3,6 @@ package com.orion.ops.plugin.common.handler.http;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.orion.http.ok.OkRequest;
-import com.orion.lang.constant.Const;
 import com.orion.lang.constant.StandardContentType;
 import com.orion.lang.define.wrapper.HttpWrapper;
 import com.orion.lang.utils.io.Files1;
@@ -13,12 +12,12 @@ import com.orion.lang.utils.io.Files1;
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2022/7/8 16:33
+ * @since 2022/8/1 10:57
  */
 public class HttpApiRequest extends OkRequest {
 
-    public HttpApiRequest(String host, HttpApiDefined api) {
-        this.url = Files1.getPath(host + Const.SLASH + api.getPath());
+    public HttpApiRequest(String url, HttpApiDefined api) {
+        this.url = Files1.getPath(url + api.getPath());
         this.method = api.getMethod().method();
     }
 
