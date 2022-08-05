@@ -1,6 +1,7 @@
 package com.orion.ops.machine.monitor.controller;
 
 import com.orion.lang.utils.convert.Converts;
+import com.orion.ops.machine.monitor.constant.PropertiesConst;
 import com.orion.ops.machine.monitor.entity.dto.DiskIoUsageDTO;
 import com.orion.ops.machine.monitor.entity.dto.DiskStoreUsageDTO;
 import com.orion.ops.machine.monitor.entity.vo.*;
@@ -34,7 +35,10 @@ public class MachineMetricsController {
 
     @GetMapping("/base")
     @ApiOperation(value = "获取机器基本指标")
-    public BaseMetricsVO getBaseMetrics(@RequestParam("limit") Integer limit) {
+    public BaseMetricsVO getBaseMetrics(@RequestParam("limit") Integer limit, @RequestParam("machineId") Long machineId) {
+        // 设置应用id
+        PropertiesConst.MACHINE_ID = machineId;
+        // 查询基本数据指标
         BaseMetricsVO base = new BaseMetricsVO();
         base.setOs(Converts.to(metricsProvider.getOsInfo(), OsInfoVO.class));
         base.setLoad(Converts.to(metricsProvider.getSystemLoad(), SystemLoadVO.class));

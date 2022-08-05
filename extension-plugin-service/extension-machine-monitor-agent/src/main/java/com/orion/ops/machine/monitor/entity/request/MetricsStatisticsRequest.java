@@ -16,7 +16,7 @@ import lombok.Data;
 public class MetricsStatisticsRequest {
 
     /**
-     * @see com.orion.ops.plugin.common.constant.GranularityType
+     * @see com.orion.ops.machine.monitor.constant.GranularityType
      */
     @ApiModelProperty(value = "数据粒度")
     private Integer granularity;
