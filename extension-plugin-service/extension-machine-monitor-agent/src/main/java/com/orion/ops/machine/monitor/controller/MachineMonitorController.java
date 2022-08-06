@@ -14,7 +14,6 @@ import com.orion.ops.machine.monitor.metrics.statistics.CpuMetricsStatisticResol
 import com.orion.ops.machine.monitor.metrics.statistics.DiskMetricsStatisticResolver;
 import com.orion.ops.machine.monitor.metrics.statistics.MemoryMetricsStatisticResolver;
 import com.orion.ops.machine.monitor.metrics.statistics.NetMetricsStatisticResolver;
-import com.orion.ops.plugin.common.annotation.IgnoreLog;
 import com.orion.ops.plugin.common.annotation.RestWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,7 +40,6 @@ public class MachineMonitorController {
     @Resource
     private MetricsProvider metricsProvider;
 
-    @IgnoreLog
     @PostMapping("/cpu")
     @ApiOperation(value = "获取cpu数据")
     public CpuMetricsStatisticsVO getCpuData(@RequestBody MetricsStatisticsRequest request) {
@@ -52,7 +50,6 @@ public class MachineMonitorController {
         return resolver.getMetrics();
     }
 
-    @IgnoreLog
     @PostMapping("/memory")
     @ApiOperation(value = "获取内存数据")
     public MemoryMetricsStatisticsVO getMemoryData(@RequestBody MetricsStatisticsRequest request) {
@@ -63,7 +60,6 @@ public class MachineMonitorController {
         return resolver.getMetrics();
     }
 
-    @IgnoreLog
     @PostMapping("/net")
     @ApiOperation(value = "获取网络数据")
     public NetBandwidthMetricsStatisticVO getNetBandwidthData(@RequestBody MetricsStatisticsRequest request) {
@@ -74,7 +70,6 @@ public class MachineMonitorController {
         return resolver.getMetrics();
     }
 
-    @IgnoreLog
     @PostMapping("/disk")
     @ApiOperation(value = "获取磁盘数据")
     public DiskMetricsStatisticVO getDiskData(@RequestBody MetricsStatisticsRequest request) {
