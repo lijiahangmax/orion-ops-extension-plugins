@@ -2,6 +2,7 @@ package com.orion.ops.machine.monitor.entity.vo;
 
 import com.orion.lang.utils.convert.TypeStore;
 import com.orion.lang.utils.io.Files1;
+import com.orion.lang.utils.time.Dates;
 import com.orion.ops.machine.monitor.entity.dto.SystemProcessDTO;
 import com.orion.ops.machine.monitor.utils.Formats;
 import io.swagger.annotations.ApiModel;
@@ -52,7 +53,7 @@ public class SystemProcessVO {
             vo.setCpuUsage(Formats.roundToDouble(p.getCpuUsage()));
             vo.setMemoryUsage(Files1.getSize(p.getMemoryUsage()));
             vo.setOpenFile(p.getOpenFile());
-            vo.setUptime(Formats.formatElapsedSecs(p.getUptime()));
+            vo.setUptime(Formats.formatElapsedSecs(p.getUptime() / Dates.SECOND_STAMP));
             vo.setCommandLine(p.getCommandLine());
             return vo;
         });

@@ -37,7 +37,7 @@ public class Utils {
 
     private static final String YM = "yyyyMM";
 
-    private static final int MPB = 128;
+    private static final int MBP = 128;
 
     /**
      * 计算 cpu 使用率
@@ -70,14 +70,14 @@ public class Utils {
     }
 
     /**
-     * 计算速率 mpb/s
+     * 计算速率 mbp/s
      *
      * @param second second
      * @param kb     kb
-     * @return mpb/s
+     * @return mbp/s
      */
-    public static Double computeMpbSecondSpeed(long second, long kb) {
-        return Formats.roundToDouble((double) kb / MPB / second, 5);
+    public static Double computeMbpSecondSpeed(long second, long kb) {
+        return Formats.roundToDouble((double) kb / MBP / second, 5);
     }
 
     /**

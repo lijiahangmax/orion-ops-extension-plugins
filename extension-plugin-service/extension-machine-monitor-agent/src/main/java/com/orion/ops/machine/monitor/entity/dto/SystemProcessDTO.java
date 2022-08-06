@@ -33,7 +33,7 @@ public class SystemProcessDTO {
     @ApiModelProperty(value = "句柄数")
     private Long openFile;
 
-    @ApiModelProperty(value = "启用时长")
+    @ApiModelProperty(value = "启用时长 ms")
     private Long uptime;
 
     @ApiModelProperty(value = "命令行")

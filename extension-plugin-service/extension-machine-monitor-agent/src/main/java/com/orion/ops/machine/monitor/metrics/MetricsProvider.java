@@ -220,8 +220,8 @@ public class MetricsProvider {
      */
     public List<SystemProcessDTO> getProcesses(String name, int limit) {
         Predicate<OSProcess> filter;
-        if (Strings.isEmpty(name)) {
-            filter = OperatingSystem.ProcessFiltering.ALL_PROCESSES;
+        if (Strings.isBlank(name)) {
+            filter = null;
         } else {
             filter = p -> p.getName().toLowerCase().contains(name.toLowerCase());
         }

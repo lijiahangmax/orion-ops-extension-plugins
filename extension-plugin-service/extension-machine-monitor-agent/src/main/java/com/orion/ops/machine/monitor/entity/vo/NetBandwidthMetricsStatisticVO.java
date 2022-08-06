@@ -15,10 +15,10 @@ import lombok.Data;
 @ApiModel(value = "网络指标统计数据")
 public class NetBandwidthMetricsStatisticVO implements BaseMetricsStatisticsEntity {
 
-    @ApiModelProperty(value = "上行速率 mpb/s")
+    @ApiModelProperty(value = "上行速率 mbp/s")
     private MetricsStatisticsVO<Double> sentSpeed;
 
-    @ApiModelProperty(value = "下行速率 mpb/s")
+    @ApiModelProperty(value = "下行速率 mbp/s")
     private MetricsStatisticsVO<Double> recvSpeed;
 
     @ApiModelProperty(value = "上行包数")

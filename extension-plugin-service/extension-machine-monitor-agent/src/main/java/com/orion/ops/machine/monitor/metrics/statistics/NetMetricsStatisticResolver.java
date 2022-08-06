@@ -22,12 +22,12 @@ import java.util.stream.LongStream;
 public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<NetBandwidthBO, NetBandwidthMetricsStatisticVO> {
 
     /**
-     * 上行速率 mpb/s
+     * 上行速率 mbp/s
      */
     private final MetricsStatisticsVO<Double> sentSpeed;
 
     /**
-     * 下行速率 mpb/s
+     * 下行速率 mbp/s
      */
     private final MetricsStatisticsVO<Double> recvSpeed;
 
@@ -60,8 +60,8 @@ public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<Ne
         long totalRecvSize = Utils.getLongStream(rows, NetBandwidthBO::getRs).sum();
         long totalSentPacket = Utils.getLongStream(rows, NetBandwidthBO::getSp).sum();
         long totalRecvPacket = Utils.getLongStream(rows, NetBandwidthBO::getRp).sum();
-        sentSpeed.getMetrics().add(new TimestampValue<>(start, Utils.computeMpbSecondSpeed(s, totalSentSize)));
-        recvSpeed.getMetrics().add(new TimestampValue<>(start, Utils.computeMpbSecondSpeed(s, totalRecvSize)));
+        sentSpeed.getMetrics().add(new TimestampValue<>(start, Utils.computeMbpSecondSpeed(s, totalSentSize)));
+        recvSpeed.getMetrics().add(new TimestampValue<>(start, Utils.computeMbpSecondSpeed(s, totalRecvSize)));
         sentPacket.getMetrics().add(new TimestampValue<>(start, totalSentPacket));
         recvPacket.getMetrics().add(new TimestampValue<>(start, totalRecvPacket));
     }

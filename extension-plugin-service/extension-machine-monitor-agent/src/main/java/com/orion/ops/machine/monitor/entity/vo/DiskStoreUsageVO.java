@@ -41,7 +41,7 @@ public class DiskStoreUsageVO {
             vo.setTotalSpace(Files1.getSize(p.getTotalSpace()));
             vo.setUsageSpace(Files1.getSize(p.getUsageSpace()));
             vo.setFreeSpace(Files1.getSize(p.getFreeSpace()));
-            vo.setUsage(Formats.roundToDouble(p.getUsage()));
+            vo.setUsage(Formats.roundToDouble(p.getUsage() * 100));
             return vo;
         });
     }

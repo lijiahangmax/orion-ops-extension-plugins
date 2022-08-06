@@ -1,5 +1,6 @@
 package com.orion.ops.machine.monitor.controller;
 
+import com.orion.lang.utils.Strings;
 import com.orion.lang.utils.Valid;
 import com.orion.ops.machine.monitor.constant.Currents;
 import com.orion.ops.machine.monitor.constant.GranularityType;
@@ -8,6 +9,7 @@ import com.orion.ops.machine.monitor.entity.vo.CpuMetricsStatisticsVO;
 import com.orion.ops.machine.monitor.entity.vo.DiskMetricsStatisticVO;
 import com.orion.ops.machine.monitor.entity.vo.MemoryMetricsStatisticsVO;
 import com.orion.ops.machine.monitor.entity.vo.NetBandwidthMetricsStatisticVO;
+import com.orion.ops.machine.monitor.metrics.MetricsProvider;
 import com.orion.ops.machine.monitor.metrics.statistics.CpuMetricsStatisticResolver;
 import com.orion.ops.machine.monitor.metrics.statistics.DiskMetricsStatisticResolver;
 import com.orion.ops.machine.monitor.metrics.statistics.MemoryMetricsStatisticResolver;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * 监控统计 api
  *
@@ -33,6 +37,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orion/machine-monitor-agent/api/monitor-statistic")
 public class MachineMonitorController {
+
+    @Resource
+    private MetricsProvider metricsProvider;
 
     @IgnoreLog
     @PostMapping("/cpu")
@@ -72,7 +79,11 @@ public class MachineMonitorController {
     @ApiOperation(value = "获取磁盘数据")
     public DiskMetricsStatisticVO getDiskData(@RequestBody MetricsStatisticsRequest request) {
         this.validRequest(request);
-        Currents.setDiskSeq(request.getSeq());
+        String seq = request.getSeq();
+        if (Strings.isBlank(seq)) {
+            seq = metricsProvider.getDiskName().get(0).getSeq();
+        }
+        Currents.setDiskSeq(seq);
         try {
             // 统计
             DiskMetricsStatisticResolver resolver = new DiskMetricsStatisticResolver(request);
