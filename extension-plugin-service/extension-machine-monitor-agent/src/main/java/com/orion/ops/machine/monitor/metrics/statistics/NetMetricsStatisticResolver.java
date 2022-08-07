@@ -55,15 +55,15 @@ public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<Ne
 
     @Override
     protected void computeMetricsData(List<NetBandwidthBO> rows, Long start, Long end) {
-        long s = end - start;
+        long s = this.computeRowsSecond(rows);
         long totalSentSize = Utils.getLongStream(rows, NetBandwidthBO::getSs).sum();
         long totalRecvSize = Utils.getLongStream(rows, NetBandwidthBO::getRs).sum();
         long totalSentPacket = Utils.getLongStream(rows, NetBandwidthBO::getSp).sum();
         long totalRecvPacket = Utils.getLongStream(rows, NetBandwidthBO::getRp).sum();
         sentSpeed.getMetrics().add(new TimestampValue<>(start, Utils.computeMbpSecondSpeed(s, totalSentSize)));
         recvSpeed.getMetrics().add(new TimestampValue<>(start, Utils.computeMbpSecondSpeed(s, totalRecvSize)));
-        sentPacket.getMetrics().add(new TimestampValue<>(start, totalSentPacket));
-        recvPacket.getMetrics().add(new TimestampValue<>(start, totalRecvPacket));
+        sentPacket.getMetrics().add(new TimestampValue<>(start, totalSentPacket / s));
+        recvPacket.getMetrics().add(new TimestampValue<>(start, totalRecvPacket / s));
     }
 
     @Override

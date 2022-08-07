@@ -21,10 +21,10 @@ public class NetBandwidthMetricsStatisticVO implements BaseMetricsStatisticsEnti
     @ApiModelProperty(value = "下行速率 mbp/s")
     private MetricsStatisticsVO<Double> recvSpeed;
 
-    @ApiModelProperty(value = "上行包数")
+    @ApiModelProperty(value = "上行包数 个/s")
     private MetricsStatisticsVO<Long> sentPacket;
 
-    @ApiModelProperty(value = "下行包数")
+    @ApiModelProperty(value = "下行包数 个/s")
     private MetricsStatisticsVO<Long> recvPacket;
 
 }

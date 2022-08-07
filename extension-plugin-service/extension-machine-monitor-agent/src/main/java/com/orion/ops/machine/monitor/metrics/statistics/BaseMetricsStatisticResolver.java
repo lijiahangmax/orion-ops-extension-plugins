@@ -143,6 +143,22 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      */
     protected abstract void computeMetricsAvg();
 
+    /**
+     * 计算统计周期 秒
+     *
+     * @param rows rows
+     * @return 秒
+     */
+    protected long computeRowsSecond(List<T> rows) {
+        long sum = rows.stream()
+                .mapToLong(row -> row.getEr() - row.getSr())
+                .sum();
+        if (sum == 0) {
+            return 1;
+        }
+        return sum;
+    }
+
     protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc) {
         return this.calcDataAgg(data, calc, 3);
     }

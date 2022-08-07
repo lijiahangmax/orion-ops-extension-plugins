@@ -62,7 +62,7 @@ public class DiskMetricsStatisticResolver extends BaseMetricsStatisticResolver<D
 
     @Override
     protected void computeMetricsData(List<DiskIoUsageBO> rows, Long start, Long end) {
-        long s = end - start;
+        long s = this.computeRowsSecond(rows);
         long totalReadSize = Utils.getLongStream(rows, DiskIoUsageBO::getRs).sum();
         long totalWriteSize = Utils.getLongStream(rows, DiskIoUsageBO::getWs).sum();
         long totalReadCount = Utils.getLongStream(rows, DiskIoUsageBO::getRc).sum();
