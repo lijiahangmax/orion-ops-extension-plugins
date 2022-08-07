@@ -5,7 +5,6 @@ import com.orion.lang.constant.Letters;
 import com.orion.lang.utils.crypto.Signatures;
 import com.orion.lang.utils.io.Files1;
 import com.orion.lang.utils.time.Dates;
-import com.orion.ops.machine.monitor.constant.Const;
 import com.orion.ops.machine.monitor.entity.bo.BaseRangeBO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -88,7 +87,7 @@ public class Utils {
      * @return mb/s
      */
     public static Double computeMbSecondSpeed(long second, long kb) {
-        return Formats.roundToDouble((double) kb / Const.BUFFER_KB_1 / second, 5);
+        return Formats.roundToDouble((double) kb / second, 5);
     }
 
     /**

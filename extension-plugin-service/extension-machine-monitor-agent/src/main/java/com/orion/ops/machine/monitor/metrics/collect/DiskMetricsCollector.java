@@ -74,7 +74,7 @@ public class DiskMetricsCollector implements IMetricsCollector<DiskIoUsageBO> {
             DiskIoUsageBO disk = new DiskIoUsageBO();
             disk.setSeq(seq);
             disk.setRs((currentDisk.getReadBytes() - prevDisk.getReadBytes()) / Const.BUFFER_KB_1);
-            disk.setWs((currentDisk.getReadBytes() - prevDisk.getReadBytes()) / Const.BUFFER_KB_1);
+            disk.setWs((currentDisk.getWriteBytes() - prevDisk.getWriteBytes()) / Const.BUFFER_KB_1);
             disk.setRc(currentDisk.getReads() - prevDisk.getReads());
             disk.setWc(currentDisk.getWrites() - prevDisk.getWrites());
             disk.setUt(currentDisk.getTransferTime() - prevDisk.getTransferTime());

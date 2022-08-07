@@ -68,8 +68,8 @@ public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<Ne
 
     @Override
     protected void computeMetricsMax() {
-        double sentSpeedMax = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::max, 5);
-        double recvSpeedMax = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::max, 5);
+        double sentSpeedMax = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::max, 3);
+        double recvSpeedMax = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::max, 3);
         long sentPacketMax = super.calcDataAggLong(sentPacket.getMetrics(), LongStream::max);
         long recvPacketMax = super.calcDataAggLong(recvPacket.getMetrics(), LongStream::max);
         sentSpeed.setMax(sentSpeedMax);
@@ -80,8 +80,8 @@ public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<Ne
 
     @Override
     protected void computeMetricsMin() {
-        double sentSpeedMin = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::min, 5);
-        double recvSpeedMin = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::min, 5);
+        double sentSpeedMin = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::min, 3);
+        double recvSpeedMin = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::min, 3);
         long sentPacketMin = super.calcDataAggLong(sentPacket.getMetrics(), LongStream::min);
         long recvPacketMin = super.calcDataAggLong(recvPacket.getMetrics(), LongStream::min);
         sentSpeed.setMin(sentSpeedMin);
@@ -92,8 +92,8 @@ public class NetMetricsStatisticResolver extends BaseMetricsStatisticResolver<Ne
 
     @Override
     protected void computeMetricsAvg() {
-        double sentSpeedAvg = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::average, 5);
-        double recvSpeedAvg = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::average, 5);
+        double sentSpeedAvg = super.calcDataAgg(sentSpeed.getMetrics(), DoubleStream::average, 3);
+        double recvSpeedAvg = super.calcDataAgg(recvSpeed.getMetrics(), DoubleStream::average, 3);
         double sentPacketAvg = super.calcDataAvgLong(sentPacket.getMetrics());
         double recvPacketAvg = super.calcDataAvgLong(recvPacket.getMetrics());
         sentSpeed.setAvg(sentSpeedAvg);
