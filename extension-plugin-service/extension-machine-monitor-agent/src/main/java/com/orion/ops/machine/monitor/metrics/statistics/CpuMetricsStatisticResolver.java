@@ -43,19 +43,19 @@ public class CpuMetricsStatisticResolver extends BaseMetricsStatisticResolver<Cp
 
     @Override
     protected void computeMetricsMax() {
-        double max = super.calcDataAgg(usage.getMetrics(), DoubleStream::max);
+        double max = super.calcDataReduce(usage.getMetrics(), DoubleStream::max);
         usage.setMax(max);
     }
 
     @Override
     protected void computeMetricsMin() {
-        double min = super.calcDataAgg(usage.getMetrics(), DoubleStream::min);
+        double min = super.calcDataReduce(usage.getMetrics(), DoubleStream::min);
         usage.setMin(min);
     }
 
     @Override
     protected void computeMetricsAvg() {
-        double avg = super.calcDataAgg(usage.getMetrics(), DoubleStream::average);
+        double avg = super.calcDataAvg(usage.getMetrics());
         usage.setAvg(avg);
     }
 

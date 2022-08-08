@@ -27,6 +27,11 @@ import java.util.stream.LongStream;
 public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S extends BaseMetricsStatisticsEntity> implements IMetricsStatisticResolver<S> {
 
     /**
+     * 默认小数位
+     */
+    private static final int DEFAULT_SCALE = 3;
+
+    /**
      * 访问器
      */
     private final MetricsFileAccessor<T> accessor;
@@ -35,6 +40,11 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      * 请求
      */
     protected final MetricsStatisticsRequest request;
+
+    /**
+     * 空行
+     */
+    protected int emptyLines;
 
     /**
      * 监控指标
@@ -114,6 +124,9 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
                     iter.remove();
                 }
             }
+            if (currentRows.isEmpty()) {
+                emptyLines++;
+            }
             // 计算数据
             this.computeMetricsData(currentRows, start, end);
         }
@@ -159,8 +172,8 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
         return sum;
     }
 
-    protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc) {
-        return this.calcDataAgg(data, calc, 3);
+    protected double calcDataReduce(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc) {
+        return this.calcDataReduce(data, calc, DEFAULT_SCALE);
     }
 
     /**
@@ -171,10 +184,10 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      * @param scale 小数位
      * @return data
      */
-    protected double calcDataAgg(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc, int scale) {
+    protected double calcDataReduce(List<TimestampValue<Double>> data, Function<DoubleStream, OptionalDouble> calc, int scale) {
         DoubleStream stream = data.stream().mapToDouble(TimestampValue::getValue);
-        double max = calc.apply(stream).orElse(Const.D_0);
-        return Formats.roundToDouble(max, scale);
+        double val = calc.apply(stream).orElse(Const.D_0);
+        return Formats.roundToDouble(val, scale);
     }
 
     /**
@@ -184,9 +197,31 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      * @param calc 计算
      * @return data
      */
-    protected long calcDataAggLong(List<TimestampValue<Long>> data, Function<LongStream, OptionalLong> calc) {
+    protected long calcDataReduceLong(List<TimestampValue<Long>> data, Function<LongStream, OptionalLong> calc) {
         LongStream stream = data.stream().mapToLong(TimestampValue::getValue);
         return calc.apply(stream).orElse(Const.L_0);
+    }
+
+    protected double calcDataAvg(List<TimestampValue<Double>> data) {
+        return this.calcDataAvg(data, DEFAULT_SCALE);
+    }
+
+    /**
+     * 计算平均值
+     *
+     * @param data  data
+     * @param scale 小数位
+     * @return avg
+     */
+    protected double calcDataAvg(List<TimestampValue<Double>> data, int scale) {
+        double sum = data.stream()
+                .mapToDouble(TimestampValue::getValue)
+                .sum();
+        int validLines = data.size() - emptyLines;
+        if (validLines == 0) {
+            return Const.D_0;
+        }
+        return Formats.roundToDouble(sum / validLines, scale);
     }
 
     /**
@@ -196,11 +231,14 @@ public abstract class BaseMetricsStatisticResolver<T extends BaseRangeBO, S exte
      * @return data
      */
     protected double calcDataAvgLong(List<TimestampValue<Long>> data) {
-        double d = data.stream()
+        double sum = data.stream()
                 .mapToLong(TimestampValue::getValue)
-                .average()
-                .orElse(Const.D_0);
-        return Formats.roundToDouble(d, 3);
+                .sum();
+        int validLines = data.size() - emptyLines;
+        if (validLines == 0) {
+            return Const.L_0;
+        }
+        return Formats.roundToDouble(sum / validLines, DEFAULT_SCALE);
     }
 
 }

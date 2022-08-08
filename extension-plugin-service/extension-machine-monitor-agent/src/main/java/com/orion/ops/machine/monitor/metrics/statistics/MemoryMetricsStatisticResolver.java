@@ -54,24 +54,24 @@ public class MemoryMetricsStatisticResolver extends BaseMetricsStatisticResolver
 
     @Override
     protected void computeMetricsMax() {
-        double sizeMax = super.calcDataAgg(size.getMetrics(), DoubleStream::max);
-        double usageMax = super.calcDataAgg(usage.getMetrics(), DoubleStream::max);
+        double sizeMax = super.calcDataReduce(size.getMetrics(), DoubleStream::max);
+        double usageMax = super.calcDataReduce(usage.getMetrics(), DoubleStream::max);
         size.setMax(sizeMax);
         usage.setMax(usageMax);
     }
 
     @Override
     protected void computeMetricsMin() {
-        double sizeMin = super.calcDataAgg(size.getMetrics(), DoubleStream::min);
-        double usageMin = super.calcDataAgg(usage.getMetrics(), DoubleStream::min);
+        double sizeMin = super.calcDataReduce(size.getMetrics(), DoubleStream::min);
+        double usageMin = super.calcDataReduce(usage.getMetrics(), DoubleStream::min);
         size.setMin(sizeMin);
         usage.setMin(usageMin);
     }
 
     @Override
     protected void computeMetricsAvg() {
-        double sizeAvg = super.calcDataAgg(size.getMetrics(), DoubleStream::average);
-        double usageAvg = super.calcDataAgg(usage.getMetrics(), DoubleStream::average);
+        double sizeAvg = super.calcDataAvg(size.getMetrics());
+        double usageAvg = super.calcDataAvg(usage.getMetrics());
         size.setAvg(sizeAvg);
         usage.setAvg(usageAvg);
     }

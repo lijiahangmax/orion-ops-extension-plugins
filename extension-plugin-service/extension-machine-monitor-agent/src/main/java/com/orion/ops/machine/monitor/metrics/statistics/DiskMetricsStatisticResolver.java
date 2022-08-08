@@ -78,11 +78,11 @@ public class DiskMetricsStatisticResolver extends BaseMetricsStatisticResolver<D
 
     @Override
     protected void computeMetricsMax() {
-        double readSpeedMax = super.calcDataAgg(readSpeed.getMetrics(), DoubleStream::max, 3);
-        double writeSpeedMax = super.calcDataAgg(writeSpeed.getMetrics(), DoubleStream::max, 3);
-        long readCountMax = super.calcDataAggLong(readCount.getMetrics(), LongStream::max);
-        long writeCountMax = super.calcDataAggLong(writeCount.getMetrics(), LongStream::max);
-        long usageTimeMax = super.calcDataAggLong(usageTime.getMetrics(), LongStream::max);
+        double readSpeedMax = super.calcDataReduce(readSpeed.getMetrics(), DoubleStream::max);
+        double writeSpeedMax = super.calcDataReduce(writeSpeed.getMetrics(), DoubleStream::max);
+        long readCountMax = super.calcDataReduceLong(readCount.getMetrics(), LongStream::max);
+        long writeCountMax = super.calcDataReduceLong(writeCount.getMetrics(), LongStream::max);
+        long usageTimeMax = super.calcDataReduceLong(usageTime.getMetrics(), LongStream::max);
         readSpeed.setMax(readSpeedMax);
         writeSpeed.setMax(writeSpeedMax);
         readCount.setMax(readCountMax);
@@ -92,11 +92,11 @@ public class DiskMetricsStatisticResolver extends BaseMetricsStatisticResolver<D
 
     @Override
     protected void computeMetricsMin() {
-        double readSpeedMin = super.calcDataAgg(readSpeed.getMetrics(), DoubleStream::min, 3);
-        double writeSpeedMin = super.calcDataAgg(writeSpeed.getMetrics(), DoubleStream::min, 3);
-        long readCountMin = super.calcDataAggLong(readCount.getMetrics(), LongStream::min);
-        long writeCountMin = super.calcDataAggLong(writeCount.getMetrics(), LongStream::min);
-        long usageTimeMin = super.calcDataAggLong(usageTime.getMetrics(), LongStream::min);
+        double readSpeedMin = super.calcDataReduce(readSpeed.getMetrics(), DoubleStream::min);
+        double writeSpeedMin = super.calcDataReduce(writeSpeed.getMetrics(), DoubleStream::min);
+        long readCountMin = super.calcDataReduceLong(readCount.getMetrics(), LongStream::min);
+        long writeCountMin = super.calcDataReduceLong(writeCount.getMetrics(), LongStream::min);
+        long usageTimeMin = super.calcDataReduceLong(usageTime.getMetrics(), LongStream::min);
         readSpeed.setMin(readSpeedMin);
         writeSpeed.setMin(writeSpeedMin);
         readCount.setMin(readCountMin);
@@ -106,8 +106,8 @@ public class DiskMetricsStatisticResolver extends BaseMetricsStatisticResolver<D
 
     @Override
     protected void computeMetricsAvg() {
-        double readSpeedAvg = super.calcDataAgg(readSpeed.getMetrics(), DoubleStream::average, 3);
-        double writeSpeedAvg = super.calcDataAgg(writeSpeed.getMetrics(), DoubleStream::average, 3);
+        double readSpeedAvg = super.calcDataAvg(readSpeed.getMetrics());
+        double writeSpeedAvg = super.calcDataAvg(writeSpeed.getMetrics());
         double readCountAvg = super.calcDataAvgLong(readCount.getMetrics());
         double writeCountAvg = super.calcDataAvgLong(writeCount.getMetrics());
         double usageTimeAvg = super.calcDataAvgLong(usageTime.getMetrics());
