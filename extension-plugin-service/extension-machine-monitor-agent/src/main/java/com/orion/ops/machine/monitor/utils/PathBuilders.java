@@ -15,6 +15,8 @@ public class PathBuilders {
     private PathBuilders() {
     }
 
+    public static final String COLLECT_PATH = "/orion-ops/monitor-collect";
+
     public static final String CPU_DAY_DATA_PATH = "/cpu_day";
 
     public static final String MEMORY_DAY_DATA_PATH = "/memory_day";
@@ -41,7 +43,7 @@ public class PathBuilders {
      */
     public static String getCpuDayDataPath(String time) {
         return Systems.HOME_DIR
-                + "/" + Const.OPS_MONITOR_AGENT
+                + COLLECT_PATH
                 + CPU_DAY_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
@@ -55,7 +57,7 @@ public class PathBuilders {
      */
     public static String getMemoryDayDataPath(String time) {
         return Systems.HOME_DIR
-                + "/" + Const.OPS_MONITOR_AGENT
+                + COLLECT_PATH
                 + MEMORY_DAY_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
@@ -69,7 +71,7 @@ public class PathBuilders {
      */
     public static String getNetDayDataPath(String time) {
         return Systems.HOME_DIR
-                + "/" + Const.OPS_MONITOR_AGENT
+                + COLLECT_PATH
                 + NET_DAY_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
@@ -84,7 +86,7 @@ public class PathBuilders {
      */
     public static String getDiskDayDataPath(String time, String seq) {
         return Systems.HOME_DIR
-                + "/" + Const.OPS_MONITOR_AGENT
+                + COLLECT_PATH
                 + DISK_DAY_DATA_PATH
                 + "/" + seq
                 + "-" + time
@@ -101,7 +103,7 @@ public class PathBuilders {
      */
     public static String getCpuMonthDataPath(String time) {
         return Systems.HOME_DIR
-                + "/" + Const.OPS_MONITOR_AGENT
+                + COLLECT_PATH
                 + CPU_MONTH_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
@@ -115,7 +117,7 @@ public class PathBuilders {
      */
     public static String getMemoryMonthDataPath(String time) {
         return Systems.HOME_DIR
-                + "/" + Const.OPS_MONITOR_AGENT
+                + COLLECT_PATH
                 + MEMORY_MONTH_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
@@ -129,7 +131,7 @@ public class PathBuilders {
      */
     public static String getNetMonthDataPath(String time) {
         return Systems.HOME_DIR
-                + "/" + Const.OPS_MONITOR_AGENT
+                + COLLECT_PATH
                 + NET_MONTH_DATA_PATH
                 + "/" + time
                 + "." + Const.SUFFIX_LOG;
@@ -144,7 +146,7 @@ public class PathBuilders {
      */
     public static String getDiskMonthDataPath(String time, String seq) {
         return Systems.HOME_DIR
-                + "/" + Const.OPS_MONITOR_AGENT
+                + COLLECT_PATH
                 + DISK_MONTH_DATA_PATH
                 + "/" + seq
                 + "-" + time
