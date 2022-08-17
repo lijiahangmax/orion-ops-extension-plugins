@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>com.orion.ops</groupId>
-    <artifactId>extension-plugin-service</artifactId>
+    <artifactId>orion-ops-plugins-parent</artifactId>
     <version>1.0.0</version>
     <name>${project.artifactId}</name>
     <description>extension plugin parent</description>
@@ -27,8 +27,8 @@
     </properties>
 
     <modules>
-        <module>./extension-plugin-common</module>
-        <module>./extension-machine-monitor-agent</module>
+        <module>./plugin-common</module>
+        <module>./machine-monitor-agent</module>
     </modules>
 
     <dependencies>

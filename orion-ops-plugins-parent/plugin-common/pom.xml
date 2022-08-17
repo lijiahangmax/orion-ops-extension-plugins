@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.orion.ops</groupId>
-        <artifactId>extension-plugin-service</artifactId>
+        <artifactId>orion-ops-plugins-parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>extension-plugin-common</artifactId>
+    <artifactId>plugin-common</artifactId>
     <name>${project.artifactId}</name>
     <description>extension plugin common</description>
     <modelVersion>4.0.0</modelVersion>
