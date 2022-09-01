@@ -1,18 +1,21 @@
 package com.orion.ops.machine.monitor.controller;
 
 import com.orion.lang.define.wrapper.HttpWrapper;
+import com.orion.lang.utils.collect.Lists;
 import com.orion.ops.machine.monitor.constant.Const;
+import com.orion.ops.machine.monitor.constant.MachineAlarmType;
 import com.orion.ops.machine.monitor.constant.PropertiesConst;
+import com.orion.ops.machine.monitor.entity.request.MachineSyncRequest;
+import com.orion.ops.machine.monitor.handler.AlarmChecker;
 import com.orion.ops.machine.monitor.metrics.collect.MetricsCollectTask;
 import com.orion.ops.plugin.common.annotation.RestWrapper;
+import com.orion.ops.plugin.common.handler.http.vo.MachineAlarmConfig;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 机器监控端点 api
@@ -28,10 +31,10 @@ import javax.annotation.Resource;
 public class MachineEndpointController {
 
     @Resource
-    private PropertiesConst propertiesConst;
+    private MetricsCollectTask metricsCollectTask;
 
     @Resource
-    private MetricsCollectTask metricsCollectTask;
+    private AlarmChecker alarmChecker;
 
     @GetMapping("/ping")
     @ApiOperation(value = "检测心跳")
@@ -55,8 +58,21 @@ public class MachineEndpointController {
     @ApiOperation(value = "设置机器id")
     public Long setMachineId(@RequestParam("machineId") Long machineId) {
         Long before = PropertiesConst.MACHINE_ID;
-        propertiesConst.setMachineId(machineId);
+        PropertiesConst.MACHINE_ID = machineId;
         return before;
+    }
+
+    @PostMapping("/sync")
+    @ApiOperation(value = "同步机器信息")
+    public String setMachineId(@RequestBody MachineSyncRequest request) {
+        // 设置机器id
+        PropertiesConst.MACHINE_ID = request.getMachineId();
+        // 设置报警配置
+        List<MachineAlarmConfig> config = request.getAlarmConfig();
+        if (!Lists.isEmpty(config)) {
+            config.forEach(s -> alarmChecker.getConfig().put(MachineAlarmType.of(s.getType()), s));
+        }
+        return PropertiesConst.AGENT_VERSION;
     }
 
     @GetMapping("/status")

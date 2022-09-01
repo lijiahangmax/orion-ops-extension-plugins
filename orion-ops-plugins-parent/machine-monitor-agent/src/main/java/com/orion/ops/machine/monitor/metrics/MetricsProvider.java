@@ -165,7 +165,7 @@ public class MetricsProvider {
                     disk.setFreeSpace(freeSpace);
                     disk.setUsage((double) usageSpace / (double) totalSpace);
                     return disk;
-                }).collect(Collectors.toList());
+                }).distinct().collect(Collectors.toList());
     }
 
     /**

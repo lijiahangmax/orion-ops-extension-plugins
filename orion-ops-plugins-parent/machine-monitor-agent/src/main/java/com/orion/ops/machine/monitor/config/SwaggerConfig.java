@@ -36,7 +36,7 @@ import java.util.List;
 @Profile({"dev"})
 public class SwaggerConfig {
 
-    @Value("${monitor.agent.access.header}")
+    @Value("${agent.access.header}")
     private String accessHeader;
 
     @Bean

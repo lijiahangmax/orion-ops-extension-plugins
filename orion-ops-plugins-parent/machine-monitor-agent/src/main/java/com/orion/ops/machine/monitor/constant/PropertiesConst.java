@@ -24,12 +24,12 @@ public class PropertiesConst {
     public static String AGENT_VERSION;
 
     @Value("${machineId:}")
-    public void setMachineId(Long machineId) {
+    private void setMachineId(Long machineId) {
         PropertiesConst.MACHINE_ID = machineId;
     }
 
     @Value("${agent.version}")
-    public void setAgentVersion(String agentVersion) {
+    private void setAgentVersion(String agentVersion) {
         PropertiesConst.AGENT_VERSION = agentVersion;
     }
 

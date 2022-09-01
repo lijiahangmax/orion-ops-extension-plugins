@@ -17,7 +17,7 @@
         <!-- common -->
         <dependency>
             <groupId>com.orion.ops</groupId>
-            <artifactId>extension-plugin-common</artifactId>
+            <artifactId>plugin-common</artifactId>
             <version>${common.version}</version>
         </dependency>
 

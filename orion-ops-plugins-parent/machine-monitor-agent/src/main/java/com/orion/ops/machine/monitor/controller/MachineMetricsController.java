@@ -35,9 +35,7 @@ public class MachineMetricsController {
 
     @GetMapping("/base")
     @ApiOperation(value = "获取机器基本指标")
-    public BaseMetricsVO getBaseMetrics(@RequestParam("limit") Integer limit, @RequestParam("machineId") Long machineId) {
-        // 设置应用id
-        PropertiesConst.MACHINE_ID = machineId;
+    public BaseMetricsVO getBaseMetrics(@RequestParam("limit") Integer limit) {
         // 查询基本数据指标
         BaseMetricsVO base = new BaseMetricsVO();
         base.setOs(Converts.to(metricsProvider.getOsInfo(), OsInfoVO.class));
