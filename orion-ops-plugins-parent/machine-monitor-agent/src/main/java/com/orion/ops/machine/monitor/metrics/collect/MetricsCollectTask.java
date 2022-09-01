@@ -1,16 +1,19 @@
 package com.orion.ops.machine.monitor.metrics.collect;
 
 import com.orion.lang.utils.time.Dates;
+import com.orion.ops.machine.monitor.constant.MachineAlarmType;
 import com.orion.ops.machine.monitor.entity.bo.CpuUsageBO;
 import com.orion.ops.machine.monitor.entity.bo.DiskIoUsageBO;
 import com.orion.ops.machine.monitor.entity.bo.MemoryUsageBO;
 import com.orion.ops.machine.monitor.entity.bo.NetBandwidthBO;
+import com.orion.ops.machine.monitor.handler.AlarmChecker;
 import com.orion.ops.machine.monitor.metrics.reduce.MetricsHourReduceCalculator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -29,6 +32,9 @@ public class MetricsCollectTask implements Runnable {
      * 计数器
      */
     private final AtomicInteger counter;
+
+    @Resource
+    private AlarmChecker alarmChecker;
 
     @Getter
     @Setter
@@ -68,6 +74,8 @@ public class MetricsCollectTask implements Runnable {
         CpuUsageBO cpu = ((CpuMetricsCollector) MetricsCollectorType.CPU.getCollectBean()).collect();
         // 规约小时数据粒度
         MetricsHourReduceCalculator.CPU.getReduceResolverBean().reduce(cpu);
+        // 检测报警
+        alarmChecker.check(MachineAlarmType.CPU_USAGE, cpu.getU());
     }
 
     /**
@@ -78,6 +86,8 @@ public class MetricsCollectTask implements Runnable {
         MemoryUsageBO mem = ((MemoryMetricsCollector) MetricsCollectorType.MEMORY.getCollectBean()).collect();
         // 规约小时数据粒度
         MetricsHourReduceCalculator.MEMORY.getReduceResolverBean().reduce(mem);
+        // 检测报警
+        alarmChecker.check(MachineAlarmType.MEMORY_USAGE, mem.getUr());
     }
 
     /**
