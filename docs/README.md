@@ -33,7 +33,7 @@ orion-ops: [gitee](https://gitee.com/lijiahangmax/orion-ops) [github](https://gi
 ```
 orion-ops-plugins-parent          后端服务父工程  
     │ 
-    ├── plugin-common             后端服务公共工程  
+    ├── plugin-common             插件公共工程  
     │  
     └── machine-monitor-agent     机器监控 agent  
 ```
@@ -44,8 +44,7 @@ orion-ops-plugins-parent          后端服务父工程
 - [快速开始(下载)](/machine-monitor-agent/quickstart-download)
 - [快速开始(构建)](/machine-monitor-agent/quickstart-build)
 - [常见问题](/machine-monitor-agent/faq)
-- [设计概念](/machine-monitor-agent/concepts)
-- [更新日志](/machine-monitor-agent/change-log)
+  <img src="./assert/img/machine-monitor-agent/machine-monitor-agent-arch.png" alt="总体架构"/>
 
 ## 联系我
 

@@ -70,7 +70,7 @@ public class MachineEndpointController {
         // 设置报警配置
         List<MachineAlarmConfig> config = request.getAlarmConfig();
         if (!Lists.isEmpty(config)) {
-            config.forEach(s -> alarmChecker.getConfigMap().put(MachineAlarmType.of(s.getType()), s));
+            config.forEach(s -> alarmChecker.getAlarmContext().put(MachineAlarmType.of(s.getType()), s));
         }
         return PropertiesConst.AGENT_VERSION;
     }

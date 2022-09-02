@@ -31,7 +31,7 @@ public class AlarmChecker {
      * 报警配置
      */
     @Getter
-    private final Map<MachineAlarmType, MachineAlarmConfig> configMap = Maps.newMap();
+    private final Map<MachineAlarmType, MachineAlarmConfig> alarmContext = Maps.newMap();
 
     /**
      * 连续报警次数
@@ -56,7 +56,7 @@ public class AlarmChecker {
      * @param value value
      */
     public void check(MachineAlarmType type, Double value) {
-        MachineAlarmConfig config = configMap.get(type);
+        MachineAlarmConfig config = alarmContext.get(type);
         if (config == null) {
             return;
         }
