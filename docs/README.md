@@ -5,7 +5,7 @@
 github: https://github.com/lijiahangmax/orion-ops-extension-plugins  
 gitee: https://gitee.com/lijiahangmax/orion-ops-extension-plugins  
 orion-ops: [gitee](https://gitee.com/lijiahangmax/orion-ops) [github](https://github.com/lijiahangmax/orion-ops)  
-文档: https://lijiahangmax.gitee.io/orion-ops/#/
+文档: https://lijiahangmax.github.io/orion-ops-extension-plugins/#/
 
 <p style="text-align: left">
 	<a target="_blank" style="text-decoration: none" href="https://www.codacy.com/gh/lijiahangmax/orion-ops-extension-plugins/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lijiahangmax/orion-ops-extension-plugins&amp;utm_campaign=Badge_Grade">
@@ -61,4 +61,4 @@ orion-ops-plugins-parent          后端服务父工程
 
 ## License
 
-使用 [Apache-2.0](https://github.com/lijiahangmax/orion-ops/blob/main/LICENSE) 开源许可证。
+使用 [Apache-2.0](https://github.com/lijiahangmax/orion-ops-extension-plugins/blob/main/LICENSE) 开源许可证。
