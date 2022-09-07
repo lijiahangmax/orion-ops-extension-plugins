@@ -1,6 +1,6 @@
 > 总体架构
 
-<img src="../assert/img/machine-monitor-agent/machine-monitor-agent-arch.png" alt="总体架构"/>  
+![总体架构](../assert/img/machine-monitor-agent/machine-monitor-agent-arch.png "总体架构")
 
 > 1. 监控指标文件存储在哪里?
 
