@@ -9,7 +9,7 @@ $HOME/orion-ops/plugins/start-machine-monitor-agent.sh
 如果启动脚本不存在则需要手动安装步骤:
 
 1. 在机器列表中找到失败的机器 点击详情 记录机器id
-2. 将 orion-ops 部署机器下的 agent 包复制到机器上
+2. 将 orion-ops 部署机器下的 agent 包复制到需要手动启动的机器上
 3. 执行启动操作
 
 ```
@@ -19,9 +19,11 @@ pluginPath=$HOME/orion-ops/plugins
 killTag=machine-monitor-agent
 logPath=$pluginPath/machine-monitor-agent.out
 scriptPath=$pluginPath/start-machine-monitor-agent.sh
-mkdir -p ${pluginPath}
-echo "ps -ef | grep ${killTag} | grep -v grep | awk '{print \$2}' | xargs kill -9 || echo \$?
-nohup java -jar ${agentJarPath} --machineId=${machineId} --spring.profiles.active=prod >> ${logPath} &" > ${scriptPath}
+echo "eof=$\"\n\"
+ps -ef | grep ${killTag} | grep -v grep | awk '{print \$2}' | xargs kill -9 || echo \$?
+nohup java -jar ${agentJarPath} --machineId=${machineId} --spring.profiles.active=prod 2>&1 >> ${logPath} &
+eof=\$(echo -e \$eof)
+echo \$eof" > ${scriptPath}
 chmod 777 ${scriptPath}
 ${scriptPath}
 ```
