@@ -10,7 +10,7 @@
 
     <groupId>com.orion.ops</groupId>
     <artifactId>orion-ops-plugins-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>${project.artifactId}</name>
     <description>extension plugin parent</description>
     <modelVersion>4.0.0</modelVersion>
@@ -21,7 +21,7 @@
         <java.version>1.8</java.version>
         <orion.all.version>1.0.3</orion.all.version>
         <oshi.version>6.1.6</oshi.version>
-        <common.version>1.0.0</common.version>
+        <common.version>1.0.1</common.version>
         <swagger.version>2.9.2</swagger.version>
         <knife4j.version>2.0.5</knife4j.version>
     </properties>

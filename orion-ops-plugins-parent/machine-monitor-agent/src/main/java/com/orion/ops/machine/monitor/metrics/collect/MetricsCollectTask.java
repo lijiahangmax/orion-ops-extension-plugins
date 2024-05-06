@@ -45,9 +45,6 @@ public class MetricsCollectTask implements Runnable {
         this.counter = new AtomicInteger();
     }
 
-    // TODO 检查监控指标 push
-    // TODO pushApi Component
-
     @Override
     public void run() {
         if (!run) {
@@ -55,15 +52,19 @@ public class MetricsCollectTask implements Runnable {
         }
         int seq = counter.incrementAndGet();
         log.info("第 {} 次采集数据-开始 {}", seq, Dates.current());
-        // 采集处理器数据
-        this.collectCpuData();
-        // 采集内存数据
-        this.collectMemoryData();
-        // 采集网络带宽数据
-        this.collectNetData();
-        // 采集硬盘读写数据
-        this.collectDiskData();
-        log.info("第 {} 次采集数据-结束 {}", seq, Dates.current());
+        try {
+            // 采集处理器数据
+            this.collectCpuData();
+            // 采集内存数据
+            this.collectMemoryData();
+            // 采集网络带宽数据
+            this.collectNetData();
+            // 采集硬盘读写数据
+            this.collectDiskData();
+            log.info("第 {} 次采集数据-结束 {}", seq, Dates.current());
+        } catch (Exception e) {
+            log.error("第 {} 次采集数据-异常 {}", seq, Dates.current(), e);
+        }
     }
 
     /**

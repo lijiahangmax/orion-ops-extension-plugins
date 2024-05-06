@@ -68,7 +68,12 @@ public class DiskMetricsCollector implements IMetricsCollector<DiskIoUsageBO> {
         List<DiskIoUsageBO> list = Lists.newList();
         for (int i = 0; i < currentDisks.size(); i++) {
             HWDiskStore currentDisk = currentDisks.get(i);
-            HWDiskStore prevDisk = prevDisks.get(i);
+            HWDiskStore prevDisk;
+            if (prevDisks.size() > i) {
+                prevDisk = prevDisks.get(i);
+            } else {
+                prevDisk = currentDisk;
+            }
             // 设置
             String seq = Utils.getDiskSeq(currentDisk.getModel());
             DiskIoUsageBO disk = new DiskIoUsageBO();
