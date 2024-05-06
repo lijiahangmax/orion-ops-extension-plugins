@@ -40,7 +40,7 @@ orion-ops-plugins-parent          后端服务父工程
 
 ### machine-monitor-agent (机器监控数据采集端)
 
-- 当前最新版本: **1.0.0**
+- 当前最新版本: **1.0.1**
 - [快速开始(下载)](/machine-monitor-agent/quickstart-download)
 - [快速开始(构建)](/machine-monitor-agent/quickstart-build)
 - [常见问题](/machine-monitor-agent/faq)

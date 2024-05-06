@@ -37,7 +37,7 @@ maven -U clean install -DskipTests
 
 > 配置插件包
 
-1. 将构建的包复制到部署 orion-ops 的机器中 将 `machine-monitor-agent/target/machine-monitor-agent-1.0.0.jar`
+1. 将构建的包复制到部署 orion-ops 的机器中 将 `machine-monitor-agent/target/machine-monitor-agent-1.0.1.jar`
    复制到部署 `orion-ops` 的机器中 如: `/root/lib/machine-monitor-agent-latest.jar`
 
 2. 修改 orion-ops 系统配置  
