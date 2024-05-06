@@ -44,7 +44,7 @@ orion-ops-plugins-parent          后端服务父工程
 - [快速开始(下载)](https://lijiahangmax.github.io/orion-ops-extension-plugins/#/machine-monitor-agent/quickstart-download)
 - [快速开始(构建)](https://lijiahangmax.github.io/orion-ops-extension-plugins/#/machine-monitor-agent/quickstart-build)
 - [常见问题](https://lijiahangmax.github.io/orion-ops-extension-plugins/#/machine-monitor-agent/faq)
-  <img src="https://img-blog.csdnimg.cn/a7a8661648f94318b3dd7ff75ced1b68.png" alt="总体架构"/>
+  <img src="https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/6/eabedadc-2cd1-4b6a-a480-0e1ee065b6a0.png" alt="总体架构"/>
 
 ## 联系我
 
