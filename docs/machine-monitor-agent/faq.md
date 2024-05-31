@@ -1,8 +1,8 @@
-> ##### 1. orion-ops 执行安装操作时失败怎么办?
+### orion-ops 执行安装操作时失败怎么办?
 
 手动启动:
 
-```
+```shell
 $HOME/orion-ops/plugins/start-machine-monitor-agent.sh
 ```
 
@@ -13,7 +13,7 @@ $HOME/orion-ops/plugins/start-machine-monitor-agent.sh
 3. 创建启动脚本
 4. 执行启动脚本
 
-```启动脚本
+```shell
 machineId=刚刚记录的机器id
 agentJarPath=agent文件路径
 AGENT_PROCESS=machine-monitor-agent
@@ -33,16 +33,12 @@ nohup java -jar -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=56m -Xms128m -Xmx128
 echo 'agent started result: ' $?
 ```
 
-<br/>
-
-> ##### 2. 调用 orion-ops 的通知服务失败怎么办?
+### 调用 orion-ops 的通知服务失败怎么办?
 
 检查 agent 包的配置 `orion.ops.access.host` `orion.ops.access.secret` 是否正确  
 检查 orion-ops 包的配置 `expose.api.access.secret` 和agent 包的配置 `orion.ops.access.secret` 是否匹配
 
-<br/> 
-
-> ##### 3. orion-ops 提示 api调用异常怎么办?
+### orion-ops 提示 api调用异常怎么办?
 
 提示 `api调用异常` 的主要原因是 `orion-ops` 调用 agent 的 http api 失败
 
@@ -51,6 +47,4 @@ echo 'agent started result: ' $?
 3. 进入机器终端, 使用 `curl localhost:9220` 检查 agent 进程是否有效
 4. 进入 orion-ops 终端, 使用 `curl ip:9220` 检查 agent 进程是否有效
 5. 如果 agent 正常启动, 需要考虑 orion-ops 的部署机器的防火墙
-
-<br/> 
 

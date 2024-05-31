@@ -1,19 +1,11 @@
-### orion ops 拓展插件
-
-此项目为 `orion-ops` 的拓展插件仓库, 目前仅包含了机器监控数据采集端
-
-github: https://github.com/lijiahangmax/orion-ops-extension-plugins  
-gitee: https://gitee.com/lijiahangmax/orion-ops-extension-plugins  
-orion-ops: [gitee](https://gitee.com/lijiahangmax/orion-ops) [github](https://github.com/lijiahangmax/orion-ops)  
-文档: https://lijiahangmax.github.io/orion-ops-extension-plugins/#/
-
-<p style="text-align: left">
+<p style="margin-top: 12px" align="center"><b>此项目为 `orion-ops` 的拓展插件仓库, 目前仅包含了机器监控数据采集端</b></p>
+<p align="center">
 	<a target="_blank" style="text-decoration: none" href="https://www.codacy.com/gh/lijiahangmax/orion-ops-extension-plugins/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lijiahangmax/orion-ops-extension-plugins&amp;utm_campaign=Badge_Grade">
 		<img src="https://app.codacy.com/project/badge/Grade/47f0fff1e7944376abd9041c4e5a3c00" alt="Codacy"/>
 	</a>
-	<a target="_blank" style="text-decoration: none" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">
-		<img src="https://img.shields.io/badge/JDK-8+-green.svg" alt="jdk8"/>
-	</a>
+    <a target="_blank" style="text-decoration: none !important;" href="https://github.com/lijiahangmax/orion-ops-extension-plugins/releases">
+      <img src="https://img.shields.io/github/v/release/lijiahangmax/orion-ops-extension-plugins" alt="release" />
+    </a>
 	<a target="_blank" style="text-decoration: none" href="https://www.apache.org/licenses/LICENSE-2.0">
 		<img src="https://img.shields.io/github/license/lijiahangmax/orion-ops-extension-plugins" alt="License"/>
 	</a>
@@ -25,8 +17,15 @@ orion-ops: [gitee](https://gitee.com/lijiahangmax/orion-ops) [github](https://gi
 	</a>		
 	 <a target="_blank" style="text-decoration: none" href="https://github.com/lijiahangmax/orion-ops-extension-plugins">
 		<img src="https://img.shields.io/github/stars/lijiahangmax/orion-ops-extension-plugins.svg?style=social" alt="star"/>
-	</a> 	
+	</a> 
 </p>
+
+### orion ops 拓展插件
+
+* [github](https://github.com/lijiahangmax/orion-ops-extension-plugins)
+* [gitee](https://gitee.com/lijiahangmax/orion-ops-extension-plugins)
+* [orion-ops](https://lijiahangmax.github.io/open-orion/orion-ops)
+* [文档](https://lijiahangmax.github.io/open-orion/orion-ops-extension-plugins)
 
 ### 项目结构
 
@@ -40,18 +39,17 @@ orion-ops-plugins-parent          后端服务父工程
 
 ### machine-monitor-agent (机器监控数据采集端)
 
-- 当前最新版本: **1.0.1**
-- [快速开始(下载)](https://lijiahangmax.github.io/orion-ops-extension-plugins/#/machine-monitor-agent/quickstart-download)
-- [快速开始(构建)](https://lijiahangmax.github.io/orion-ops-extension-plugins/#/machine-monitor-agent/quickstart-build)
-- [常见问题](https://lijiahangmax.github.io/orion-ops-extension-plugins/#/machine-monitor-agent/faq)
-  <img src="https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/6/eabedadc-2cd1-4b6a-a480-0e1ee065b6a0.png" alt="总体架构"/>
+* [快速开始(下载)](https://lijiahangmax.github.io/open-orion/orion-ops-extension-plugins/quickstart/download.html)
+* [快速开始(构建)](https://lijiahangmax.github.io/open-orion/orion-ops-extension-plugins/quickstart/build.html)
+* [常见问题](https://lijiahangmax.github.io/open-orion/orion-ops-extension-plugins/support/faq.html)
+
+<img src="https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/6/eabedadc-2cd1-4b6a-a480-0e1ee065b6a0.png" alt="总体架构"/>
 
 ## 联系我
 
 <img src="https://yxythpt.oss-cn-shenzhen.aliyuncs.com/2022-03-28/files5090991341399292419.jpg" alt="联系微信" width="268px"/>   
 
-📧 添加备注: ops 还不快骚扰一下~  
-<br/>
+📧 添加备注: ops
 
 ## 支持一下
 
