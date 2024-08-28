@@ -24,8 +24,8 @@
 
 * [github](https://github.com/lijiahangmax/orion-ops-extension-plugins)
 * [gitee](https://gitee.com/lijiahangmax/orion-ops-extension-plugins)
-* [orion-ops](https://lijiahangmax.github.io/open-orion/orion-ops)
-* [文档](https://lijiahangmax.github.io/open-orion/orion-ops-extension-plugins)
+* [orion-ops](https://ops.orionsec.cn)
+* [文档](https://om.orionsec.cn)
 
 ### 项目结构
 
@@ -39,9 +39,9 @@ orion-ops-plugins-parent          后端服务父工程
 
 ### machine-monitor-agent (机器监控数据采集端)
 
-* [快速开始(下载)](https://lijiahangmax.github.io/open-orion/orion-ops-extension-plugins/quickstart/download.html)
-* [快速开始(构建)](https://lijiahangmax.github.io/open-orion/orion-ops-extension-plugins/quickstart/build.html)
-* [常见问题](https://lijiahangmax.github.io/open-orion/orion-ops-extension-plugins/support/faq.html)
+* [快速开始(下载)](https://om.orionsec.cn/quickstart/download.html)
+* [快速开始(构建)](https://om.orionsec.cn/quickstart/build.html)
+* [常见问题](https://om.orionsec.cn/support/faq.html)
 
 <img src="https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/6/eabedadc-2cd1-4b6a-a480-0e1ee065b6a0.png" alt="总体架构"/>
 
