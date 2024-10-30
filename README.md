@@ -49,7 +49,8 @@ orion-ops-plugins-parent          后端服务父工程
 
 <img src="https://yxythpt.oss-cn-shenzhen.aliyuncs.com/2022-03-28/files5090991341399292419.jpg" alt="联系微信" width="268px"/>   
 
-📧 添加备注: ops
+📧 问题/加群微信备注: ops  
+📧 合作/功能定制备注: 合作
 
 ## 支持一下
 
