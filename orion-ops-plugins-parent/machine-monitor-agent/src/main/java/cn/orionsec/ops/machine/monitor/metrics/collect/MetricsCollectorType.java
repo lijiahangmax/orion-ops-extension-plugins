@@ -15,8 +15,8 @@
  */
 package cn.orionsec.ops.machine.monitor.metrics.collect;
 
+import cn.orionsec.kit.spring.SpringHolder;
 import cn.orionsec.ops.machine.monitor.entity.bo.BaseRangeBO;
-import com.orion.spring.SpringHolder;
 import lombok.AllArgsConstructor;
 
 /**

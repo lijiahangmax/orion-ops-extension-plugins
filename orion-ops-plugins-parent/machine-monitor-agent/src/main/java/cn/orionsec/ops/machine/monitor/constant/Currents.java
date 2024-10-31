@@ -15,7 +15,7 @@
  */
 package cn.orionsec.ops.machine.monitor.constant;
 
-import com.orion.lang.utils.Valid;
+import cn.orionsec.kit.lang.utils.Valid;
 
 /**
  * 当前上下文

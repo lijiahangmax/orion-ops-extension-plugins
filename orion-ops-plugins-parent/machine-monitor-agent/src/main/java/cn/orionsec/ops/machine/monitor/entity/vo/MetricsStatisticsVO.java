@@ -15,9 +15,9 @@
  */
 package cn.orionsec.ops.machine.monitor.entity.vo;
 
+import cn.orionsec.kit.lang.define.wrapper.TimestampValue;
+import cn.orionsec.kit.lang.utils.collect.Lists;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.orion.lang.define.wrapper.TimestampValue;
-import com.orion.lang.utils.collect.Lists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

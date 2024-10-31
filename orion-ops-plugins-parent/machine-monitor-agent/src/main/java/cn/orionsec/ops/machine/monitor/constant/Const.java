@@ -15,7 +15,7 @@
  */
 package cn.orionsec.ops.machine.monitor.constant;
 
-import com.orion.lang.annotation.Removed;
+import cn.orionsec.kit.lang.annotation.Removed;
 
 /**
  * 常量
@@ -24,7 +24,7 @@ import com.orion.lang.annotation.Removed;
  * @version 1.0.0
  * @since 2022/6/29 15:06
  */
-public class Const extends com.orion.lang.constant.Const {
+public class Const implements cn.orionsec.kit.lang.constant.Const {
 
     private Const() {
     }

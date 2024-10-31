@@ -15,8 +15,8 @@
  */
 package cn.orionsec.ops.machine.monitor.config;
 
-import com.orion.lang.define.wrapper.HttpWrapper;
-import com.orion.lang.id.UUIds;
+import cn.orionsec.kit.lang.define.wrapper.HttpWrapper;
+import cn.orionsec.kit.lang.id.UUIds;
 import cn.orionsec.ops.machine.monitor.interceptor.AccessTokenInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

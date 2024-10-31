@@ -15,8 +15,8 @@
  */
 package cn.orionsec.ops.machine.monitor.entity.vo;
 
+import cn.orionsec.kit.lang.utils.convert.TypeStore;
 import cn.orionsec.ops.machine.monitor.entity.dto.CpuUsageDTO;
-import com.orion.lang.utils.convert.TypeStore;
 import cn.orionsec.ops.machine.monitor.utils.Formats;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

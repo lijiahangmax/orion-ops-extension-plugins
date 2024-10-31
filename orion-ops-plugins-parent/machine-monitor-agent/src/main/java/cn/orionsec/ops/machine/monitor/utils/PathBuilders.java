@@ -15,7 +15,7 @@
  */
 package cn.orionsec.ops.machine.monitor.utils;
 
-import com.orion.lang.utils.Systems;
+import cn.orionsec.kit.lang.utils.Systems;
 import cn.orionsec.ops.machine.monitor.constant.Const;
 
 /**

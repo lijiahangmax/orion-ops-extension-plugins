@@ -15,9 +15,9 @@
  */
 package cn.orionsec.ops.machine.monitor.entity.vo;
 
-import com.orion.lang.utils.convert.TypeStore;
-import com.orion.lang.utils.io.Files1;
-import com.orion.lang.utils.time.Dates;
+import cn.orionsec.kit.lang.utils.convert.TypeStore;
+import cn.orionsec.kit.lang.utils.io.Files1;
+import cn.orionsec.kit.lang.utils.time.Dates;
 import cn.orionsec.ops.machine.monitor.entity.dto.SystemProcessDTO;
 import cn.orionsec.ops.machine.monitor.utils.Formats;
 import io.swagger.annotations.ApiModel;

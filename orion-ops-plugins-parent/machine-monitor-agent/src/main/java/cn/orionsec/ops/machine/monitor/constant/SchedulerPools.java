@@ -15,9 +15,9 @@
  */
 package cn.orionsec.ops.machine.monitor.constant;
 
-import com.orion.lang.define.thread.NamedThreadFactory;
-import com.orion.lang.utils.Systems;
-import com.orion.lang.utils.Threads;
+import cn.orionsec.kit.lang.define.thread.NamedThreadFactory;
+import cn.orionsec.kit.lang.utils.Systems;
+import cn.orionsec.kit.lang.utils.Threads;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;

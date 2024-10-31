@@ -15,10 +15,10 @@
  */
 package cn.orionsec.ops.machine.monitor.entity.vo;
 
-import com.orion.lang.utils.Systems;
+import cn.orionsec.kit.lang.utils.Systems;
+import cn.orionsec.kit.spring.SpringHolder;
 import cn.orionsec.ops.machine.monitor.constant.PropertiesConst;
 import cn.orionsec.ops.machine.monitor.metrics.collect.MetricsCollectTask;
-import com.orion.spring.SpringHolder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

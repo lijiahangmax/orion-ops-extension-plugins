@@ -15,9 +15,8 @@
  */
 package cn.orionsec.ops.machine.monitor.controller;
 
-import com.orion.lang.define.wrapper.HttpWrapper;
-import com.orion.lang.utils.collect.Lists;
-import cn.orionsec.ops.machine.monitor.constant.Const;
+import cn.orionsec.kit.lang.define.wrapper.HttpWrapper;
+import cn.orionsec.kit.lang.utils.collect.Lists;
 import cn.orionsec.ops.machine.monitor.constant.MachineAlarmType;
 import cn.orionsec.ops.machine.monitor.constant.PropertiesConst;
 import cn.orionsec.ops.machine.monitor.entity.request.MachineSyncRequest;
@@ -54,7 +53,7 @@ public class MachineEndpointController {
     @GetMapping("/ping")
     @ApiOperation(value = "检测心跳")
     public Integer ping() {
-        return Const.ENABLE;
+        return 1;
     }
 
     @GetMapping("/version")

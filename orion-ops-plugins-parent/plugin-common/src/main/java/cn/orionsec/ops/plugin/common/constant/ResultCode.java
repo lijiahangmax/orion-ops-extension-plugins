@@ -15,7 +15,7 @@
  */
 package cn.orionsec.ops.plugin.common.constant;
 
-import com.orion.lang.define.wrapper.CodeInfo;
+import cn.orionsec.kit.lang.define.wrapper.CodeInfo;
 
 /**
  * 返回code

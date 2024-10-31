@@ -15,8 +15,8 @@
  */
 package cn.orionsec.ops.machine.monitor.metrics.collect;
 
+import cn.orionsec.kit.lang.utils.collect.Lists;
 import cn.orionsec.ops.machine.monitor.entity.bo.BaseRangeBO;
-import com.orion.lang.utils.collect.Lists;
 
 import java.util.List;
 

@@ -15,7 +15,7 @@
  */
 package cn.orionsec.ops.machine.monitor.entity.vo;
 
-import com.orion.lang.utils.convert.TypeStore;
+import cn.orionsec.kit.lang.utils.convert.TypeStore;
 import cn.orionsec.ops.machine.monitor.constant.Const;
 import cn.orionsec.ops.machine.monitor.entity.dto.NetBandwidthDTO;
 import cn.orionsec.ops.machine.monitor.utils.Formats;
