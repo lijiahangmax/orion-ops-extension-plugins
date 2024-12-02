@@ -243,7 +243,7 @@ public class MetricsProvider {
         }
         // 获取全部进程
         List<OSProcess> beforeProcesses = os.getProcesses(filter, OperatingSystem.ProcessSorting.CPU_DESC, limit);
-        // 获取当前指标 休眠1秒 获取后一秒的指标比对
+        // 获取当前指标 休眠1秒 比对指标
         Threads.sleep(Const.MS_S_1);
         // 获取进程最新信息
         Map<Integer, OSProcess> afterProcessMap = beforeProcesses.stream()
@@ -260,8 +260,13 @@ public class MetricsProvider {
                     p.setPid(s.getProcessID());
                     p.setName(s.getName());
                     p.setUser(s.getUser());
-                    // 核心平均使用率
-                    p.setCpuUsage(s.getProcessCpuLoadBetweenTicks(afterProcessMap.get(s.getProcessID())) * 100 / cpuCount);
+                    // 平均核心使用率
+                    OSProcess afterProcess = afterProcessMap.get(s.getProcessID());
+                    if (afterProcess != null) {
+                        p.setCpuUsage(afterProcess.getProcessCpuLoadBetweenTicks(s) * 100 / cpuCount);
+                    } else {
+                        p.setCpuUsage(s.getProcessCpuLoadCumulative() * 100 / cpuCount);
+                    }
                     p.setMemoryUsage(s.getResidentSetSize());
                     p.setOpenFile(s.getOpenFiles());
                     p.setUptime(s.getUpTime());
