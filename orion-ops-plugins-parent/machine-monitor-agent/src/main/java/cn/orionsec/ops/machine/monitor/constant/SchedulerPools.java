@@ -37,7 +37,7 @@ public class SchedulerPools {
     /**
      * 数据采集调度器
      */
-    public static final ScheduledExecutorService COLLECT_SCHEDULER = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("machine-collector-thread-"));
+    public static final ScheduledExecutorService COLLECT_SCHEDULER = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("metrics-collector-"));
 
     static {
         Systems.addShutdownHook(() -> {

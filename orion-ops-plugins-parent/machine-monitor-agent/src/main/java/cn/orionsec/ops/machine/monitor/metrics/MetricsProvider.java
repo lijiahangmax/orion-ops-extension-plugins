@@ -15,6 +15,7 @@
  */
 package cn.orionsec.ops.machine.monitor.metrics;
 
+import cn.orionsec.kit.lang.function.Functions;
 import cn.orionsec.kit.lang.utils.Strings;
 import cn.orionsec.kit.lang.utils.Systems;
 import cn.orionsec.kit.lang.utils.Threads;
@@ -31,9 +32,8 @@ import oshi.hardware.*;
 import oshi.software.os.OSProcess;
 import oshi.software.os.OperatingSystem;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -238,22 +238,38 @@ public class MetricsProvider {
         if (Strings.isBlank(name)) {
             filter = null;
         } else {
-            filter = p -> p.getName().toLowerCase().contains(name.toLowerCase());
+            filter = p -> p.getName().toLowerCase().contains(name.toLowerCase())
+                    || (p.getCommandLine() != null && p.getCommandLine().toLowerCase().contains(name.toLowerCase()));
         }
-        return os.getProcesses(filter, OperatingSystem.ProcessSorting.CPU_DESC, limit)
-                .stream()
+        // 获取全部进程
+        List<OSProcess> beforeProcesses = os.getProcesses(filter, OperatingSystem.ProcessSorting.CPU_DESC, limit);
+        // 获取当前指标 休眠1秒 获取后一秒的指标比对
+        Threads.sleep(Const.MS_S_1);
+        // 获取进程最新信息
+        Map<Integer, OSProcess> afterProcessMap = beforeProcesses.stream()
+                .map(OSProcess::getProcessID)
+                .map(os::getProcess)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toMap(OSProcess::getProcessID, Function.identity(), Functions.right()));
+        // cpu 核心数
+        int cpuCount = hardware.getProcessor().getLogicalProcessorCount();
+        // 响应
+        return beforeProcesses.stream()
                 .map(s -> {
                     SystemProcessDTO p = new SystemProcessDTO();
                     p.setPid(s.getProcessID());
                     p.setName(s.getName());
                     p.setUser(s.getUser());
-                    p.setCpuUsage(s.getProcessCpuLoadBetweenTicks(s));
+                    // 核心平均使用率
+                    p.setCpuUsage(s.getProcessCpuLoadBetweenTicks(afterProcessMap.get(s.getProcessID())) * 100 / cpuCount);
                     p.setMemoryUsage(s.getResidentSetSize());
                     p.setOpenFile(s.getOpenFiles());
                     p.setUptime(s.getUpTime());
                     p.setCommandLine(s.getCommandLine());
                     return p;
-                }).collect(Collectors.toList());
+                })
+                .sorted(Comparator.comparing(SystemProcessDTO::getCpuUsage).reversed())
+                .collect(Collectors.toList());
     }
 
 }
