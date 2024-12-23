@@ -1,5 +1,10 @@
 /*
- * Copyright (c) 2021 - present Jiahang Li (om.orionsec.cn ljh1553488six@139.com).
+ * Copyright (c) 2021 - present Jiahang Li, All rights reserved.
+ *
+ *   https://om.orionsec.cn
+ *
+ * Members:
+ *   Jiahang Li - ljh1553488six@139.com - author
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +39,12 @@ import java.util.List;
 public class AddLicenseHeader {
 
     private static final String LICENSE = "/*\n" +
-            " * Copyright (c) 2021 - present Jiahang Li (om.orionsec.cn ljh1553488six@139.com).\n" +
+            " * Copyright (c) 2021 - present Jiahang Li, All rights reserved.\n" +
+            " *\n" +
+            " *   https://om.orionsec.cn\n" +
+            " *\n" +
+            " * Members:\n" +
+            " *   Jiahang Li - ljh1553488six@139.com - author\n" +
             " *\n" +
             " * Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
             " * you may not use this file except in compliance with the License.\n" +
@@ -55,7 +65,8 @@ public class AddLicenseHeader {
         StopWatch sw = StopWatch.begin();
         // 扫描文件
         List<File> files = Files1.listFilesFilter(PATH, file -> file.isFile()
-                && file.getName().endsWith(".java"), true, false);
+                && file.getName().endsWith(".java")
+                && !file.getAbsolutePath().contains("generated-sources"), true, false);
         sw.tag("search");
         // 添加头
         files.forEach(AddLicenseHeader::addLicenseToFile);
